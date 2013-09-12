@@ -7,6 +7,8 @@ class Ressource
 			$create_date,
 			$trend,
 			$type,
+			$entry_id,
+			$category_id,
 			$alert;
 	
 	/***************
@@ -58,6 +60,14 @@ class Ressource
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->alert = $val;
 		return $this->alert;
 	};
+	public function entry_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->entry_id = $val;
+		return $this->entry_id;
+	};
+	public function category_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->category_id = $val;
+		return $this->category_id;
+	};
 	
 	//fonctions utiles seulement pour la construction de la classe
 	private function set_ress_id ($val = null){
@@ -83,6 +93,14 @@ class Ressource
 	private function set_ress_alert ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->alert = $val;
 		return $this->alert;
+	};
+	public function set_ress_entry_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->entry_id = $val;
+		return $this->entry_id;
+	};
+	public function set_ress_category_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->category_id = $val;
+		return $this->category_id;
 	};
 	
 }

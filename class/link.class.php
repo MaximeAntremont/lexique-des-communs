@@ -58,6 +58,10 @@ class Link
 		if(isset($val) && is_numeric($val)) $this->type = $val;
 		return $this->type;
 	};
+	public function entry_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->entry_id = $val;
+		return $this->entry_id;
+	};
 	
 	//fonctions utiles seulement pour la construction de la classe
 	private function set_link_id ($val = null){
@@ -83,6 +87,10 @@ class Link
 	private function set_link_type ($val = null){
 		if(isset($val) && is_numeric($val)) $this->type = $val;
 		return $this->type;
+	};
+	public function set_link_entry_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->entry_id = $val;
+		return $this->entry_id;
 	};
 	
 }
