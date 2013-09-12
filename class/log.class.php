@@ -41,6 +41,10 @@ class Log
 		if(!empty($val) && is_string($val) && strlen($val) <= 5000) $this->val = $val;
 		return $this->val;
 	};
+	public function entry_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->entry_id = $val;
+		return $this->entry_id;
+	};
 	public function create_date ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->create_date = $val;
 		return $this->create_date;
@@ -62,6 +66,10 @@ class Log
 	private function set_log_val ($val = null){
 		if(!empty($val) && is_string($val) && strlen($val) <= 5000) $this->val = $val;
 		return $this->val;
+	};
+	public function set_log_entry_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->entry_id = $val;
+		return $this->entry_id;
 	};
 	private function set_log_create_date ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->create_date = $val;
