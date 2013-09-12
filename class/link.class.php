@@ -7,6 +7,7 @@ class Link
 			$create_date,
 			$from,
 			$to,
+			$entry_id,
 			$type;
 	
 	/***************
