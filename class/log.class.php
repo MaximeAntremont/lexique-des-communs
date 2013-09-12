@@ -67,7 +67,7 @@ class Log
 		if(!empty($val) && is_string($val) && strlen($val) <= 5000) $this->val = $val;
 		return $this->val;
 	};
-	public function set_log_entry_id ($val = null){
+	private function set_log_entry_id ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->entry_id = $val;
 		return $this->entry_id;
 	};
