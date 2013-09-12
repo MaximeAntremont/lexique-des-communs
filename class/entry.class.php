@@ -19,7 +19,7 @@ class Entry
 	{
 		foreach ($donnees as $key => $value)
 		{
-			$method = preg_replace("#^entry_#", "", $key);
+			$method = 'set_'.$key;
 			if (method_exists($this, $method))
 			{
 			  $this->$method($value);
@@ -40,6 +40,20 @@ class Entry
 		return $this->val;
 	};
 	public function create_date ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->create_date = $val;
+		return $this->create_date;
+	};
+	
+	//fonctions utiles seulement pour la construction de la classe
+	private function set_entry_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->id = $val;
+		return $this->id;
+	};
+	private function set_entry_val ($val = null){
+		if(isset($val) && is_string($val) && strlen($val) <= 50) $this->val = $val;
+		return $this->val;
+	};
+	private function set_entry_create_date ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->create_date = $val;
 		return $this->create_date;
 	};

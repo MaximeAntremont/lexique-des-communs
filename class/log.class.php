@@ -21,7 +21,7 @@ class Log
 	{
 		foreach ($donnees as $key => $value)
 		{
-			$method = preg_replace("#^log_#", "", $key);
+			$method = 'set_'.$key;
 			if (method_exists($this, $method))
 			{
 			  $this->$method($value);
@@ -50,6 +50,28 @@ class Log
 		return $this->ip;
 	};
 	public function type ($val = null){
+		if(isset($val) && is_numeric($val)) $this->type = $val;
+		return $this->type;
+	};
+	
+	//fonctions utiles seulement pour la construction de la classe
+	private function set_log_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->id = $val;
+		return $this->id;
+	};
+	private function set_log_val ($val = null){
+		if(!empty($val) && is_string($val) && strlen($val) <= 5000) $this->val = $val;
+		return $this->val;
+	};
+	private function set_log_create_date ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->create_date = $val;
+		return $this->create_date;
+	};
+	private function set_log_ip ($val = null){
+		if(!empty($val) && is_string($val) && strlen($val) <= 255) $this->ip = $val;
+		return $this->ip;
+	};
+	private function set_log_type ($val = null){
 		if(isset($val) && is_numeric($val)) $this->type = $val;
 		return $this->type;
 	};

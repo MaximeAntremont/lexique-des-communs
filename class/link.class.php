@@ -22,7 +22,7 @@ class Link
 	{
 		foreach ($donnees as $key => $value)
 		{
-			$method = preg_replace("#^link_#", "", $key);
+			$method = 'set_'.$key;
 			if (method_exists($this, $method))
 			{
 			  $this->$method($value);
@@ -55,6 +55,32 @@ class Link
 		return $this->to;
 	};
 	public function type ($val = null){
+		if(isset($val) && is_numeric($val)) $this->type = $val;
+		return $this->type;
+	};
+	
+	//fonctions utiles seulement pour la construction de la classe
+	private function set_link_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->id = $val;
+		return $this->id;
+	};
+	private function set_link_val ($val = null){
+		if(!empty($val) && is_string($val) && strlen($val) <= 50) $this->val = $val;
+		return $this->val;
+	};
+	private function set_link_create_date ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->create_date = $val;
+		return $this->create_date;
+	};
+	private function set_link_from ($val = null){
+		if(isset($val) && is_numeric($val) && $val > 0) $this->from = $val;
+		return $this->from;
+	};
+	private function set_link_to ($val = null){
+		if(isset($val) && is_numeric($val) && $val > 0) $this->to = $val;
+		return $this->to;
+	};
+	private function set_link_type ($val = null){
 		if(isset($val) && is_numeric($val)) $this->type = $val;
 		return $this->type;
 	};
