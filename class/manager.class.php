@@ -10,7 +10,7 @@ class Manager
 	}
 	
 	public function setDb ($val){
-		$this->_db = $db;
+		$this->_db = $val;
 	}
 	
 	
