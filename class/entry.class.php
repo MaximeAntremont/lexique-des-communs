@@ -80,6 +80,13 @@ class Entry
 		}
 	}
 	
+	public function addLink (Link $obj){
+		$this->links[] = $obj;
+	}
+	public function getLink ($val){
+		return ( is_int($val) ) ? $this->links[$val] : false;
+	}
+	
 	//fonctions utiles seulement pour la construction de la classe
 	private function set_entry_id ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->id = $val;
@@ -103,13 +110,5 @@ class Entry
 			"val: ".$this->val()."<br/>".
 			"create_date: ".$this->create_date();
 	}
-	
-	/*
-	
-		TODO permettre l'ajout de ressources
-		TODO système de navigation dans les ressources (recherche, fetch, reset/place cursor, ...)
-		TODO développer le manager global gérant tout d'un coup (moins chiant qu'un manger par classe)
-	
-	*/
 	
 }
