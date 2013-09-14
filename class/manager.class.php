@@ -103,12 +103,19 @@ class Manager
 	
 	public function sendNewCategory (Category $obj){
 		
-		$req = $this->_db->prepare('INSERT INTO category SET category_val = :val');
+		if( $this->isReadyToSend($obj) ){
 		
-		$req->bindValue(':val', $obj->val());
+			$req = $this->_db->prepare('INSERT INTO category SET category_val = :val');
+			
+			$req->bindValue(':val', $obj->val());
+			
+			$req->execute();
+			
+		}else{
+			
+			return false;
 		
-		$req->execute();
-		
+		}
 	}
 	
 	public function updateCategory (Category $obj){
@@ -136,21 +143,28 @@ class Manager
 	
 	public function sendNewLink (Link $obj){
 		
-		$req = $this->_db->prepare('INSERT INTO link SET 
-			link_val = :val,
-			link_from = :from,
-			link_to = to:,
-			link_type = :type,
-			link_entry_id = :entry_id ');
+		if( $this->isReadyToSend($obj) ){
 		
-		$req->bindValue(':val', $obj->val());
-		$req->bindValue(':from', $obj->from());
-		$req->bindValue(':to', $obj->to());
-		$req->bindValue(':type', $obj->type());
-		$req->bindValue(':entry_id', $obj->entry_id());
+			$req = $this->_db->prepare('INSERT INTO link SET 
+				link_val = :val,
+				link_from = :from,
+				link_to = to:,
+				link_type = :type,
+				link_entry_id = :entry_id ');
+			
+			$req->bindValue(':val', $obj->val());
+			$req->bindValue(':from', $obj->from());
+			$req->bindValue(':to', $obj->to());
+			$req->bindValue(':type', $obj->type());
+			$req->bindValue(':entry_id', $obj->entry_id());
+			
+			$req->execute();
 		
-		$req->execute();
+		}else{
 		
+			return false;
+			
+		}
 	}
 	
 	public function updateLink (Link $obj){
@@ -188,19 +202,26 @@ class Manager
 	
 	public function sendNewLog (Log $obj){
 		
-		$req = $this->_db->prepare('INSERT INTO log SET 
-			log_val = :val,
-			log_entry_id = :entry_id,
-			log_ip = :ip,
-			log_type = :type');
-		
-		$req->bindValue(':val', $obj->val());
-		$req->bindValue(':entry_id', $obj->entry_id());
-		$req->bindValue(':ip', $obj->ip());
-		$req->bindValue(':type', $obj->type());
-		
-		$req->execute();
-		
+		if( $this->isReadyToSend($obj) ){
+			
+			$req = $this->_db->prepare('INSERT INTO log SET 
+				log_val = :val,
+				log_entry_id = :entry_id,
+				log_ip = :ip,
+				log_type = :type');
+			
+			$req->bindValue(':val', $obj->val());
+			$req->bindValue(':entry_id', $obj->entry_id());
+			$req->bindValue(':ip', $obj->ip());
+			$req->bindValue(':type', $obj->type());
+			
+			$req->execute();
+			
+		}else{
+			
+			return false;
+			
+		}
 	}
 	
 	public function updateLog (Log $obj){
@@ -236,23 +257,30 @@ class Manager
 	
 	public function sendNewRessource (Ressource $obj){
 		
-		$req = $this->_db->prepare('INSERT INTO ressource SET 
-			ress_val = :val,
-			ress_type = :type,
-			ress_trend = :trend,
-			ress_alert = :alert,
-			ress_entry_id = :entry_id,
-			ress_category_id = :category_id');
-		
-		$req->bindValue(':val', $obj->val());
-		$req->bindValue(':type', $obj->type());
-		$req->bindValue(':trend', $obj->trend());
-		$req->bindValue(':alert', $obj->alert());
-		$req->bindValue(':entry_id', $obj->entry_id());
-		$req->bindValue(':category_id', $obj->category_id());
-		
-		$req->execute();
-		
+		if( $this->isReadyToSend($obj) ){
+			
+			$req = $this->_db->prepare('INSERT INTO ressource SET 
+				ress_val = :val,
+				ress_type = :type,
+				ress_trend = :trend,
+				ress_alert = :alert,
+				ress_entry_id = :entry_id,
+				ress_category_id = :category_id');
+			
+			$req->bindValue(':val', $obj->val());
+			$req->bindValue(':type', $obj->type());
+			$req->bindValue(':trend', $obj->trend());
+			$req->bindValue(':alert', $obj->alert());
+			$req->bindValue(':entry_id', $obj->entry_id());
+			$req->bindValue(':category_id', $obj->category_id());
+			
+			$req->execute();
+			
+		}else{
+			
+			return false;
+			
+		}
 	}
 	
 	public function updateRessource (Ressource $obj){
@@ -292,17 +320,23 @@ class Manager
 	
 	public function sendNewUser (User $obj){
 		
-		$req = $this->_db->prepare('INSERT INTO user SET 
-			user_name = :name,
-			user_pass = :pass,
-			user_type = :type');
+		if( $this->isReadyToSend($obj) ){
+			$req = $this->_db->prepare('INSERT INTO user SET 
+				user_name = :name,
+				user_pass = :pass,
+				user_type = :type');
+			
+			$req->bindValue(':name', $obj->name());
+			$req->bindValue(':pass', $obj->pass());
+			$req->bindValue(':type', $obj->type());
+			
+			$req->execute();
 		
-		$req->bindValue(':name', $obj->name());
-		$req->bindValue(':pass', $obj->pass());
-		$req->bindValue(':type', $obj->type());
-		
-		$req->execute();
-		
+		}else{
+			
+			return false;
+			
+		}
 	}
 	
 	public function updateUser (User $obj){
@@ -339,23 +373,43 @@ class Manager
 		if($obj instanceof Entry){
 			
 			$val = $obj->val();
-			return (empty($val)) ? false : true;
+			return (!empty($val)) ? true : false;
 		
 		}elseif($obj instanceof Ressource){
 		
+			$val = $obj->val();
+			$type = $obj->type();
+			$entry_id = $obj->entry_id();
+			return (!empty($val) && is_numeric($type) && is_numeric($entry_id)) ? true : false;
 		
 		}elseif($obj instanceof Link){
-		
-		
+			
+			$from = $obj->from();
+			$to = $obj->to();
+			$type = $obj->type();
+			$entry_id = $obj->entry_id();
+			return (is_numeric($from) && is_numeric($to) && is_numeric($type) && is_numeric($entry_id)) ? true : false;
+			
 		}elseif($obj instanceof User){
-		
-		
+			
+			$name = $obj->name();
+			$pass = $obj->pass();
+			$type = $obj->type();
+			return (!empty($name) && !empty($pass) && is_numeric($type)) ? true : false;
+			
 		}elseif($obj instanceof Category){
-		
-		
+			
+			$val = $obj->val();
+			return (!empty($val)) ? true : false;
+			
 		}elseif($obj instanceof Log){
-		
-		
+			
+			$val = $obj->val();
+			$entry_id = $obj->entry_id();
+			$ip = $obj->ip();
+			$type = $obj->type();
+			return (!empty($val) && is_numeric($entry_id) && is_numeric($ip) && is_numeric($type) ) ? true : false;
+			
 		}else{
 		
 			return false;
