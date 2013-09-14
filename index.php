@@ -76,7 +76,23 @@
 						
 					}
 				?>
-				<label>Entry ID<input type="text" name="ress_entry_id" /></label><br />
+				<label>Entry<select name="ress_entry_id">
+				<?php
+					$manager = new Manager(getConnection());
+					
+					if(!$manager->isHS()){
+					
+						$all = $manager->getEntryAll();
+						
+						foreach($all as $entry){
+							echo '<option value="'.$entry->id().'">'.$entry->val().'</option>';
+						}
+						
+						echo "<br/>";
+						
+					}
+				?>
+				</select></label><br />
 				<label>Category ID<input type="text" name="ress_category_id" /></label><br />
 				<label>Type<select name="ress_type">
 					<option value="100">vidéo</option>
@@ -108,9 +124,55 @@
 						
 					}
 				?>
-				<label>Entry ID<input type="text" name="link_entry_id" /></label><br />
-				<label>From<input type="text" name="link_from" /></label><br />
-				<label>To<input type="text" name="link_to" /></label><br />
+				<label>Entry<select name="link_entry_id">
+				<?php
+					$manager = new Manager(getConnection());
+					
+					if(!$manager->isHS()){
+					
+						$all = $manager->getEntryAll();
+						
+						foreach($all as $entry){
+							echo '<option value="'.$entry->id().'">'.$entry->val().'</option>';
+						}
+						
+						echo "<br/>";
+						
+					}
+				?>
+				</select></label><br />
+				<label>From<select name="link_from" />
+				<?php
+					if(!$manager->isHS()){
+					
+						$all = $manager->getRessourceAll();
+						
+						foreach($all as $ress){
+							
+							echo '<option value="'.$ress->id().'">'.$ress->id().'</option>';
+							
+						}
+						
+						echo "<br/>";
+						
+					}
+				?></select><br />
+				<label>To<select name="link_to" />
+				<?php
+					if(!$manager->isHS()){
+					
+						$all = $manager->getRessourceAll();
+						
+						foreach($all as $ress){
+							
+							echo '<option value="'.$ress->id().'">'.$ress->id().'</option>';
+							
+						}
+						
+						echo "<br/>";
+						
+					}
+				?></select><br />
 				<label>Value<input type="text" name="link_val" /></label><br />
 				<label>Type<select name="link_type">
 					<option value="000" selected>Rien</option>
