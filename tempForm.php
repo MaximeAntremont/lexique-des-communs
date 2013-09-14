@@ -24,7 +24,7 @@ if($db = getConnection()){
 	
 	if(!$manager->isEntrySet($entry)) $manager->sendNewEntry($entry);
 	$manager->sendNewRessource($ressource);
-	if(!$manager->isLinkSet($link)) $manager->sendNewLink($link);
+	$manager->sendNewLink($link);
 	
 }
 
