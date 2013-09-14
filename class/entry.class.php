@@ -6,6 +6,9 @@ class Entry
 			$val,
 			$create_date;
 	
+	public  $ressources,
+			$links;
+	
 	/***************
 	 * CONSTRUCTOR
 	 ***************/
@@ -42,6 +45,39 @@ class Entry
 	public function create_date ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->create_date = $val;
 		return $this->create_date;
+	}
+	public function ressources ($val = null){
+		if( is_array($val) ) $this->ressources = $val;
+		return $this->ressources;
+	}
+	public function links ($val = null){
+		if( is_array($val) ) $this->links = $val;
+		return $this->links;
+	}
+	
+	public function addRessource (Ressource $obj){
+		$this->ressources[] = $obj;
+	}
+	public function getRessource ($val, $regex = null){
+		if( is_int($val) ) return $this->ressources[$val];
+		elseif( is_string($val) ){
+		
+			$results = array();
+			foreach($this->ressources as $ress){
+			
+				if($regex == true){
+					if(preg_match($val, $ress->val()))
+						$results[] = $ress;
+				}else{
+					if($val == $ress->val()) return $ress;
+				}
+				
+			}
+			return $results;
+			
+		}else{
+			return false;
+		}
 	}
 	
 	//fonctions utiles seulement pour la construction de la classe
