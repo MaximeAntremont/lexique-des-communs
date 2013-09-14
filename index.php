@@ -136,11 +136,10 @@
 							echo '<option value="'.$entry->id().'">'.$entry->val().'</option>';
 						}
 						
-						echo "<br/>";
-						
 					}
 				?>
 				</select></label><br />
+				
 				<label>From<select name="link_from" >
 				<?php
 					if(!$manager->isHS()){
@@ -151,12 +150,10 @@
 							
 							echo '<option value="'.$ress->id().'">'.$ress->id().'</option>';
 							
-						}
-						
-						echo "<br/>";
-						
+						}						
 					}
-				?></select><br />
+				?></select></label><br />
+				
 				<label>To<select name="link_to" >
 				<?php
 					if(!$manager->isHS()){
@@ -172,7 +169,8 @@
 						echo "<br/>";
 						
 					}
-				?></select><br />
+				?></select></label><br />
+				
 				<label>Value<input type="text" name="link_val" /></label><br />
 				<label>Type<select name="link_type">
 					<option value="000" selected>Rien</option>
