@@ -141,7 +141,7 @@
 					}
 				?>
 				</select></label><br />
-				<label>From<select name="link_from" />
+				<label>From<select name="link_from" >
 				<?php
 					if(!$manager->isHS()){
 					
@@ -157,7 +157,7 @@
 						
 					}
 				?></select><br />
-				<label>To<select name="link_to" />
+				<label>To<select name="link_to" >
 				<?php
 					if(!$manager->isHS()){
 					
