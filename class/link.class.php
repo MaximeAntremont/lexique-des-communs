@@ -98,6 +98,12 @@ class Link
 	 * Diverses fonctions
 	 *********************/
 	
+	public function isPathValid (){
+		
+		return ( $this->from == $this->to ) ? false : true;
+		
+	}
+	
 	public function __toString (){
 		return "id: ".$this->id()."<br/>".
 			"val: ".$this->val()."<br/>".

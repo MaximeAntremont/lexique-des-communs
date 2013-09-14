@@ -450,7 +450,7 @@ class Manager
 			$to = $obj->to();
 			$type = $obj->type();
 			$entry_id = $obj->entry_id();
-			return (is_numeric($from) && is_numeric($to) && is_numeric($type) && is_numeric($entry_id)) ? true : false;
+			return (is_numeric($from) && is_numeric($to) && is_numeric($type) && is_numeric($entry_id) && $obj->isPathValid()) ? true : false;
 			
 		}elseif($obj instanceof User){
 			
