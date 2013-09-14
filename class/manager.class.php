@@ -13,10 +13,13 @@ class Manager
 		$this->_db = $val;
 	}
 	
+	public function isHS (){
+		return (empty($this->_db)) ? true : false;
+	}
 	
 	
-	/********
-	***********
+	/**************************************************************************
+	***************************************************************************
 	**	ENTRY PART
 	***********
 	*********/
@@ -84,9 +87,8 @@ class Manager
 		
 	}
 	
-	
 	//isEntry...
-	public function isEntrySet ($entry){
+	public function isEntrySet (Entry $entry){
 		
 		$req = $this->_db->query('SELECT entry_id FROM entry WHERE entry_val = "'.$entry->val().'"');
 		
@@ -95,8 +97,8 @@ class Manager
 	}
 	
 	
-	/********
-	***********
+	/***************************************************************************
+	***************************************************************************
 	**	CATEGORY PART
 	***********
 	*********/
@@ -135,8 +137,8 @@ class Manager
 	
 	
 	
-	/********
-	***********
+	/**************************************************************************
+	***************************************************************************
 	**	LINK PART
 	***********
 	*********/
@@ -148,9 +150,9 @@ class Manager
 			$req = $this->_db->prepare('INSERT INTO link SET 
 				link_val = :val,
 				link_from = :from,
-				link_to = to:,
+				link_to = :to,
 				link_type = :type,
-				link_entry_id = :entry_id ');
+				link_entry_id = :entry_id');
 			
 			$req->bindValue(':val', $obj->val());
 			$req->bindValue(':from', $obj->from());
@@ -188,14 +190,50 @@ class Manager
 		
 	}
 	
-	public function getLink (){
+	public function getLinkAll (){
+		
+		$links = array();
+		
+		$req = $this->_db->query('SELECT * FROM link');
+		
+		while($don = $req->fetch()){
+			$links[] = new Link($don);
+		}
+		
+		return $links;
+		
+	}
+	
+	public function getLinkBy_id ($id){
+		
+		if(is_numeric($id)){
+			
+			$req = $this->_db->query('SELECT * FROM link WHERE link_id = '.$id);
+			
+			return ($don = $req->fetch()) ? new Link($don) : false;
+			
+		}else{
+			return false;
+		}
+		
+	}
+	
+	//isEntry...
+	public function isLinkSet (Link $link){
+		
+		$req = $this->_db->query('SELECT link_id FROM link WHERE 
+			link_entry_id = "'.$link->entry_id().'"'.
+			'AND link_from = "'.$link->from().'"'.
+			'AND link_to = "'.$link->to().'"');
+		
+		return ($don = $req->fetch()) ? true : false;
 		
 	}
 	
 	
 	
-	/********
-	***********
+	/**************************************************************************
+	***************************************************************************
 	**	LOG PART
 	***********
 	*********/
@@ -249,8 +287,8 @@ class Manager
 	
 	
 	
-	/********
-	***********
+	/**************************************************************************
+	***************************************************************************
 	**	RESSOURCE PART
 	***********
 	*********/
@@ -306,14 +344,38 @@ class Manager
 		
 	}
 	
-	public function getRessource (){
+	public function getRessourceAll (){
+		
+		$ressources = array();
+		
+		$req = $this->_db->query('SELECT * FROM ressource');
+		
+		while($don = $req->fetch()){
+			$ressources[] = new Ressource($don);
+		}
+		
+		return $ressources;
+		
+	}
+	
+	public function getRessourceBy_id ($id){
+		
+		if(is_numeric($id)){
+			
+			$req = $this->_db->query('SELECT * FROM ressource WHERE ress_id = '.$id);
+			
+			return ($don = $req->fetch()) ? new Ressource($don) : false;
+			
+		}else{
+			return false;
+		}
 		
 	}
 	
 	
 	
-	/********
-	***********
+	/**************************************************************************
+	***************************************************************************
 	**	USER PART
 	***********
 	*********/
@@ -362,8 +424,8 @@ class Manager
 	
 	
 	
-	/********
-	***********
+	/**************************************************************************
+	***************************************************************************
 	**	CHECK FUNCTIONS
 	***********
 	*********/
