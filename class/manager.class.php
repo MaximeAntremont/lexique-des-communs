@@ -21,31 +21,78 @@ class Manager
 	***********
 	*********/
 	
+	//setter
 	public function sendNewEntry (Entry $obj){
+		if( $this->isReadyToSend($obj) ){
 		
-		$req = $this->_db->prepare('INSERT INTO entry SET entry_val = :val');
-		
-		$req->bindValue(':val', $obj->val());
-		
-		$req->execute();
+			$req = $this->_db->prepare('INSERT INTO entry SET entry_val = :val');
+			
+			$req->bindValue(':val', $obj->val());
+			
+			$req->execute();
+			
+		}else{
+			return false;
+		}
 		
 	}
 	
+	//getters
 	public function updateEntry (Entry $obj){
+		$tempVal = $obj->val();
+		$tempId = $obj->id();
+		if( !empty($tempVal) && !empty($tempId) && is_numeric($tempId) ){
 		
-		$req = $this->_db->prepare('UPDATE entry SET entry_val = :val WHERE entry_id = :id');
+			$req = $this->_db->prepare('UPDATE entry SET entry_val = :val WHERE entry_id = :id');
+			
+			$req->bindValue(':id', $obj->id());
+			$req->bindValue(':val', $obj->val());
+			
+			$req->execute();
+		}else{
+			return false;
 		
-		$req->bindValue(':id', $obj->id());
-		$req->bindValue(':val', $obj->val());
-		
-		$req->execute();
+		}
 		
 	}
 	
-	public function getEntry (){
+	public function getEntryAll (){
+		
+		$entrys = array();
+		
+		$req = $this->_db->query('SELECT * FROM entry');
+		
+		while($don = $req->fetch()){
+			$entrys[] = new Entry($don);
+		}
+		
+		return $entrys;
 		
 	}
 	
+	public function getEntryBy_id ($id){
+		
+		if(is_numeric($id)){
+			
+			$req = $this->_db->query('SELECT * FROM entry WHERE entry_id = '.$id);
+			
+			return ($don = $req->fetch()) ? new Entry($don) : false;
+			
+		}else{
+			return false;
+		}
+		
+	}
+	
+	
+	//isEntry...
+	public function isEntrySet ($entry){
+		
+		$req = $this->_db->query('SELECT entry_id FROM entry WHERE entry_val = "'.$entry->val().'"');
+		
+		return ($don = $req->fetch()) ? true : false;
+		
+	}
 	
 	
 	/********
@@ -280,4 +327,40 @@ class Manager
 	}
 	
 	
+	
+	/********
+	***********
+	**	CHECK FUNCTIONS
+	***********
+	*********/
+	
+	public function isReadyToSend ($obj){
+		
+		if($obj instanceof Entry){
+			
+			$val = $obj->val();
+			return (empty($val)) ? false : true;
+		
+		}elseif($obj instanceof Ressource){
+		
+		
+		}elseif($obj instanceof Link){
+		
+		
+		}elseif($obj instanceof User){
+		
+		
+		}elseif($obj instanceof Category){
+		
+		
+		}elseif($obj instanceof Log){
+		
+		
+		}else{
+		
+			return false;
+		
+		}
+		
+	}
 }
