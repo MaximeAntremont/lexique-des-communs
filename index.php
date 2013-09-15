@@ -16,27 +16,49 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Formulaire d'ajout temporaire</title>
 		<style type="text/css">
-			fieldset{
-				width: 250px;
+			*{
+				margin: 0;
+				padding: 0;
+				font-family: sans-serif;
+			}
+			body{
+				background: rgb(250,250,250);
+			}
+			form{
+				display: none;
 			}
 			
-			label{
-				display: block;
+			.window{
+				width: 300px;
+				padding: 10px;
+				margin: 0 auto;
+				margin-top: 200px;
+				min-height: 10px;
 			}
-			
-			input[type="text"]{
-				float: right;
+			.window form{
+				width: 100%;
+				display: inline-block;
+			}
+			h1{
+				font-size: 22px;
 			}
 		</style>
 	</head>
 	<body>
 		
+		<div class="window" >
+			<h1 style="text-align:center;" >Bienvenue !</h1>
+			<p>
+				Vous êtes sur la page d'index. Cliquez sur suivant pour accéder à plus d'options !
+			</p>
+			<form action="entry.test.php"><input type="submit" value="suivant" /></form>
+		</div>
 		
 		<form action="tempForm.php" method="POST" >
 			<fieldset>
 				<legend>Entry</legend>
 				<?php
-					$manager = new Manager(getConnection());
+					$manager = new Manager(null);
 					
 					if(!$manager->isHS()){
 					
@@ -78,7 +100,6 @@
 				?>
 				<label>Entry<select name="ress_entry_id">
 				<?php
-					$manager = new Manager(getConnection());
 					
 					if(!$manager->isHS()){
 					
@@ -125,9 +146,7 @@
 					}
 				?>
 				<label>Entry<select name="link_entry_id">
-				<?php
-					$manager = new Manager(getConnection());
-					
+				<?php					
 					if(!$manager->isHS()){
 					
 						$all = $manager->getEntryAll();
