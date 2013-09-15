@@ -114,6 +114,17 @@ class Manager
 		
 	}
 	
+	public function getEntryByLetter ($letter){
+		$entries = array();
+		$req = $this->_db->query('SELECT * FROM entry WHERE entry_val LIKE "'.$letter.'%"');
+		
+		while($don = $req->fetch()){
+			$entries[] = new Entry($don);
+		}
+		
+		return $entries;
+	}
+	
 	//isEntry...
 	public function isEntrySet (Entry $entry){
 		
