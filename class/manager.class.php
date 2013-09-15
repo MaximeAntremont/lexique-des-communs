@@ -114,15 +114,26 @@ class Manager
 		
 	}
 	
-	public function getEntryByLetter ($letter){
-		$entries = array();
-		$req = $this->_db->query('SELECT * FROM entry WHERE entry_val LIKE "'.$letter.'%"');
+	public function getEntryBy_mySelf ($myRequest, $withRessources = null, $withLinks = null){
 		
-		while($don = $req->fetch()){
-			$entries[] = new Entry($don);
+		if(is_string($myRequest) && !empty($myRequest)){
+			
+			$entrys = array();
+			$req = $this->_db->query('SELECT * FROM entry WHERE '.$myRequest);
+			
+			while($don = $req->fetch()){
+				$tempEntry = new Entry($don);
+				$tempEntry->ressources( ($withRessources == true)?$this->getRessourceBy_entry_id($tempEntry->id()):null );
+				$tempEntry->links( ($withRessources == true)?$this->getLinksBy_entry_id($tempEntry->id()):null );
+				$entrys[] = $tempEntry;
+			}
+			
+			return $entrys;
+			
+		}else{
+			return false;
 		}
 		
-		return $entries;
 	}
 	
 	//isEntry...
