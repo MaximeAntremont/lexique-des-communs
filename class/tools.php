@@ -18,7 +18,7 @@
 		
 		if($letter != 'AA'){
 			foreach($entries as $entry){
-				if(strpos($entry->val(), $letter) === 0 && isset($isWritten[$letter]) && $isWritten[$letter] == false){
+				if((strpos($entry->val(), $letter) === 0 || strpos($entry->val(), strtolower($letter)) === 0) && isset($isWritten[$letter]) && $isWritten[$letter] == false){
 					echo('<a '.((strpos($selected,$letter) === 0)?'class="selected"':'').' href="visualisation.php?letter='.$letter.'">'.$letter.'</a>'.(($letter == 'Z')?'':'-'));
 					$isWritten[$letter] = true;
 					$letter++;
