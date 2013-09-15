@@ -34,6 +34,8 @@ class Manager
 			
 			$req->execute();
 			
+			return true;
+			
 		}else{
 			return false;
 		}
@@ -59,7 +61,7 @@ class Manager
 		
 	}
 	
-	public function getEntryAll (){
+	public function getEntryAll ($ressource = null, $link = null){
 		
 		$entrys = array();
 		
@@ -67,6 +69,12 @@ class Manager
 		
 		while($don = $req->fetch()){
 			$entrys[] = new Entry($don);
+		}
+		
+		if($ressource == true){
+			
+			
+			
 		}
 		
 		return $entrys;
@@ -113,6 +121,8 @@ class Manager
 			
 			$req->execute();
 			
+			return true;
+			
 		}else{
 			
 			return false;
@@ -131,7 +141,31 @@ class Manager
 		
 	}
 	
-	public function getCategory (){
+	public function getCategoryAll (){
+		
+		$categorys = array();
+		
+		$req = $this->_db->query('SELECT * FROM category');
+		
+		while($don = $req->fetch()){
+			$categorys[] = new Category($don);
+		}
+		
+		return $categorys;
+		
+	}
+	
+	public function getCategoryBy_id ($id){
+		
+		if(is_numeric($id)){
+			
+			$req = $this->_db->query('SELECT * FROM category WHERE category_id = '.$id);
+			
+			return ($don = $req->fetch()) ? new Category($don) : false;
+			
+		}else{
+			return false;
+		}
 		
 	}
 	
@@ -162,6 +196,8 @@ class Manager
 			
 			$req->execute();
 		
+			return true;
+			
 		}else{
 		
 			return false;
@@ -218,6 +254,25 @@ class Manager
 		
 	}
 	
+	public function getLinkBy_entry_id ($id){
+		
+		if(is_numeric($id)){
+			
+			$links = array();
+			$req = $this->_db->query('SELECT * FROM link WHERE link_entry_id = '.$id);
+			
+			while($don = $req->fetch()){
+				$links[] = new Link($don);
+			}
+			
+			return $links;
+			
+		}else{
+			return false;
+		}
+		
+	}
+	
 	//isEntry...
 	public function isLinkSet (Link $link){
 		
@@ -254,6 +309,8 @@ class Manager
 			$req->bindValue(':type', $obj->type());
 			
 			$req->execute();
+			
+			return true;
 			
 		}else{
 			
@@ -314,6 +371,8 @@ class Manager
 			
 			$req->execute();
 			
+			return true;
+			
 		}else{
 			
 			return false;
@@ -372,6 +431,25 @@ class Manager
 		
 	}
 	
+	public function getRessourceBy_entry_id ($id){
+		
+		if(is_numeric($id)){
+			
+			$ressources = array();
+			$req = $this->_db->query('SELECT * FROM ressource WHERE ress_entry_id = '.$id);
+			
+			while($don = $req->fetch()){
+				$ressources[] = new Ressource($don);
+			}
+			
+			return $ressources;
+			
+		}else{
+			return false;
+		}
+		
+	}
+	
 	
 	
 	/**************************************************************************
@@ -394,6 +472,8 @@ class Manager
 			
 			$req->execute();
 		
+			return true;
+			
 		}else{
 			
 			return false;
