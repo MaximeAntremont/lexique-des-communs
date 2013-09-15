@@ -23,7 +23,7 @@
 			
 				$tempVal = $entry->val();
 				if(  strtoupper($tempVal[0]) === $letter && isset($isWritten[$letter]) && $isWritten[$letter] == false){ //pourquoi avoir mit un "isset($isWritten[$letter])" ? Si "$isWritten[$letter]" n'est pas fait, ceci n'est-il pas égal à false ?
-					echo('<a '.((strpos($selected,$letter) === 0)?'class="selected"':'').' href="visualisation.php?letter='.$letter.'">'.$letter.'</a>'.(($letter == 'Z')?'':'-'));
+					echo('<a '.((strpos($selected,$letter) === 0)?'class="selected"':'').' href="visualisation.php?letter='.$letter.'">'.$letter.'</a>'.(($letter == 'Z')?'':''));
 					$isWritten[$letter] = true;
 					$letter++;
 				}
@@ -31,7 +31,7 @@
 			}
 			
 			if(isset($isWritten[$letter]) && $isWritten[$letter] == false){
-				echo('<span>'.$letter.'</span>'.(($letter == 'Z')?'':'-'));
+				echo('<span>'.$letter.'</span>'.(($letter == 'Z')?'':''));
 				$isWritten[$letter] = true;
 				$letter++;
 			}
