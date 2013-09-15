@@ -2,12 +2,12 @@
 
 class Entry 
 {
-	private $id,
-			$val,
-			$create_date;
+	private $id = null,
+			$val = null,
+			$create_date = null;
 	
-	public  $ressources,
-			$links;
+	public  $ressources = null,
+			$links = null;
 	
 	/***************
 	 * CONSTRUCTOR
@@ -113,28 +113,28 @@ class Entry
 	
 	public function getArray (){
 		
-		$dataLinks = array();
+		$dataLinks = null;
 		if($this->links())
 			foreach($this->links() as $link){
 				$dataLinks[] = $link->getArray();
 			}
 		
-		$dataRessources = array();
+		$dataRessources = null;
 		if($this->ressources())
 			foreach($this->ressources() as $ress){
 				$dataRessources[] = $ress->getArray();
 			}
-		
+			
 		$dataEntry = array( 
 			"id" => $this->id(),
-			"val" => $this->val(),
-			"create_date" => $this->val(),
-			"ressources" => $dataRessources,
-			"links" => $dataLinks
+			"val" => $this->val()
+			// "create_date" => "1",
+			// "ressources" => $dataRessources,
+			// "links" => $dataLinks
 		);
 		
 		return $dataEntry;
-		
+		// return array("me");
 	}
 	
 }

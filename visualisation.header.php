@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	include_once('../config.php');
 	include_once('config.php');
 	include_once('class/tools.php');
@@ -15,5 +15,6 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="css/visualisation.css" type="text/css">
+		<script src="utils/jquery.js"></script>
 	</head>
 	<body>

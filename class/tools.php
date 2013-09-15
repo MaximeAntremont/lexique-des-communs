@@ -44,7 +44,7 @@
 			echo('<br /><h1>'.$selectableEntries[0]->val().'</h1>');
 			echo('<ul>');
 			foreach($selectableEntries as $selectableEntry){
-				echo('<li>'.$selectableEntry -> val().'</li>');
+				echo('<li class="entryClick" id="id'. $selectableEntry->id() .'" >'.$selectableEntry -> val().'</li>');
 			}
 			echo('</ul>');
 			

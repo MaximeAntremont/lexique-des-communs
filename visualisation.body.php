@@ -1,4 +1,4 @@
-		<div id="background" ></div>
+﻿		<div id="background" ></div>
 		<div id='view'>
 			<span id='index-bar' class='bar'>
 				<?php
@@ -10,3 +10,4 @@
 			<span id='bottom-pan' class='panel'></span>
 			<canvas></canvas>
 		</div>
+		<div id="test"></div>
