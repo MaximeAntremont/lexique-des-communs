@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class Manager
 {
@@ -27,14 +27,24 @@ class Manager
 	//setter
 	public function sendNewEntry (Entry $obj){
 		if( $this->isReadyToSend($obj) ){
-		
+			
+			$log = new Log();
+			
 			$req = $this->_db->prepare('INSERT INTO entry SET entry_val = :val');
 			
 			$req->bindValue(':val', $obj->val());
 			
-			$req->execute();
+			if($req->execute()){
 			
-			return true;
+				$log->type(201);
+				$log->ip($_SERVER['REMOTE_ADDR']);
+				$log->val("NO IDEA OF THE CONTENT TO PUT HERE");
+				$log->entry_id( $this->_db->lastInsertId() );
+				
+				$this->sendNewLog($log);
+				return true;
+				
+			}else{return false;}
 			
 		}else{
 			return false;
@@ -151,9 +161,32 @@ class Manager
 	}
 	
 	public function getCategoryAll ($filter = null){
+	
 		$categorys = array();
+		$reqFilter = null;
 		
-		$req = $this->_db->query('SELECT * FROM category' . (($filter != null)?(' WHERE category_id != ' . $filter) : ''));
+		//gestion du filtre
+		if(is_array($filter)){
+			
+			$i = true;
+			foreach($filter as $key => $val){
+				
+				if($i && is_numeric($val)){ //pour éviter un "WHERE AND ..."
+					$reqFilter .= "category_id != '" . $val . "'";
+					$i = false;
+				}elseif(is_numeric($val))
+					$reqFilter .= " AND category_id != '" . $val . "'";
+					
+			}
+			
+		}elseif(is_numeric($filter)){
+			
+			$reqFilter .= "category_id != '" . $filter . "'";
+			
+		}
+		
+		//requête
+		$req = $this->_db->query('SELECT * FROM category' . (($filter != null)?(' WHERE ' . $reqFilter): ''));
 		
 		while($don = $req->fetch()){
 			$categorys[] = new Category($don);
@@ -301,14 +334,14 @@ class Manager
 	*********/
 	
 	public function sendNewLog (Log $obj){
-		
 		if( $this->isReadyToSend($obj) ){
 			
 			$req = $this->_db->prepare('INSERT INTO log SET 
+				log_type = :type,
 				log_val = :val,
-				log_entry_id = :entry_id,
 				log_ip = :ip,
-				log_type = :type');
+				log_entry_id = :entry_id
+				');
 			
 			$req->bindValue(':val', $obj->val());
 			$req->bindValue(':entry_id', $obj->entry_id());
@@ -358,8 +391,9 @@ class Manager
 	*********/
 	
 	public function sendNewRessource (Ressource $obj){
-		
 		if( $this->isReadyToSend($obj) ){
+			
+			$log = new Log();
 			
 			$req = $this->_db->prepare('INSERT INTO ressource SET 
 				ress_val = :val,
@@ -376,9 +410,17 @@ class Manager
 			$req->bindValue(':entry_id', $obj->entry_id());
 			$req->bindValue(':category_id', $obj->category_id());
 			
-			$req->execute();
+			if($req->execute()){
 			
-			return true;
+				$log->type(202);
+				$log->ip($_SERVER['REMOTE_ADDR']);
+				$log->val("NO IDEA OF THE CONTENT TO PUT HERE");
+				$log->entry_id($obj->entry_id());
+				
+				$this->sendNewLog($log);
+				return true;
+				
+			}else{return false;}
 			
 		}else{
 			
@@ -557,7 +599,7 @@ class Manager
 			$entry_id = $obj->entry_id();
 			$ip = $obj->ip();
 			$type = $obj->type();
-			return (!empty($val) && is_numeric($entry_id) && is_numeric($ip) && is_numeric($type) ) ? true : false;
+			return (!empty($val) && is_numeric($entry_id) && !empty($ip) && is_numeric($type) ) ? true : false;
 			
 		}else{
 		
