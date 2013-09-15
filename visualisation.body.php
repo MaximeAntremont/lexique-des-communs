@@ -2,7 +2,7 @@
 			<span id='index-bar' class='bar'>
 				<?php
 					$entries = $manager -> getEntryAll();				
-					drawIndex();
+					drawIndex(((isset($_GET['letter']))?$_GET['letter']:null));
 				?>
 			</span>
 			<span id='left-pan' class='panel'></span>
