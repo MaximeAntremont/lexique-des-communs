@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class Manager
 {
@@ -151,9 +151,32 @@ class Manager
 	}
 	
 	public function getCategoryAll ($filter = null){
+	
 		$categorys = array();
+		$reqFilter = null;
 		
-		$req = $this->_db->query('SELECT * FROM category' . (($filter != null)?(' WHERE category_id != ' . $filter) : ''));
+		//gestion du filtre
+		if(is_array($filter)){
+			
+			$i = true;
+			foreach($filter as $key => $val){
+				
+				if($i && is_numeric($val)){ //pour éviter un "WHERE AND ..."
+					$reqFilter .= "category_id != '" . $val . "'";
+					$i = false;
+				}elseif(is_numeric($val))
+					$reqFilter .= " AND category_id != '" . $val . "'";
+					
+			}
+			
+		}elseif(is_numeric($filter)){
+			
+			$reqFilter .= "category_id != '" . $filter . "'";
+			
+		}
+		
+		//requête
+		$req = $this->_db->query('SELECT * FROM category' . (($filter != null)?(' WHERE ' . $reqFilter): ''));
 		
 		while($don = $req->fetch()){
 			$categorys[] = new Category($don);
