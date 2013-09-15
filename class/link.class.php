@@ -114,4 +114,20 @@ class Link
 			"entry_id: ".$this->entry_id();
 	}
 	
+	public function getArray (){
+		
+		$dataLink = array(
+			"id" => $this->id(),
+			"val" => $this->val(),
+			"create_date" => $this->create_date(),
+			"from" => $this->from(),
+			"to" => $this->to(),
+			"type" => $this->type(),
+			"entry_id" => $this->entry_id()
+		);
+		
+		return $dataLink;
+		
+	}
+	
 }

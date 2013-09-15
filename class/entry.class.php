@@ -111,4 +111,30 @@ class Entry
 			"create_date: ".$this->create_date();
 	}
 	
+	public function getArray (){
+		
+		$dataLinks = array();
+		if($this->links())
+			foreach($this->links() as $link){
+				$dataLinks[] = $link->getArray();
+			}
+		
+		$dataRessources = array();
+		if($this->ressources())
+			foreach($this->ressources() as $ress){
+				$dataRessources[] = $ress->getArray();
+			}
+		
+		$dataEntry = array( 
+			"id" => $this->id(),
+			"val" => $this->val(),
+			"create_date" => $this->val(),
+			"ressources" => $dataRessources,
+			"links" => $dataLinks
+		);
+		
+		return $dataEntry;
+		
+	}
+	
 }

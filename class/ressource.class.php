@@ -118,4 +118,21 @@ class Ressource
 			"category_id: ".$this->category_id();
 	}
 	
+	public function getArray (){
+		
+		$dataRessource= array(
+			"id" => $this->id(),
+			"val" => $this->val(),
+			"create_date" => $this->create_date(),
+			"type" => $this->type(),
+			"trend" => $this->trend(),
+			"alert" => $this->alert(),
+			"entry_id" => $this->entry_id(),
+			"category_id" => $this->category_id()
+		);
+		
+		return $dataRessource;
+		
+	}
+	
 }
