@@ -30,4 +30,4 @@ if($db = getConnection()){
 	
 }
 
-// header("location: entry.test.php");
+header("location: entry.test.php");
