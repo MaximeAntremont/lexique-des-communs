@@ -10,3 +10,26 @@
 			return false;
 		}
 	}
+	
+	function drawIndex($letter = 'A', $isWritten = array()){
+		$isWritten[$letter] = false;
+		global $entries;
+		
+		if($letter != 'AA'){
+			foreach($entries as $entry){
+				if(strpos($entry->val(), $letter) === 0 && isset($isWritten[$letter]) && $isWritten[$letter] == false){
+					echo('<a href="">'.$letter.'</a>'.(($letter == 'Z')?'':'-'));
+					$isWritten[$letter] = true;
+					$letter++;
+				}
+			}
+			
+			if(isset($isWritten[$letter]) && $isWritten[$letter] == false){
+				echo('<span>'.$letter.'</span>'.(($letter == 'Z')?'':'-'));
+				$isWritten[$letter] = true;
+				$letter++;
+			}
+				
+			drawIndex($letter);
+		}
+	}
