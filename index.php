@@ -42,6 +42,10 @@
 			h1{
 				font-size: 22px;
 			}
+			form{
+				width: 300px;
+				float: left;
+			}
 		</style>
 	</head>
 	<body>
@@ -57,47 +61,32 @@
 		<form action="tempForm.php" method="POST" >
 			<fieldset>
 				<legend>Entry</legend>
-				<?php
-					$manager = new Manager(null);
-					
-					if(!$manager->isHS()){
-					
-						$all = $manager->getEntryAll();
-						
-						foreach($all as $entry){
-							
-							echo $entry->id()." - ".$entry->val()."<br/>";
-							
-						}
-						
-						echo "<br/>";
-						
-					}
-				?>
 				<label>Value<input type="text" name="entry_val" /></label><br />
 				<input type="Submit" />
 			</fieldset>
+			<?php
+				$manager = new Manager(getConnection());
+				
+				if(!$manager->isHS()){
+				
+					$all = $manager->getEntryAll();
+					
+					foreach($all as $entry){
+						
+						echo $entry->id()." - ".$entry->val()."<br/>";
+						
+					}
+					
+					echo "<br/>";
+					
+				}
+			?>
 		</form>
 		
 		
 		<form action="tempForm.php" method="POST" >
 			<fieldset>
 				<legend>Ressource</legend>
-				<?php
-					if(!$manager->isHS()){
-					
-						$all = $manager->getRessourceAll();
-						
-						foreach($all as $ress){
-							
-							echo $ress->id()." - ".$ress->entry_id()." - ".$ress->val()."<br/>";
-							
-						}
-						
-						echo "<br/>";
-						
-					}
-				?>
 				<label>Entry<select name="ress_entry_id">
 				<?php
 					
@@ -125,26 +114,26 @@
 				<label>Value<input type="text" name="ress_val" /></label><br />
 				<input type="Submit" />
 			</fieldset>
+			<?php
+				if(!$manager->isHS()){
+				
+					$all = $manager->getRessourceAll();
+					
+					foreach($all as $ress){
+						
+						echo $ress->id()." - ".$ress->entry_id()." - ".$ress->val()."<br/>";
+						
+					}
+					
+					echo "<br/>";
+					
+				}
+			?>
 		</form>
 		
 		<form action="tempForm.php" method="POST" >
 			<fieldset>
 				<legend>Link</legend>
-				<?php
-					if(!$manager->isHS()){
-					
-						$all = $manager->getLinkAll();
-						
-						foreach($all as $link){
-							
-							echo $link->id()." - ".$link->type()." - ".$link->from()." -> ".$link->to()." - ".$link->val()."<br/>";
-							
-						}
-						
-						echo "<br/>";
-						
-					}
-				?>
 				<label>Entry<select name="link_entry_id">
 				<?php					
 					if(!$manager->isHS()){
@@ -202,6 +191,21 @@
 				<p>Note: ajouter Alert dans Link (class)</p>
 				<input type="Submit" />
 			</fieldset>
+			<?php
+				if(!$manager->isHS()){
+				
+					$all = $manager->getLinkAll();
+					
+					foreach($all as $link){
+						
+						echo $link->id()." - ".$link->type()." - ".$link->from()." -> ".$link->to()." - ".$link->val()."<br/>";
+						
+					}
+					
+					echo "<br/>";
+					
+				}
+			?>
 		</form>
 		
 		<!--
