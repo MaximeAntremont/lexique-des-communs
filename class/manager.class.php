@@ -61,7 +61,7 @@ class Manager
 		
 	}
 	
-	public function getEntryAll ($ressource = null, $link = null){
+	public function getEntryAll (){
 		
 		$entrys = array();
 		
@@ -71,23 +71,32 @@ class Manager
 			$entrys[] = new Entry($don);
 		}
 		
-		if($ressource == true){
-			
-			
-			
-		}
-		
 		return $entrys;
 		
 	}
 	
-	public function getEntryBy_id ($id){
+	public function getEntryBy_id ($id, $ressource = null, $link = null){
 		
 		if(is_numeric($id)){
+			$entry = null;
 			
 			$req = $this->_db->query('SELECT * FROM entry WHERE entry_id = '.$id);
 			
-			return ($don = $req->fetch()) ? new Entry($don) : false;
+			if($don = $req->fetch())
+				$entry = new Entry($don);
+			else
+				return false;
+			
+			if($ressource = true){
+				
+				$entry->ressources($this->getRessourceBy_entry_id($id));
+				
+				if($link == true)
+					$entry->links($this->getLinkBy_entry_id($id));
+				
+			}
+			
+			return $entry;
 			
 		}else{
 			return false;
