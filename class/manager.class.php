@@ -141,18 +141,16 @@ class Manager
 		
 	}
 	
-	public function getCategoryAll (){
-		
+	public function getCategoryAll ($filter = null){
 		$categorys = array();
 		
-		$req = $this->_db->query('SELECT * FROM category');
+		$req = $this->_db->query('SELECT * FROM category' . (($filter != null)?(' WHERE category_id != ' . $filter) : ''));
 		
 		while($don = $req->fetch()){
 			$categorys[] = new Category($don);
 		}
 		
 		return $categorys;
-		
 	}
 	
 	public function getCategoryBy_id ($id){
