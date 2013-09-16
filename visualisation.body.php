@@ -8,6 +8,6 @@
 			</span>
 			<span id='left-pan' class='panel'></span>
 			<span id='bottom-pan' class='panel'></span>
-			<canvas></canvas>
+			<canvas id="canvas" ></canvas>
 		</div>
 		<div id="test"></div>
