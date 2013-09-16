@@ -1,4 +1,4 @@
-﻿		<div id="background" ></div>
+		<div id="background" ></div>
 		<div id='view'>
 			<span id='index-bar' class='bar'>
 				<?php

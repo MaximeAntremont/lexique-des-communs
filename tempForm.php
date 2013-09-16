@@ -10,13 +10,13 @@ include_once('class/link.class.php');
 include_once('class/user.class.php');
 include_once('class/manager.class.php');
 
-//partie pour la sécurité
+//partie pour la sÃ©curitÃ©
 foreach($_POST as $key => $val){
 	$_POST[$key] = htmlspecialchars(trim($val));
 	echo "[$key]".$val."<br/>";
 }
 
-//partie pour la création des objets
+//partie pour la crÃ©ation des objets
 $entry = new Entry($_POST);
 $ressource = new Ressource($_POST);
 $link = new Link($_POST);
