@@ -97,7 +97,7 @@ class Manager
 			else
 				return false;
 			
-			if($ressource = true){
+			if($ressource == true){
 				
 				$entry->ressources($this->getRessourceBy_entry_id($id));
 				

@@ -80,6 +80,7 @@ class Ressource
 	}
 	private function set_ress_create_date ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->create_date = $val;
+		elseif(isset($val) && is_string($val)) $this->create_date = $val;
 		return $this->create_date;
 	}
 	private function set_ress_type ($val = null){

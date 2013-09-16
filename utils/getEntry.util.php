@@ -20,7 +20,7 @@
 		
 		$entry_id = htmlspecialchars($_POST['entry_id']);
 		
-		if($entry = $manager->getEntryBy_id( $entry_id )){
+		if($entry = $manager->getEntryBy_id( $entry_id, true, true )){
 			
 			
 			echo json_encode($entry->getArray());

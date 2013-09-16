@@ -102,3 +102,8 @@ font-family: TEX;
 /*
 	END ==> Index-Bar
 */
+
+#test{
+	font-size: 12px;
+	margin-left: 150px;
+}
