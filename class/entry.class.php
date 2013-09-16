@@ -127,14 +127,13 @@ class Entry
 			
 		$dataEntry = array( 
 			"id" => $this->id(),
-			"val" => $this->val()
-			// "create_date" => "1",
-			// "ressources" => $dataRessources,
-			// "links" => $dataLinks
+			"val" => $this->val(),
+			"create_date" => $this->create_date(),
+			"ressources" => $dataRessources,
+			"links" => $dataLinks
 		);
 		
 		return $dataEntry;
-		// return array("me");
 	}
 	
 }
