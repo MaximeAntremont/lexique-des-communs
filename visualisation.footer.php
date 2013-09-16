@@ -30,8 +30,8 @@
 
 			detectScreen();
 
-			$('#canvas').attr('width', winW);
-			$('#canvas').attr('height', winH);
+			$('#canvas').attr('width', winW-30);
+			$('#canvas').attr('height', winH-30);
 			
 			$(".entryClick").click(function (){
 			
@@ -45,18 +45,36 @@
 				}).done(function(data) {
 				
 					context.clearRect(0,0,winW,winH);
-					context.textAlign = "left"
+					context.textAlign = "center"
 					context.font = '20px TEX';
 					
 					var ress = [];
 					
-					if(data.ressources != null)
+					if(data.ressources != null){
+						
+						var circle = {
+							r : (DIAGONAL/3)/2,
+							step : 2 / data.ressources.length,
+							cursor : 0,
+							center: {x: winW_m, y:winH_m}
+						}
+						
 						data['ressources'].forEach(function(obj){
-							var x = (Math.random() > 0.5) ? (Math.random()*300)+winW_m : (winW_m-(Math.random()*300));
-							var y = (Math.random() > 0.5) ? (Math.random()*300)+winH_m : (winH_m-(Math.random()*300));
+							
+							// var x = (Math.random() > 0.5) ? (Math.random()*300)+winW_m : (winW_m-(Math.random()*300));
+							// var y = (Math.random() > 0.5) ? (Math.random()*300)+winH_m : (winH_m-(Math.random()*300));
+							
+							var x = circle.center.x + (Math.cos(circle.cursor*Math.PI) * circle.r);
+							var y = circle.center.y + (Math.sin(circle.cursor*Math.PI) * circle.r);
+							
+							circle.cursor += circle.step;
+							
 							context.fillText(obj.val, x, y);
 							ress[obj.id] = {x: x, y:y};
+							
 						});
+						
+					}
 					
 					if(data.links != null)
 						data['links'].forEach(function(obj){
