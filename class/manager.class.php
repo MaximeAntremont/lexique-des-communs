@@ -417,20 +417,22 @@ class Manager
 			
 			$log = new Log();
 			
-			$req = $this->_db->prepare('INSERT INTO ressource SET 
+			$sql = 'INSERT INTO ressource SET 
 				ress_val = :val,
-				ress_type = :type,
-				ress_trend = :trend,
-				ress_alert = :alert,
-				ress_entry_id = :entry_id,
-				ress_category_id = :category_id');
+				ress_type = :type,'.
+				(($obj->trend() != null) ? 'ress_trend = :trend,' : '' ).
+				(($obj->alert() != null) ? 'ress_alert = :alert,' : '' ).
+				(($obj->category_id() != null) ? 'ress_category_id = :category_id,' : '' ).
+				'ress_entry_id = :entry_id';
+			
+			$req = $this->_db->prepare($sql);
 			
 			$req->bindValue(':val', $obj->val());
 			$req->bindValue(':type', $obj->type());
-			$req->bindValue(':trend', $obj->trend());
-			$req->bindValue(':alert', $obj->alert());
+			if($obj->trend() != null) $req->bindValue(':trend', $obj->trend());
+			if($obj->alert() != null) $req->bindValue(':alert', $obj->alert());
+			if($obj->category_id() != null) $req->bindValue(':category_id', $obj->category_id());
 			$req->bindValue(':entry_id', $obj->entry_id());
-			$req->bindValue(':category_id', $obj->category_id());
 			
 			if($req->execute()){
 			
