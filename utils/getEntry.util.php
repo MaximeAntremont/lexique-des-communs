@@ -21,9 +21,10 @@
 		$entry_id = htmlspecialchars($_POST['entry_id']);
 		
 		if($entry = $manager->getEntryBy_id( $entry_id )){
-			$arra = $entry->getArray();
-			$data = json_encode($arra);
-			echo $data;
+			
+			
+			echo json_encode($entry->getArray());
+			
 		}else{
 			
 			echo json_encode( array('error' => false) );

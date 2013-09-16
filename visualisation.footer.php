@@ -12,7 +12,7 @@
 					dataType: "json",
 					data: {entry_id: entry_id}
 				}).done(function(data) {
-					alert(data['val']);
+					alert(data['id']);
 				}).fail(function(){
 					alert("fail ?");
 				});

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /* 
 	NE SURTOUT PAS METTRE D'INFORMATION PERSONNELLE DANS CE FICHIER !!!! (ex: mot de passe)
@@ -47,7 +47,6 @@
 	);
 	
 	$ress_dico = array(
-		
 		101 => $ress_video_vimeo,
 		102 => $ress_video_youtube
 	);
