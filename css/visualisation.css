@@ -15,15 +15,10 @@ font-family: TEX;
 	font-family: TEX;
 	margin: 0;
 	padding: 0;
-	border: 0px solid grey;
 }
 
 body{
 	background: rgb(230,230,230);
-	border: 0px;
-}
-html{
-	border: 0px;
 }
 
 /*************************************************
@@ -75,8 +70,7 @@ html{
 		position: fixed;
 		top: 40px; left: 40px;
 		height: 100px;
-		width: 300px;	
-		border: 1px solid rgb(250,250,250);
+		width: 50%;	
 		z-index: 10;
 	}
 
@@ -108,7 +102,46 @@ html{
 		display: inline-block;
 		margin-right: 5px;
 	}
+
+ /*************************************************
+				  TOP_LEFT_CORNER
+ *************************************************/
 	
+	#top_left_corner #part_one{
+		float: left;
+		height: 100%;
+		border-right: 1px solid rgb(180,180,180);
+	}
+	
+	#top_left_corner #part_one h1{
+		margin-right: 15px;
+		font-size: 40px;
+		color: rgb(50,50,50);
+	}
+	
+	#top_left_corner #part_two{
+		float: left;
+		height: 100%;
+		color: rgb(150,150,150);
+	}
+	
+	#top_left_corner #part_two h3{
+		float: left;
+		margin-left: 15px;
+		font-size: 20px;
+	}
+	
+	#top_left_corner #part_two h3:hover{
+		cursor: pointer;
+		color: rgb(140,100,200);
+	}
+	
+	#top_left_corner #part_two h3 .entry_selected{
+		cursor: default;
+		color: rgb(50,50,50);
+	}
+	
+
  /*************************************************
 					CACHE_PANEL
  *************************************************/
@@ -151,81 +184,3 @@ html{
 		width: 380px;
 		height: 40px;
 	}
-	
-
-/*
-		Index-Bar
-*/
-
-#index-bar{
-	width: 100%;
-	height: 40px;
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	padding-left: 15px;
-	background: rgb(220,220,220);
-	
-	font-size: 20px;
-	font-weight: bold;
-	z-index: 10;
-	color: rgb(110,110,110);
-}
-
-#index-bar a{
-	color: rgb(20,20,20);
-	text-decoration: none;
-}
-
-#index-bar a:visited{
-	color: rgb(20,20,20);
-}
-
-#index-bar a:hover{
-	color: rgb(140,100,200);
-}
-
-#index-bar:hover{
-	cursor: default;
-}
-#index-bar span{
-	position: relative;
-	top: 3px;
-	margin-right: 4px;
-	height: 35px;
-	display: inline-block;
-}
-
-#index-bar .selected{
-	text-decoration: underline;
-}
-
-#index-bar ul{
-	border-left: solid 1px #000;
-	padding: 5px;
-	margin-left: 5px;
-	margin-top: 15px;
-}
-
-#index-bar ul,
-#index-bar h1{
-	display: inline-block;
-}
-
-#index-bar ul li{
-	list-style: none;
-}
-
-#index-bar .entryClick:hover {
-	cursor: pointer;
-	color: rgb(140,100,200);
-}
-
-/*
-	END ==> Index-Bar
-*/
-
-#test{
-	font-size: 12px;
-	margin-left: 150px;
-}

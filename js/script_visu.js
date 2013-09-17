@@ -1,4 +1,4 @@
-﻿$(function(){
+$(function(){
 	
 	var canvas = document.getElementById('canvas');
 	var context = canvas.getContext('2d');
@@ -56,6 +56,7 @@
 		dataType: "json"
 	}).done(function(data) {
 		
+		var letters = [];
 		var txt = '<div id="index">';
 		
 		if(data != null)
@@ -64,10 +65,25 @@
 					txt += '<div class="letter-on" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
 				else
 					txt += '<div class="letter-off" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
+				letters['char-'+obj['char']] = obj['select'];
 			});
 			
 		txt += "</div>";
 		$("#top_panel").append(txt);
+		
+		$(".letter-on").click(function(){
+			// var letter = this.id.replace("cahr-", "");
+			$("#top_left_corner #part_one").html("<h1>"+ letters[this.id][0]['val'] +"</h1>");
+			$("#top_left_corner #part_two").html("");
+			
+			if(letters[this.id])
+				letters[this.id].forEach(function (entry){
+					$("#top_left_corner #part_two").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
+				});
+			
+		});
+		
+		
 		cache_panel.stopWaiting(true);
 	}).fail(function (a,b,c){
 		console.debug(a+" | "+b+" | "+c);

@@ -5,12 +5,12 @@
 	<div id="left_panel"></div>
 	<div id="right_panel"></div>
 	<div id="bottom_panel"></div>
+	
 	<div id="top_left_corner">
-		<?php
-			$entries = $manager -> getEntryAll();				
-			// drawIndex(((isset($_GET['letter']))?$_GET['letter']:null));
-		?>
+		<div id="part_one" ></div>
+		<div id="part_two" ></div>
 	</div>
+	
 	<div id="cache_panel" >
 		<div style="height: 100%;vertical-align: middle;display: inline-block;" ></div>
 		<div id="middle_window">
