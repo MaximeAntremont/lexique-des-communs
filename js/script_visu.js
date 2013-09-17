@@ -28,15 +28,53 @@
 	}
 
 	detectScreen();
-	// alert(winW+" "+winH);
-	
 	$('#canvas').attr('width', winW);
 	$('#canvas').attr('height', winH);
-	// $('#canvas').css('border', '1px solid black');
 	$('#canvas').css('position', 'fixed');
 	$('#canvas').css('top', '40px');
 	$('#canvas').css('left', '40px');
 	$('#canvas').css('z-index', '5');
+	
+	$(window).resize(function (){
+		
+		detectScreen();
+		$('#canvas').attr('width', winW);
+		$('#canvas').attr('height', winH);
+		$('#canvas').css('position', 'fixed');
+		$('#canvas').css('top', '40px');
+		$('#canvas').css('left', '40px');
+		$('#canvas').css('z-index', '5');
+		
+	});
+	
+	var cache_panel = new Cache($('#cache_panel'),$('#cache_panel #header'),$('#cache_panel #content'),$('#cache_panel #footer'));
+	
+	cache_panel.startWaiting(true);
+	$.ajax({
+		type: "POST",
+		url: "utils/getIndex.util.php",
+		dataType: "json"
+	}).done(function(data) {
+		
+		var txt = '<div id="index">';
+		
+		if(data != null)
+			data.forEach(function(obj){
+				if(obj.select != null)
+					txt += '<div class="letter-on" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
+				else
+					txt += '<div class="letter-off" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
+			});
+			
+		txt += "</div>";
+		$("#top_panel").append(txt);
+		cache_panel.stopWaiting(true);
+	}).fail(function (a,b,c){
+		console.debug(a+" | "+b+" | "+c);
+	});
+	
+	
+	
 	
 	$(".entryClick").click(function (){
 	
