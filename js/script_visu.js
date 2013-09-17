@@ -3,6 +3,8 @@ $(function(){
 	var winW = 630, winH = 460;
 	var winW_m, winH_m;
 	var DIAGONAL = 600;
+	var ENTRYS = [];
+	var LETTERS = [];
 	var cache_panel = new Cache($('#cache_panel'),
 	$('#cache_panel #header'),
 	$('#cache_panel #content'),
@@ -167,6 +169,7 @@ $(function(){
 		$("#top_left_corner #part_two h3").click(function(){
 			cache_panel.startWaiting(true);
 			fetchEntryData( this.id.replace("id", ""), cache_panel.stopWaiting(true) );
+			window.location.hash = this.id.replace("id", "");
 		});
 	}
 	
@@ -177,7 +180,7 @@ $(function(){
 							REFRESH INDEX
 	*************************************************************/
 	
-	function refreshIndex(){
+	function refreshIndex(callback){
 		$.ajax({
 			type: "POST",
 			url: "utils/getIndex.util.php",
@@ -194,6 +197,10 @@ $(function(){
 					else
 						txt += '<div class="letter-off" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
 					letters['char-'+obj['char']] = obj['select'];
+					
+					LETTERS['char-'+obj['char']] = obj['select'];
+					if(obj['select'] && obj['select'].length > 0)
+						obj['select'].forEach(function(o){ENTRYS.push(o);});
 				});
 				
 			txt += '</div>';
@@ -222,7 +229,7 @@ $(function(){
 				});
 				
 			});
-			
+			if(callback) callback();
 		}).fail(function (a,b,c){
 			console.debug(a+" | "+b+" | "+c);
 		});
@@ -291,9 +298,28 @@ $(function(){
 		canvas.css('left', '40px');
 		canvas.css('z-index', '5');
 		
-		refreshIndex();
+		var noRecall = true;
+		refreshIndex(function(){
 		
-		if(callback) callback();
+			var hash = window.location.hash.substring(1);
+
+			if(hash != "" && hash > 0) {
+				if(ENTRYS != null)
+					ENTRYS.forEach(function(obj){
+						// alert(obj.id);
+						
+						if(obj.id == hash){
+							recall = false;
+							printEntrysFromLetter(LETTERS, "char-"+obj['val'].charAt(0).toUpperCase());
+							fetchEntryData(obj.id, cache_panel.stopWaiting(true));
+						}
+					});
+				
+			}
+			
+		});
+		
+		if(recall && callback) callback();
 		
 	}
 
