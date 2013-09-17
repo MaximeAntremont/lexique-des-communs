@@ -298,7 +298,7 @@ $(function(){
 		canvas.css('left', '40px');
 		canvas.css('z-index', '5');
 		
-		var noRecall = true;
+		var recall = true;
 		refreshIndex(function(){
 		
 			var hash = window.location.hash.substring(1);
