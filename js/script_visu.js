@@ -158,7 +158,7 @@ $(function(){
 						printEntrysFromLetter
 	*************************************************************/
 	function printEntrysFromLetter(letters, id){
-		$("#top_left_corner #part_one").html("<h1>"+ letters[id][0]['val'] +"</h1>");
+		$("#top_left_corner #part_one").html("<h1>"+ id.replace("char-", "") +"</h1>");
 		$("#top_left_corner #part_two").html("");
 		
 		if(letters[id])
@@ -306,8 +306,6 @@ $(function(){
 			if(hash != "" && hash > 0) {
 				if(ENTRYS != null)
 					ENTRYS.forEach(function(obj){
-						// alert(obj.id);
-						
 						if(obj.id == hash){
 							recall = false;
 							printEntrysFromLetter(LETTERS, "char-"+obj['val'].charAt(0).toUpperCase());
@@ -329,6 +327,14 @@ $(function(){
 	
 	
 	function fetchEntryData(entry_id, callback){
+		
+		if(ENTRYS != null)
+			ENTRYS.forEach(function(obj){
+				if(obj.id == entry_id){
+					$('#top_left_corner #part_one').html("<h1>"+ obj['val'] +"</h1>");
+				}
+			});
+		
 		$.ajax({
 			type: "POST",
 			url: "utils/getEntry.util.php",
