@@ -3,7 +3,8 @@
 	src: url('../fonts/texgyreadventor-bold-webfont.ttf'),
 		 url('../fonts/texgyreadventor-bold-webfont.eot'); /* IE9 */
 	font-weight: bold;
-} 
+}
+
 @font-face{
 font-family: TEX;
 	src: url('../fonts/texgyreadventor-regular-webfont.ttf'),
@@ -11,31 +12,81 @@ font-family: TEX;
 	font-weight: normal;
 } 
 #background{
-	position: fixed;
-	top:0;
-	left:0;
-	z-index: -100;
-	width: 100%;
-	height: 100%;
-	background: rgb(230,230,230);
+//	position: fixed;
+//	top:0;
+//	left:0;
+//	z-index: -100;
+//	width: 100%;
+//	height: 100%;
+//	background: rgb(230,230,230);
 //	background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%, rgba(219,219,219,1) 100%);
 //	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(219,219,219,1)));
 //	background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(219,219,219,1) 100%);
 //	background: -o-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(219,219,219,1) 100%);
 //	background: -ms-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(219,219,219,1) 100%);
 //	background: radial-gradient(ellipse at center,  rgba(255,255,255,1) 0%,rgba(219,219,219,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dbdbdb',GradientType=1 );
+//	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dbdbdb',GradientType=1 );
 }
 *{
 	font-family: TEX;
 	margin: 0;
 	padding: 0;
+	border: 0px solid grey;
 }
 
+body{
+	background: rgb(230,230,230);
+	border: 0px;
+}
+html{
+	border: 0px;
+}
 
-
-
-
+/*************************************************
+					  PANELS
+ *************************************************/
+	
+	#top_panel{
+		position: fixed;
+		top: 0; left: 0;
+		height: 40px;
+		width: 100%;
+		color: rgb(110,110,110);
+		background: rgb(220,220,220);
+	}
+	#left_panel{
+		position: fixed;
+		top: 0; left: 0;
+		height: 100%;
+		width: 40px;
+		color: rgb(110,110,110);
+		/* background: rgb(220,220,220); */
+	}
+	#right_panel{
+		position: fixed;
+		top: 0; right: 0;
+		height: 100%;
+		width: 40px;
+		color: rgb(110,110,110);
+		/* background: rgb(220,220,220); */
+	}
+	#bottom_panel{
+		position: fixed;
+		bottom: 0; left: 0;
+		height: 40px;
+		width: 100%;
+		color: rgb(110,110,110);
+		/* background: rgb(220,220,220); */
+	}
+	#top_left_corner{
+		position: fixed;
+		top: 40px; left: 40px;
+		height: 100px;
+		width: 300px;	
+		border: 1px solid rgb(250,250,250);
+		z-index: 10;
+	}
+ 
 /*
 		Index-Bar
 */

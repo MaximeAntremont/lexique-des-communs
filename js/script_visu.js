@@ -20,7 +20,8 @@
 			winH = window.innerHeight;
 		}
 		
-		winH -= 40;
+		winW -= 80;
+		winH -= 80;
 		winW_m = winW/2;
 		winH_m = winH/2;
 		DIAGONAL = Math.ceil(Math.sqrt( Math.pow(winW,2)+Math.pow(winH,2)));
@@ -31,10 +32,10 @@
 	
 	$('#canvas').attr('width', winW);
 	$('#canvas').attr('height', winH);
-	$('#canvas').css('border', '5px border black');
+	// $('#canvas').css('border', '1px solid black');
 	$('#canvas').css('position', 'fixed');
-	$('#canvas').css('top', '40');
-	$('#canvas').css('left', '0');
+	$('#canvas').css('top', '40px');
+	$('#canvas').css('left', '40px');
 	$('#canvas').css('z-index', '5');
 	
 	$(".entryClick").click(function (){
