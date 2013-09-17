@@ -71,11 +71,11 @@ class Manager
 		
 	}
 	
-	public function getEntryAll (){
+	public function getEntryAll ($culumns = '*'){
 		
 		$entrys = array();
 		
-		$req = $this->_db->query('SELECT * FROM entry');
+		$req = $this->_db->query('SELECT '. $culumns .' FROM entry');
 		
 		while($don = $req->fetch()){
 			$entrys[] = new Entry($don);
@@ -114,12 +114,12 @@ class Manager
 		
 	}
 	
-	public function getEntryBy_mySelf ($myRequest, $withRessources = null, $withLinks = null){
+	public function getEntryBy_mySelf ($culumns = '*', $myRequest, $withRessources = null, $withLinks = null){
 		
 		if(is_string($myRequest) && !empty($myRequest)){
 			
 			$entrys = array();
-			$req = $this->_db->query('SELECT * FROM entry WHERE '.$myRequest);
+			$req = $this->_db->query('SELECT '. $culumns .' FROM entry WHERE '.$myRequest);
 			
 			while($don = $req->fetch()){
 				$tempEntry = new Entry($don);

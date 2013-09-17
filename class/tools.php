@@ -11,43 +11,43 @@
 		}
 	}
 	
-	function drawIndex($selected = null, $letter = 'A', $isWritten = array()){
+	// function drawIndex($selected = null, $letter = 'A', $isWritten = array()){
 	
-		$isWritten[$letter] = false;
-		global $manager;
-		global $entries;
+		// $isWritten[$letter] = false;
+		// global $manager;
+		// global $entries;
 		
-		if($letter != 'AA'){
+		// if($letter != 'AA'){
 		
-			foreach($entries as $entry){
+			// foreach($entries as $entry){
 			
-				$tempVal = $entry->val();
-				if(  strtoupper($tempVal[0]) === $letter && isset($isWritten[$letter]) && $isWritten[$letter] == false){ //pourquoi avoir mit un "isset($isWritten[$letter])" ? Si "$isWritten[$letter]" n'est pas fait, ceci n'est-il pas égal à false ?
-					echo('<span><a '.((strpos($selected,$letter) === 0)?'class="selected"':'').' href="visualisation.php?letter='.$letter.'">'.$letter.'</a></span>');
-					$isWritten[$letter] = true;
-					$letter++;
-				}
+				// $tempVal = $entry->val();
+				// if(  strtoupper($tempVal[0]) === $letter && isset($isWritten[$letter]) && $isWritten[$letter] == false){ //pourquoi avoir mit un "isset($isWritten[$letter])" ? Si "$isWritten[$letter]" n'est pas fait, ceci n'est-il pas égal à false ?
+					// echo('<span><a '.((strpos($selected,$letter) === 0)?'class="selected"':'').' href="visualisation.php?letter='.$letter.'">'.$letter.'</a></span>');
+					// $isWritten[$letter] = true;
+					// $letter++;
+				// }
 				
-			}
+			// }
 			
-			if(isset($isWritten[$letter]) && $isWritten[$letter] == false){
-				echo('<span>'.$letter.'</span>');
-				$isWritten[$letter] = true;
-				$letter++;
-			}
+			// if(isset($isWritten[$letter]) && $isWritten[$letter] == false){
+				// echo('<span>'.$letter.'</span>');
+				// $isWritten[$letter] = true;
+				// $letter++;
+			// }
 				
-			drawIndex($selected, $letter);
+			// drawIndex($selected, $letter);
 			
-		}else if($selected != null && strpos($selected,$letter) != -1){
+		// }else if($selected != null && strpos($selected,$letter) != -1){
 		
-			$selectableEntries = $manager -> getEntryBy_mySelf('entry_val LIKE "'. $selected .'%"');
-			echo('<br /><h1>'.$selectableEntries[0]->val().'</h1>');
-			echo('<ul>');
-			foreach($selectableEntries as $selectableEntry){
-				echo('<li class="entryClick" id="id'. $selectableEntry->id() .'" >'.$selectableEntry -> val().'</li>');
-			}
-			echo('</ul>');
+			// $selectableEntries = $manager -> getEntryBy_mySelf('entry_val LIKE "'. $selected .'%"');
+			// echo('<br /><h1>'.$selectableEntries[0]->val().'</h1>');
+			// echo('<ul>');
+			// foreach($selectableEntries as $selectableEntry){
+				// echo('<li class="entryClick" id="id'. $selectableEntry->id() .'" >'.$selectableEntry -> val().'</li>');
+			// }
+			// echo('</ul>');
 			
-		}
+		// }
 		
-	}
+	// }
