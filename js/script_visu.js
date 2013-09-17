@@ -79,7 +79,7 @@ $(function(){
 		this.header = function (val){
 			if(val != null){
 				header = val;
-				updateCache();
+				JQheader.html(header);
 			}
 			return header;
 		}
@@ -87,7 +87,7 @@ $(function(){
 		this.content = function (val){
 			if(val != null){
 				content = val;
-				updateCache();
+				JQcontent.html(content);
 			}
 			return content;
 		}
@@ -95,7 +95,7 @@ $(function(){
 		this.footer = function (val){
 			if(val != null){
 				footer = val;
-				updateCache();
+				JQfooter.html(footer);
 			}
 			return footer;
 		}
@@ -198,6 +198,7 @@ $(function(){
 				
 			txt += '</div>';
 			txt += '<div id="add_entry">Nouvelle entrée</div>';
+			$("#top_panel").html("");
 			$("#top_panel").append(txt);
 			
 			$(".letter-on").click(function(){
@@ -205,22 +206,47 @@ $(function(){
 			});
 			
 			$("#add_entry").click(function(){
-				cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" placeholder="Nom de l\'entrée" />', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+				cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" id="input_entry_val" placeholder="Nom de l\'entrée" />', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 				cache_panel.open();
 				$(".cliquable").click(function(){
 					if($(this).html() == "Annuler"){
 						cache_panel.close();
 					}
+					if($(this).html() == "Ajouter"){
+						sendNewEntry ($('#input_entry_val').val(), function(){
+							setTimeout(function(){cache_panel.close();}, 2000);
+							refreshIndex();
+							$("#top_left_corner #part_one, #top_left_corner #part_two").html("");
+						});
+					}
 				});
+				
 			});
 			
 		}).fail(function (a,b,c){
 			console.debug(a+" | "+b+" | "+c);
 		});
+		
 	}
 
 	
-	
+	function sendNewEntry (entry_val, callback){
+		$.ajax({
+			type: "POST",
+			url: "utils/addEntry.util.php",
+			data : {entry_val: entry_val},
+			dataType: "json"
+		}).done(function(data) {
+			
+			if(data['return']){
+				cache_panel.content("Entrée sauvegardée !");
+				if(callback) callback();
+			}else
+				cache_panel.content( '<input type="text" placeholder="Nom de l\'entrée" />' + '<div>Impossible d\'ajouter</div>' );
+		}).fail(function (a, b, c){
+			cache_panel.content( '<input type="text" placeholder="Nom de l\'entrée" />' + '<div>Erreur de communication</div>' );
+		});
+	}
 	
 	
 	
