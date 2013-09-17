@@ -237,6 +237,13 @@ $(function(){
 	}
 
 	
+	
+	
+	
+	/************************************************************
+							sendNewEntry
+	*************************************************************/
+	
 	function sendNewEntry (entry_val, callback){
 		$.ajax({
 			type: "POST",
@@ -260,6 +267,9 @@ $(function(){
 	
 	
 	
+	/************************************************************
+							detectScreen
+	*************************************************************/
 	
 	function detectScreen (){
 		if (document.body && document.body.offsetWidth) {
@@ -288,6 +298,9 @@ $(function(){
 	
 	
 	
+	/************************************************************
+							init
+	*************************************************************/
 	
 	function init (canvas, callback){
 		detectScreen();
@@ -325,6 +338,9 @@ $(function(){
 	
 	
 	
+	/************************************************************
+							fetchEntryData
+	*************************************************************/
 	
 	function fetchEntryData(entry_id, callback){
 		
@@ -332,6 +348,7 @@ $(function(){
 			ENTRYS.forEach(function(obj){
 				if(obj.id == entry_id){
 					$('#top_left_corner #part_one').html("<h1>"+ obj['val'] +"</h1>");
+					$('title').text("Encyclopétrie - "+obj['val']);
 				}
 			});
 		
