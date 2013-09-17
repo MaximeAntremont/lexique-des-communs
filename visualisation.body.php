@@ -8,8 +8,16 @@
 	<div id="top_left_corner">
 		<?php
 			$entries = $manager -> getEntryAll();				
-			drawIndex(((isset($_GET['letter']))?$_GET['letter']:null));
+			// drawIndex(((isset($_GET['letter']))?$_GET['letter']:null));
 		?>
+	</div>
+	<div id="cache_panel" >
+		<div style="height: 100%;vertical-align: middle;display: inline-block;" ></div>
+		<div id="middle_window">
+			<div id="header" ></div>
+			<div id="content" ></div>
+			<div id="footer" ></div>
+		</div>
 	</div>
 
 
