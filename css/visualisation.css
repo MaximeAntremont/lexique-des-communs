@@ -45,7 +45,10 @@ body{
 		top: 0; right: 0;
 		height: 100%;
 		width: 40px;
-		color: rgb(110,110,110);
+		text-align: center;
+		font-weight: bold;
+		color: rgb(200,200,200);
+		background: rgb(220,220,220);
 	}
 	#bottom_panel{
 		position: fixed;
@@ -158,7 +161,36 @@ body{
 		color: rgb(50,50,50);
 	}
 	
-
+ /*************************************************
+				   RIGHT PANEL
+ *************************************************/
+	
+	#right_panel .panel_button:hover {
+		cursor: pointer;
+		background: rgb(110,110,110);
+		color: rgb(220,220,220);
+	}
+	
+	#right_panel #addTrend {
+		width: 100%;
+		margin-top: 40px;
+		border-top: 1px solid rgb(200,200,200);
+		border-bottom: 1px solid rgb(200,200,200);
+		padding-bottom: 2px;
+	}
+	
+	#right_panel #subTrend {
+		width: 100%;
+		border-bottom: 1px solid rgb(200,200,200);
+		padding-bottom: 2px;
+	}
+	
+	#right_panel #addAlert {
+		width: 100%;
+		border-bottom: 1px solid rgb(200,200,200);
+		padding-bottom: 2px;
+	}
+	
  /*************************************************
 					CACHE_PANEL
  *************************************************/

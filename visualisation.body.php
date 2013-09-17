@@ -3,7 +3,11 @@
 
 	<div id="top_panel"></div>
 	<div id="left_panel"></div>
-	<div id="right_panel"></div>
+	<div id="right_panel">
+		<div id="addTrend" class="panel_button" >+</div>
+		<div id="subTrend" class="panel_button" >-</div>
+		<div id="addAlert" class="panel_button" >!</div>
+	</div>
 	<div id="bottom_panel"></div>
 	
 	<div id="top_left_corner">
@@ -14,9 +18,9 @@
 	<div id="cache_panel" >
 		<div style="height: 100%;vertical-align: middle;display: inline-block;" ></div>
 		<div id="middle_window">
-			<div id="header" ></div>
-			<div id="content" ></div>
-			<div id="footer" ></div>
+			<div id="header"></div>
+			<div id="content"></div>
+			<div id="footer"></div>
 		</div>
 	</div>
 
