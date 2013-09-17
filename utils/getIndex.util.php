@@ -15,9 +15,8 @@
 	
 	$manager = new Manager(getConnection());
 	
-	if( !$manager->isHS() && !empty($_POST['letter']) && is_string($_POST['letter']) ){
+	if( !$manager->isHS()){
 		
-		$_letter_post = htmlspecialchars($_POST['letter']);
 		$entries = $manager -> getEntryAll('entry_id, entry_val');
 		$index = array();
 		
