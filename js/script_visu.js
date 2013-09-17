@@ -1,11 +1,233 @@
 $(function(){
 	
-	var canvas = document.getElementById('canvas');
-	var context = canvas.getContext('2d');
 	var winW = 630, winH = 460;
 	var winW_m, winH_m;
 	var DIAGONAL = 600;
+	var cache_panel = new Cache($('#cache_panel'),
+	$('#cache_panel #header'),
+	$('#cache_panel #content'),
+	$('#cache_panel #footer'));
+	
+	cache_panel.startWaiting();
+	
+	var canvas = document.getElementById('canvas');
+	var context = canvas.getContext('2d');
+	
+	init($('#canvas'), function (){cache_panel.stopWaiting(true);});
+	
+	
+	$(window).resize(function (){
+		detectScreen();
+		$('#canvas').attr('width', winW);
+		$('#canvas').attr('height', winH);
+		$('#canvas').css('position', 'fixed');
+		$('#canvas').css('top', '40px');
+		$('#canvas').css('left', '40px');
+		$('#canvas').css('z-index', '5');
+	});
+	
+	
+	
+	
+	
+/************************************************************************************************************
+											FONCTIONS
+************************************************************************************************************/
 
+	/************************************************************
+							CACHE
+	*************************************************************/
+
+	function Cache (JQueryCache, JQueryHeader, JQueryContent, JQueryFooter){
+		
+		var JQcache = JQueryCache;
+		var JQheader = JQueryHeader;
+		var JQcontent = JQueryContent;
+		var JQfooter = JQueryFooter;
+		var wait = false, waitCallback = null;
+		var header = '';
+		var content = '';
+		var footer = '';
+		
+		this.startWaiting = function (open){
+			if(open == true) JQcache.show();
+			
+			header = '';
+			content = '.';
+			footer = '~ chargement en cours ~';
+			
+			updateCache();
+			
+			wait = true;
+			waiting();
+		}
+		
+		this.stopWaiting = function (close){
+			if(close == true) waitCallback = function (){JQcache.hide();};
+			else if(close) waitCallback = close;
+			wait = false;
+		}
+		
+		this.open = function (){
+			JQcache.show();
+		}
+		
+		this.close = function (){
+			JQcache.hide();
+		}
+		
+		this.header = function (val){
+			if(val != null){
+				header = val;
+				updateCache();
+			}
+			return header;
+		}
+		
+		this.content = function (val){
+			if(val != null){
+				content = val;
+				updateCache();
+			}
+			return content;
+		}
+		
+		this.footer = function (val){
+			if(val != null){
+				footer = val;
+				updateCache();
+			}
+			return footer;
+		}
+		
+		this.modify = function (top, mid, bot){
+			if(top != null && mid != null && bot != null){
+				header = top;
+				content = mid;
+				footer = bot;
+				updateCache();
+				return true;
+			}
+			return false;
+		}
+		
+		function updateCache (){
+			JQheader.html(header);
+			JQcontent.html(content);
+			JQfooter.html(footer);
+		};
+			
+		function waiting (){
+			
+			updateCache();
+			if(content == '...') content = '';
+			else content += '.';
+			
+			if(wait) setTimeout(waiting, 1000);
+			else if(waitCallback != null) {waitCallback(JQcache, JQheader, JQcontent, JQfooter);waitCallback = null};
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	/************************************************************
+							  Entry
+	*************************************************************/
+	function Entry (tab){
+		
+		var id = tab.id,
+			val = tab.val,
+			create_date = tab.create_date,
+			ressources = tab.ressources,
+			links = tab.links;
+		
+	}
+	
+	
+	
+	
+	
+	
+	/************************************************************
+						printEntrysFromLetter
+	*************************************************************/
+	function printEntrysFromLetter(letters, id){
+		$("#top_left_corner #part_one").html("<h1>"+ letters[id][0]['val'] +"</h1>");
+		$("#top_left_corner #part_two").html("");
+		
+		if(letters[id])
+			letters[id].forEach(function (entry){
+				$("#top_left_corner #part_two").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
+			});
+			
+		$("#top_left_corner #part_two h3").click(function(){
+			cache_panel.startWaiting(true);
+			fetchEntryData( this.id.replace("id", ""), cache_panel.stopWaiting(true) );
+		});
+	}
+	
+	
+	
+	
+	/************************************************************
+							REFRESH INDEX
+	*************************************************************/
+	
+	function refreshIndex(){
+		$.ajax({
+			type: "POST",
+			url: "utils/getIndex.util.php",
+			dataType: "json"
+		}).done(function(data) {
+			
+			var letters = [];
+			var txt = '<div id="index">';
+			
+			if(data != null)
+				data.forEach(function(obj){
+					if(obj.select != null)
+						txt += '<div class="letter-on" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
+					else
+						txt += '<div class="letter-off" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
+					letters['char-'+obj['char']] = obj['select'];
+				});
+				
+			txt += '</div>';
+			txt += '<div id="add_entry">Nouvelle entrée</div>';
+			$("#top_panel").append(txt);
+			
+			$(".letter-on").click(function(){
+				printEntrysFromLetter(letters, this.id);
+			});
+			
+			$("#add_entry").click(function(){
+				cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" placeholder="Nom de l\'entrée" />', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+				cache_panel.open();
+				$(".cliquable").click(function(){
+					if($(this).html() == "Annuler"){
+						cache_panel.close();
+					}
+				});
+			});
+			
+		}).fail(function (a,b,c){
+			console.debug(a+" | "+b+" | "+c);
+		});
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	function detectScreen (){
 		if (document.body && document.body.offsetWidth) {
 			winW = document.body.offsetWidth;
@@ -26,76 +248,35 @@ $(function(){
 		winH_m = winH/2;
 		DIAGONAL = Math.ceil(Math.sqrt( Math.pow(winW,2)+Math.pow(winH,2)));
 	}
-
-	detectScreen();
-	$('#canvas').attr('width', winW);
-	$('#canvas').attr('height', winH);
-	$('#canvas').css('position', 'fixed');
-	$('#canvas').css('top', '40px');
-	$('#canvas').css('left', '40px');
-	$('#canvas').css('z-index', '5');
 	
-	$(window).resize(function (){
-		
+	
+	
+	
+	
+	
+	
+	
+	function init (canvas, callback){
 		detectScreen();
-		$('#canvas').attr('width', winW);
-		$('#canvas').attr('height', winH);
-		$('#canvas').css('position', 'fixed');
-		$('#canvas').css('top', '40px');
-		$('#canvas').css('left', '40px');
-		$('#canvas').css('z-index', '5');
+		canvas.attr('width', winW);
+		canvas.attr('height', winH);
+		canvas.css('position', 'fixed');
+		canvas.css('top', '40px');
+		canvas.css('left', '40px');
+		canvas.css('z-index', '5');
 		
-	});
-	
-	var cache_panel = new Cache($('#cache_panel'),$('#cache_panel #header'),$('#cache_panel #content'),$('#cache_panel #footer'));
-	
-	cache_panel.startWaiting(true);
-	$.ajax({
-		type: "POST",
-		url: "utils/getIndex.util.php",
-		dataType: "json"
-	}).done(function(data) {
+		refreshIndex();
 		
-		var letters = [];
-		var txt = '<div id="index">';
+		if(callback) callback();
 		
-		if(data != null)
-			data.forEach(function(obj){
-				if(obj.select != null)
-					txt += '<div class="letter-on" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
-				else
-					txt += '<div class="letter-off" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
-				letters['char-'+obj['char']] = obj['select'];
-			});
-			
-		txt += "</div>";
-		$("#top_panel").append(txt);
-		
-		$(".letter-on").click(function(){
-			// var letter = this.id.replace("cahr-", "");
-			$("#top_left_corner #part_one").html("<h1>"+ letters[this.id][0]['val'] +"</h1>");
-			$("#top_left_corner #part_two").html("");
-			
-			if(letters[this.id])
-				letters[this.id].forEach(function (entry){
-					$("#top_left_corner #part_two").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
-				});
-			
-		});
-		
-		
-		cache_panel.stopWaiting(true);
-	}).fail(function (a,b,c){
-		console.debug(a+" | "+b+" | "+c);
-	});
+	}
+
 	
 	
 	
 	
-	$(".entryClick").click(function (){
 	
-		var entry_id = this.id.replace("id", "");
-		
+	function fetchEntryData(entry_id, callback){
 		$.ajax({
 			type: "POST",
 			url: "utils/getEntry.util.php",
@@ -119,9 +300,6 @@ $(function(){
 				}
 				
 				data['ressources'].forEach(function(obj){
-					
-					// var x = (Math.random() > 0.5) ? (Math.random()*300)+winW_m : (winW_m-(Math.random()*300));
-					// var y = (Math.random() > 0.5) ? (Math.random()*300)+winH_m : (winH_m-(Math.random()*300));
 					
 					var x = circle.center.x + (Math.cos(circle.cursor*Math.PI) * circle.r);
 					var y = circle.center.y + (Math.sin(circle.cursor*Math.PI) * circle.r);
@@ -147,19 +325,13 @@ $(function(){
 					context.stroke();
 					
 				});
-			// else links = "-null<br/>";
 			
-			// $('#test').html(
-				// "id: "+ data.id +"<br/>"+
-				// "val: "+ data.val +"<br/>"+
-				// "ressources: <br/>"+ress+
-				// "<br/>links: <br/>"+links
-			// );
+			if(callback) callback();
 			
 		}).fail(function(){
 			alert("fail !");
 		});
 		
-	});
+	}
 	
 });

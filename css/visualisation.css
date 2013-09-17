@@ -39,7 +39,6 @@ body{
 		height: 100%;
 		width: 40px;
 		color: rgb(110,110,110);
-		/* background: rgb(220,220,220); */
 	}
 	#right_panel{
 		position: fixed;
@@ -47,7 +46,6 @@ body{
 		height: 100%;
 		width: 40px;
 		color: rgb(110,110,110);
-		/* background: rgb(220,220,220); */
 	}
 	#bottom_panel{
 		position: fixed;
@@ -55,7 +53,6 @@ body{
 		height: 40px;
 		width: 100%;
 		color: rgb(110,110,110);
-		/* background: rgb(220,220,220); */
 	}
 	#cache_panel{
 		position: fixed;
@@ -64,6 +61,7 @@ body{
 		width: 100%;
 		z-index: 50;
 		color: rgb(110,110,110);
+		text-align: center;
 		background: rgba(0,0,0, 0.5);
 	}
 	#top_left_corner{
@@ -81,6 +79,7 @@ body{
 	#top_panel #index{
 		margin-left: 40px;
 		margin-top: 5px;
+		float: left;
 	}
 	
 	#top_panel #index:hover{
@@ -101,6 +100,24 @@ body{
 	#top_panel #index .letter-off{
 		display: inline-block;
 		margin-right: 5px;
+	}
+	
+	#top_panel #add_entry{
+		float: left;
+		height: 35px;
+		margin-left: 5px;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 5px;
+		font-weight: bold;
+		border-left: 1px solid rgb(200,200,200);
+		border-right: 1px solid rgb(200,200,200);
+	}
+	
+	#top_panel #add_entry:hover{
+		cursor: pointer;
+		background: rgb(110,110,110);
+		color: rgb(220,220,220);
 	}
 
  /*************************************************
@@ -146,10 +163,6 @@ body{
 					CACHE_PANEL
  *************************************************/
 	
-	#cache_panel{
-		text-align: center;
-	}
-	
 	#cache_panel #middle_window{
 		display: inline-block;
 		position: relative;
@@ -166,21 +179,55 @@ body{
 		left: 10px;	top: 0;
 		width: 380px;
 		height: 40px;
-		border-bottom: 1px solid rgb(220,220,220);
+		z-index: 54;
+		overflow: hidden;
+	}
+	
+	#cache_panel #middle_window #header span{
+		display: block;
+		padding-top: 10px;
+		height: 30px;
 	}
 	
 	#cache_panel #middle_window #content{
 		position: absolute;
 		left: 10px;	top: 40px;
 		width: 380px;
-		height: 220px;
+		height: 224px;
+		z-index: 53;
 		border-top: 1px solid rgb(220,220,220);
 		border-bottom: 1px solid rgb(220,220,220);
 	}
 	
+	#cache_panel #middle_window input{
+		display: block;
+		width: 100%;
+		margin-top: 10px;
+		border: none;
+		border-bottom: dotted 1px rgb(220,220,220);
+		background: rgb(200,200,200);
+	}
+	
 	#cache_panel #middle_window #footer{
 		position: absolute;
-		left: 10px;	bottom: 0;
+		left: 10px;	bottom: 5px;
 		width: 380px;
+		z-index: 56;
+	}
+	
+	#cache_panel #middle_window #footer span{
 		height: 40px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+	
+	#cache_panel #middle_window #footer .cliquable{
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	
+	#cache_panel #middle_window #footer .cliquable:hover{
+		cursor: pointer;
+		color: rgb(200,200,200);
+		background: rgb(110,110,110);
 	}
