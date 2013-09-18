@@ -1,5 +1,5 @@
 $(function(){
-	
+	var gpu = new GPU(true);
 	var winW = 630, winH = 460;
 	var winW_m, winH_m;
 	var DIAGONAL = 600;
@@ -16,6 +16,14 @@ $(function(){
 	var canvas = document.getElementById('canvas');
 	var context = canvas.getContext('2d');
 	
+	var screen = new GPUScreen({
+		canvas : canvas,
+		autoRefresh : true,
+		delay : 3,
+		autoClear : true
+	});
+	var anim = new GPUFrame (false);
+	
 	init($('#canvas'), function (){cache_panel.stopWaiting(true);});
 	
 	
@@ -31,15 +39,10 @@ $(function(){
 	
 	
 	
-	
-	
-/************************************************************************************************************
-											FONCTIONS
-************************************************************************************************************/
 
-	/************************************************************
-							CACHE
-	*************************************************************/
+/************************************************************
+						CACHE
+*************************************************************/
 
 	function Cache (JQueryCache, JQueryHeader, JQueryContent, JQueryFooter){
 		
@@ -137,9 +140,9 @@ $(function(){
 	
 	
 	
-	/************************************************************
-							  Ressource
-	*************************************************************/
+/************************************************************
+						  Ressource
+*************************************************************/
 	function Ressource (tab){
 		
 		var id = tab.id,
@@ -156,7 +159,9 @@ $(function(){
 			font = 0,
 			r = 0,
 			direction = {x:0,y:0},
-			vitesse = 1;
+			vitesse = 1,
+			visible = false,
+			alpha = 0.5;
 		
 		this.id = function (value){
 			if(value != null) id = value;
@@ -207,8 +212,17 @@ $(function(){
 			if(value != null) font = value;
 			return font;
 		};
+		this.visible = function (value){
+			if(value != null) visible = value;
+			return visible;
+		};
+		this.alpha = function (value){
+			if(value != null) alpha = value;
+			return alpha;
+		};
 		
 		this.draw = function (ctx){
+			context.globalAlpha = alpha;
 			ctx.beginPath();
 			ctx.arc(x, y, r, 0, 2 * Math.PI, false);
 			ctx.fillStyle = 'black';
@@ -239,11 +253,20 @@ $(function(){
 			return {x: x, y: y};
 		};
 		
+		this.isOver = function (mouse){
+			return (normeVector( {x: mouse.x-x, y: mouse.y-y}) < r) ? true : false;
+		};
+		
 	}
 	
-	/************************************************************
-								VECTORS
-	*************************************************************/
+	
+	
+	
+	
+	
+/************************************************************
+							VECTORS
+*************************************************************/
 	
 	function normeVector (v){
 		return Math.sqrt( Math.pow(v.x,2) + Math.pow(v.y,2) );
@@ -255,61 +278,95 @@ $(function(){
 	
 	function resizeVector(v, factor){
 		var norme = normeVector(v);
-		return {
-			x: (v.x*factor)/norme,
-			y: (v.y*factor)/norme
-		};
+		if(v.x == 0 && v.y == 0)
+			return {
+				x: 0,
+				y: 0
+			};
+		else
+			return {
+				x: (v.x*factor)/norme,
+				y: (v.y*factor)/norme
+			};
 	}
 	
 	function getVector (a, b){
 		return {x: b.x-a.x, y: b.y-a.y};
 	}
 	
+	
+	
+	
+	
+	
 /************************************************************
 							FRAME
 *************************************************************/
-	
-	var screen = new GPUScreen({
-		canvas : canvas,
-		autoRefresh : true,
-		delay : 2,
-		autoClear : true
-	});
-	var anim = new GPUFrame (false);
-	screen.setFrame(anim);
-	GPU.addCanvas(screen);
-	
 	anim.write(function (canvas, ctx, frame, vars){
 		
-		var marge = 1;
+		var movement = 0;
 		
-		if(ressources.length > 0)
-		ressources.forEach(function(obj){
-		
-			var pos = obj.getPos();			
-			var dir = obj.direction();
-			
-			if( pos.y < ( 300 ) ){
-				dir = addVector( dir, {x:0, y:-1});
-			}
-			
-			ressources.forEach(function(objBis){
-				if( obj.distanceTo(objBis) <= 3 && obj != objBis){
-					var tempV = resizeVector( getVector( objBis.getPos(), pos ) , 1);
-					var tempD = addVector( obj.direction(), tempV);
-					obj.direction( tempD );
+		if(ressources.length > 0){
+			ressources.forEach(function(obj){
+				
+				if(obj.visible()){
+				
+					var pos = obj.getPos();			
+					var dir = {x:0,y:0};
+					
+					ressources.forEach(function(objBis){
+						if(obj != objBis && objBis.visible() && obj.distanceTo(objBis) <= 1){
+							var tempV = resizeVector( getVector( objBis.getPos(), pos ) , 1);
+							dir = addVector(dir, tempV);
+							movement = 1;
+						}
+					});
+					
+					dir = resizeVector(dir, 2);
+					obj.direction(dir);
+					
+					obj.move();
+					obj.draw(ctx);
+					
 				}
 			});
-			
-			// console.debug(frame);
-			
-			
-			obj.direction( resizeVector( dir, 1 ) );
-			obj.move();
-			obj.draw(ctx);
+			if(movement == 0) movement = -1;
+		}
+		
+		console.debug(frame);
+		if(movement == -1 && cursor >= ressources.length) screen.isAutoRefresh(false);
+	});
+	
+	var cursor = 0;
+	function showSlowly (){
+		
+		ressources[cursor].visible(true);
+		cursor++;
+		if(cursor < ressources.length)
+			setTimeout(showSlowly, 100);
+		
+	}
+	
+	$('#canvas').mousemove(function(e){
+		if(ressources.length > 0){
+			ressources.forEach(function(obj){
+				var temp = obj.isOver({x: e.pageX-40, y: e.pageY-40});
+				if(obj.visible() && temp && obj.alpha() == 0.5){
+					
+					obj.alpha(0.8);
+					ressource_selected = obj;
+					screen.draw(gpu.getFrame(), true);
+					
+				}else if(!temp){
+					
+					obj.alpha(0.5);
+					
+				}
 				
-			
-		});
+				//TODO partie à optimiser ( pour le screen.draw(//,//); )
+				 
+			});
+		}
 	});
 	
 /************************************************************
@@ -334,9 +391,9 @@ $(function(){
 	
 	
 	
-	/************************************************************
-							REFRESH INDEX
-	*************************************************************/
+/************************************************************
+						REFRESH INDEX
+*************************************************************/
 	
 	function refreshIndex(callback){
 		$.ajax({
@@ -387,8 +444,9 @@ $(function(){
 				});
 				
 			});
-			screen.isAutoRefresh(true);
+			
 			if(callback) callback();
+			
 		}).fail(function (a,b,c){
 			console.debug(a+" | "+b+" | "+c);
 		});
@@ -470,6 +528,8 @@ $(function(){
 		canvas.css('left', '40px');
 		canvas.css('z-index', '5');
 		
+		screen.setFrame(anim);
+		gpu.addCanvas(screen);
 		var recall = true;
 		refreshIndex(function(){
 		
@@ -487,6 +547,14 @@ $(function(){
 				
 			}
 			
+			
+		});
+		
+		$('#pause').click(function(){
+			screen.isAutoRefresh(false);
+		});
+		$('#start').click(function(){
+			screen.restart(gpu.getFrame());
 		});
 		
 		if(recall && callback) callback();
@@ -517,14 +585,9 @@ $(function(){
 			dataType: "json",
 			data: {entry_id: entry_id}
 		}).done(function(data) {
-		
-			context.clearRect(0,0,winW,winH);
-			context.textAlign = "center"
-			context.font = '20px TEX';
-			context.globalAlpha = 0.5;
 						
 			ressources = [];
-			var r = 100;
+			var r = 10;
 			var l = data['ressources'];
 			
 			if(data.ressources != null){
@@ -532,50 +595,28 @@ $(function(){
 					
 					var ress = new Ressource(obj);
 					
-					ress.radius( 10 );
+					ress.radius( (ress.trend()*1)+10 );
 					
 					var rand = Math.random();
 					
-					ress.x( winW_m + ( Math.cos( rand*Math.PI )*r ) );
-					ress.y( winH_m + ( Math.sin( rand*Math.PI )*r ) );
+					ress.x( winW_m 
+						+ ( Math.cos( rand*Math.PI )*r )
+					);
+					ress.y( winH_m 
+						+ ( Math.sin( rand*Math.PI )*r )
+					);
 					
-					r += 30;
-					
-					ress.draw( context );
 					ressources.push( ress );
 					
 				});
-			}			
-				// var circle = {
-					// r : (DIAGONAL/3)/2,
-					// step : 2 / data.ressources.length,
-					// cursor : 0,
-					// center: {x: winW_m, y:winH_m}
-				// }
-				
-					
-					// var x = circle.center.x + (Math.cos(circle.cursor*Math.PI) * circle.r);
-					// var y = circle.center.y + (Math.sin(circle.cursor*Math.PI) * circle.r);
-					
-					// circle.cursor += circle.step;
-					
-					// context.fillText(obj.val, x, y);
-					// ress[obj.id] = {x: x, y:y};
-					
-				
+				cursor = 0;
+				showSlowly();
+				if(!screen.isAutoRefresh()) screen.restart(gpu.getFrame());
+			}else{
+				screen.stop();
+			}
 			
-			// if(data.links != null)
-				// data['links'].forEach(function(obj){
-					
-					// var from = ress[obj.from];
-					// var to = ress[obj.to];
-					
-					// context.beginPath();
-					// context.moveTo(from.x, from.y);
-					// context.lineTo(to.x, to.y);
-					// context.stroke();
-					
-				// });
+			
 			
 			if(callback) callback();
 			
@@ -584,5 +625,8 @@ $(function(){
 		});
 		
 	}
+	
+	// screen.setFrame(anim);
+	// GPU.addCanvas(screen);
 	
 });

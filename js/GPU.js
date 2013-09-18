@@ -17,8 +17,8 @@ window.GPUScreen = function (par){
 		autoClear   = par.autoClear,
 		delayTemp   = 0;
 	 
-	this.draw = function (frame){
-		if(delay == 1 || (delayTemp + delay) == frame){
+	this.draw = function (frame, force){
+		if(delay == 1 || (delayTemp + delay) == frame || force == true){
 			
 			if(autoClear)
 				context.clearRect(0, 0, canvas.width, canvas.height);
@@ -39,6 +39,13 @@ window.GPUScreen = function (par){
 	this.isAutoClear = function(val){
 		if(val == true || val == false) autoClear = val;
 		return autoClear;
+	};
+	this.restart = function(frame){
+		autoRefresh = true;
+		delayTemp = frame;
+	};
+	this.stop = function(){
+		autoRefresh = false;
 	};
 	this.isAutoRefresh = function(val){
 		if(val == true || val == false) autoRefresh = val;
@@ -403,7 +410,7 @@ function GPU (doILaunchMe){
 }
 /* INITIALISATION
 ******************************************************************/
-window.GPU = new GPU(true);
+// window.GPU = new GPU(true);
 
 /* TEMPORARY
 ******************************************************************/

@@ -7,6 +7,8 @@
 		<div id="addTrend" class="panel_button" >+</div>
 		<div id="subTrend" class="panel_button" >-</div>
 		<div id="addAlert" class="panel_button" >!</div>
+		<div id="pause" class="panel_button" >||</div>
+		<div id="start" class="panel_button" >></div>
 	</div>
 	<div id="bottom_panel"></div>
 	
