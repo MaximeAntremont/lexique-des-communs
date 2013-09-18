@@ -59,6 +59,7 @@ window.GPUFrame = function (func){
 	}
 	
 	this.read = f;
+	
 	this.write = function (fun){this.read = fun;};
 	this.addVariable = function (name, obj){variables[name] = obj;};
 	this.getVariable = function (name){return variables[name];};

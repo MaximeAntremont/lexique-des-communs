@@ -154,9 +154,9 @@ $(function(){
 			y = 0,
 			w = 0,
 			font = 0,
-			radius = 0,
+			r = 0,
 			direction = {x:0,y:0},
-			vitesse = 2;
+			vitesse = 1;
 		
 		this.id = function (value){
 			if(value != null) id = value;
@@ -200,8 +200,8 @@ $(function(){
 			return w;
 		};
 		this.radius = function (value){
-			if(value != null) radius = value;
-			return radius;
+			if(value != null) r = value;
+			return r;
 		};
 		this.font = function (value){
 			if(value != null) font = value;
@@ -210,7 +210,7 @@ $(function(){
 		
 		this.draw = function (ctx){
 			ctx.beginPath();
-			ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+			ctx.arc(x, y, r, 0, 2 * Math.PI, false);
 			ctx.fillStyle = 'black';
 			ctx.fill();
 		}
@@ -218,30 +218,103 @@ $(function(){
 		this.distanceTo = function (obj){
 			if(obj instanceof Ressource){
 				
-				return Math.sqrt( Math.pow(obj.x() - x, 2) + Math.pow(obj.y() - y, 2) ) - (obj.radius() + radius);
+				return Math.sqrt( Math.pow(obj.x() - x, 2) + Math.pow(obj.y() - y, 2) ) - (obj.radius() + r);
 				
 			}
 		}
 		
-		this.direction = function (val, add){
-			if(val != null){
-				if(add == true){
-					
-				}else direction = val;
-			}
+		this.direction = function (val){
+			if(val != null) direction = val;
 			return direction;
 		}
 		
+		this.move = function (){
+			
+			x += direction.x*vitesse;
+			y += direction.y*vitesse;
+			
+		};
+		
+		this.getPos = function (){
+			return {x: x, y: y};
+		};
+		
 	}
 	
-	
-	
-	
-	
-	
 	/************************************************************
-						printEntrysFromLetter
+								VECTORS
 	*************************************************************/
+	
+	function normeVector (v){
+		return Math.sqrt( Math.pow(v.x,2) + Math.pow(v.y,2) );
+	}
+	
+	function addVector(a, b){
+		return {x: b.x+a.x, y: b.y+a.y};
+	}
+	
+	function resizeVector(v, factor){
+		var norme = normeVector(v);
+		return {
+			x: (v.x*factor)/norme,
+			y: (v.y*factor)/norme
+		};
+	}
+	
+	function getVector (a, b){
+		return {x: b.x-a.x, y: b.y-a.y};
+	}
+	
+/************************************************************
+							FRAME
+*************************************************************/
+	
+	var screen = new GPUScreen({
+		canvas : canvas,
+		autoRefresh : true,
+		delay : 2,
+		autoClear : true
+	});
+	var anim = new GPUFrame (false);
+	screen.setFrame(anim);
+	GPU.addCanvas(screen);
+	
+	anim.write(function (canvas, ctx, frame, vars){
+		
+		var marge = 1;
+		
+		if(ressources.length > 0)
+		ressources.forEach(function(obj){
+		
+			var pos = obj.getPos();			
+			var dir = obj.direction();
+			
+			if( pos.y < ( 300 ) ){
+				dir = addVector( dir, {x:0, y:-1});
+			}
+			
+			ressources.forEach(function(objBis){
+				if( obj.distanceTo(objBis) <= 3 && obj != objBis){
+					var tempV = resizeVector( getVector( objBis.getPos(), pos ) , 1);
+					var tempD = addVector( obj.direction(), tempV);
+					obj.direction( tempD );
+				}
+			});
+			
+			// console.debug(frame);
+			
+			
+			obj.direction( resizeVector( dir, 1 ) );
+			obj.move();
+			obj.draw(ctx);
+				
+			
+		});
+	});
+	
+/************************************************************
+					printEntrysFromLetter
+*************************************************************/
 	function printEntrysFromLetter(letters, id){
 		$("#top_left_corner #part_one").html("<h1>"+ id.replace("char-", "") +"</h1>");
 		$("#top_left_corner #part_two").html("");
@@ -314,6 +387,7 @@ $(function(){
 				});
 				
 			});
+			screen.isAutoRefresh(true);
 			if(callback) callback();
 		}).fail(function (a,b,c){
 			console.debug(a+" | "+b+" | "+c);
@@ -471,10 +545,7 @@ $(function(){
 					ressources.push( ress );
 					
 				});
-			}
-			
-			alert(ressources[0].distanceTo(ressources[1]));
-			
+			}			
 				// var circle = {
 					// r : (DIAGONAL/3)/2,
 					// step : 2 / data.ressources.length,
