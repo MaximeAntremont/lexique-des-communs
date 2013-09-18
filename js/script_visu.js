@@ -9,6 +9,7 @@ $(function(){
 	$('#cache_panel #header'),
 	$('#cache_panel #content'),
 	$('#cache_panel #footer'));
+	var ressources = [];
 	
 	cache_panel.startWaiting();
 	
@@ -137,15 +138,99 @@ $(function(){
 	
 	
 	/************************************************************
-							  Entry
+							  Ressource
 	*************************************************************/
-	function Entry (tab){
+	function Ressource (tab){
 		
 		var id = tab.id,
 			val = tab.val,
 			create_date = tab.create_date,
-			ressources = tab.ressources,
-			links = tab.links;
+			trend = tab.trend,
+			type = tab.type,
+			entry_id = tab.entry_id,
+			alert = tab.alert;
+		
+		var x = 0,
+			y = 0,
+			w = 0,
+			font = 0,
+			radius = 0,
+			direction = {x:0,y:0},
+			vitesse = 2;
+		
+		this.id = function (value){
+			if(value != null) id = value;
+			return id;
+		};
+		this.val = function (value){
+			if(value != null) val = value;
+			return val;
+		};
+		this.create_date = function (value){
+			if(value != null) create_date = value;
+			return create_date;
+		};
+		this.trend = function (value){
+			if(value != null) trend = value;
+			return trend;
+		};
+		this.type = function (value){
+			if(value != null) type = value;
+			return type;
+		};
+		this.entry_id = function (value){
+			if(value != null) entry_id = value;
+			return entry_id;
+		};
+		this.alert = function (value){
+			if(value != null) alert = value;
+			return alert;
+		};
+		
+		this.x = function (value){
+			if(value != null) x = value;
+			return x;
+		};
+		this.y = function (value){
+			if(value != null) y = value;
+			return y;
+		};
+		this.w = function (value){
+			if(value != null) w = value;
+			return w;
+		};
+		this.radius = function (value){
+			if(value != null) radius = value;
+			return radius;
+		};
+		this.font = function (value){
+			if(value != null) font = value;
+			return font;
+		};
+		
+		this.draw = function (ctx){
+			ctx.beginPath();
+			ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+			ctx.fillStyle = 'black';
+			ctx.fill();
+		}
+		
+		this.distanceTo = function (obj){
+			if(obj instanceof Ressource){
+				
+				return Math.sqrt( Math.pow(obj.x() - x, 2) + Math.pow(obj.y() - y, 2) ) - (obj.radius() + radius);
+				
+			}
+		}
+		
+		this.direction = function (val, add){
+			if(val != null){
+				if(add == true){
+					
+				}else direction = val;
+			}
+			return direction;
+		}
 		
 	}
 	
@@ -362,44 +447,64 @@ $(function(){
 			context.clearRect(0,0,winW,winH);
 			context.textAlign = "center"
 			context.font = '20px TEX';
-			
-			var ress = [];
+			context.globalAlpha = 0.5;
+						
+			ressources = [];
+			var r = 100;
+			var l = data['ressources'];
 			
 			if(data.ressources != null){
-				
-				var circle = {
-					r : (DIAGONAL/3)/2,
-					step : 2 / data.ressources.length,
-					cursor : 0,
-					center: {x: winW_m, y:winH_m}
-				}
-				
 				data['ressources'].forEach(function(obj){
 					
-					var x = circle.center.x + (Math.cos(circle.cursor*Math.PI) * circle.r);
-					var y = circle.center.y + (Math.sin(circle.cursor*Math.PI) * circle.r);
+					var ress = new Ressource(obj);
 					
-					circle.cursor += circle.step;
+					ress.radius( 10 );
 					
-					context.fillText(obj.val, x, y);
-					ress[obj.id] = {x: x, y:y};
+					var rand = Math.random();
+					
+					ress.x( winW_m + ( Math.cos( rand*Math.PI )*r ) );
+					ress.y( winH_m + ( Math.sin( rand*Math.PI )*r ) );
+					
+					r += 30;
+					
+					ress.draw( context );
+					ressources.push( ress );
 					
 				});
-				
 			}
 			
-			if(data.links != null)
-				data['links'].forEach(function(obj){
+			alert(ressources[0].distanceTo(ressources[1]));
+			
+				// var circle = {
+					// r : (DIAGONAL/3)/2,
+					// step : 2 / data.ressources.length,
+					// cursor : 0,
+					// center: {x: winW_m, y:winH_m}
+				// }
+				
 					
-					var from = ress[obj.from];
-					var to = ress[obj.to];
+					// var x = circle.center.x + (Math.cos(circle.cursor*Math.PI) * circle.r);
+					// var y = circle.center.y + (Math.sin(circle.cursor*Math.PI) * circle.r);
 					
-					context.beginPath();
-					context.moveTo(from.x, from.y);
-					context.lineTo(to.x, to.y);
-					context.stroke();
+					// circle.cursor += circle.step;
 					
-				});
+					// context.fillText(obj.val, x, y);
+					// ress[obj.id] = {x: x, y:y};
+					
+				
+			
+			// if(data.links != null)
+				// data['links'].forEach(function(obj){
+					
+					// var from = ress[obj.from];
+					// var to = ress[obj.to];
+					
+					// context.beginPath();
+					// context.moveTo(from.x, from.y);
+					// context.lineTo(to.x, to.y);
+					// context.stroke();
+					
+				// });
 			
 			if(callback) callback();
 			
