@@ -509,7 +509,7 @@ class Manager
 		if(is_numeric($id)){
 			
 			$ressources = array();
-			$req = $this->_db->query('SELECT * FROM ressource WHERE ress_entry_id = '.$id);
+			$req = $this->_db->query('SELECT * FROM ressource WHERE ress_entry_id = '.$id." ORDER BY ress_trend ASC");
 			
 			while($don = $req->fetch()){
 				$ressources[] = new Ressource($don);
