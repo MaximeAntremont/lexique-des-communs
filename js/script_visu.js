@@ -156,6 +156,41 @@ $(function(){
 /************************************************************
 						  Ressource
 *************************************************************/
+	function Link (tab){
+		
+		var id = tab.id,
+			val = tab.val,
+			create_date = tab.create_date,
+			from = tab.from,
+			to = tab.to,
+			type = tab.type;
+		
+		this.id = function (val){
+			if(val != null) id = val;
+			return id;
+		};
+		this.val = function (valu){
+			if(valu != null) val = valu;
+			return val;
+		};
+		this.create_date = function (val){
+			if(val != null) create_date = val;
+			return create_date;
+		};
+		this.from = function (val){
+			if(val != null) from = val;
+			return from;
+		};
+		this.to = function (val){
+			if(val != null) to = val;
+			return to;
+		};
+		this.type = function (val){
+			if(val != null) type = val;
+			return type;
+		};
+		
+	}
 	function Ressource (tab){
 		
 		var id = tab.id,
@@ -165,7 +200,8 @@ $(function(){
 			type = tab.type,
 			entry_id = tab.entry_id,
 			category_id = tab.category_id,
-			alert = tab.alert;
+			alert = tab.alert,
+			links = [];
 		
 		var center = {x:0,y:0},
 			width = 0,
@@ -264,6 +300,13 @@ $(function(){
 			ctx.fillText(val, center.x, center.y);
 			ctx.fill();
 		}
+		
+		this.addLink = function (obj){
+			if(obj instanceof Link) links.push(obj);
+		};
+		this.getLinks = function (){
+			return links;
+		};
 		
 		this.distanceTo = function (obj){
 			if(obj instanceof Ressource){
@@ -406,17 +449,17 @@ $(function(){
 		}
 		
 		console.debug(frame);
-		if(movement == -1 && cursor >= ressources.length) screen.stop();
+		if(movement == -1 && cursor >= cursorRefs.length) screen.stop();
 	});
 	
 	var cursor = 0;
+	var cursorRefs = [];
 	function showSlowly (){
-		
-		ressources[cursor].visible(true);
-		cursor++;
-		if(cursor < ressources.length)
+		if(cursor < cursorRefs.length){
+			ressources[cursorRefs[cursor]].visible(true);
+			cursor++;
 			setTimeout(showSlowly, 200);
-		
+		}
 	}
 	
 	$('#canvas').mousemove(function(e){
@@ -467,6 +510,7 @@ $(function(){
 				
 			}
 			screen.draw(gpu.getFrame(), true);
+			drawLinks();
 		}
 	});
 	
@@ -521,6 +565,11 @@ $(function(){
 		}
 	});
 	
+	
+	
+	
+	
+	
 /************************************************************
 					printEntrysFromLetter
 *************************************************************/
@@ -552,6 +601,28 @@ $(function(){
 		}else{
 			$("#top_right_corner #val").html("");
 			$("#top_right_corner").hide();
+		}
+		
+	}
+	
+	function drawLinks (){
+		
+		if(ressources.length > 0 && ressource_selected != null){
+			var from = ressource_selected;
+			context.lineCap = 'round';
+			context.lineWidth = 2;
+			
+			from.getLinks().forEach(function (link){
+				
+				var to = ressources[link.to()];
+				context.beginPath();
+				context.moveTo(from.top_left_center.x, from.top_left_center.y);
+				context.lineTo(to.top_left_center.x, to.top_left_center.y);
+				context.stroke();
+				
+			});
+			
+			
 		}
 		
 	}
@@ -651,6 +722,14 @@ $(function(){
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	/************************************************************
 							sendNewEntry
 	*************************************************************/
@@ -697,6 +776,14 @@ $(function(){
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	/************************************************************
 							detectScreen
 	*************************************************************/
@@ -721,6 +808,10 @@ $(function(){
 		winH_m = winH/2;
 		DIAGONAL = Math.ceil(Math.sqrt( Math.pow(winW,2)+Math.pow(winH,2)));
 	}
+	
+	
+	
+	
 	
 	
 	
@@ -778,6 +869,12 @@ $(function(){
 	
 	
 	
+	
+	
+	
+	
+	
+	
 	/************************************************************
 							fetchEntryData
 	*************************************************************/
@@ -801,6 +898,7 @@ $(function(){
 		}).done(function(data) {
 						
 			ressources = [];
+			cursorRefs = [];
 			var r = 10;
 			var l = data['ressources'];
 			
@@ -821,9 +919,18 @@ $(function(){
 					);
 					
 					ress.calculWidth(context);
-					ressources.push( ress );
+					ressources[ress.id()] = ress;
+					cursorRefs.push(ress.id());
 					
 				});
+				if(data.links != null){
+					data['links'].forEach(function(obj){
+						
+						var link = new Link(obj);
+						ressources[obj.from].addLink(link);
+						
+					});
+				}
 				cursor = 0;
 				showSlowly();
 				if(!screen.isAutoRefresh()) screen.restart(gpu.getFrame());
