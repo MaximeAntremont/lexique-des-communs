@@ -168,7 +168,7 @@ $(function(){
 		
 		var x = 0,
 			y = 0,
-			w = 0,
+			width = 0,
 			font = 0,
 			r = 0,
 			direction = {x:0,y:0},
@@ -183,6 +183,20 @@ $(function(){
 		this.val = function (value){
 			if(value != null) val = value;
 			return val;
+		};
+		this.calculWidth = function (ctx){
+			ctx.font = r+'px TEX';
+			ctx.textAlign = 'center';
+			ctx.fillStyle = 'black';
+			var metrics = ctx.measureText(val);
+			width = metrics.width;
+		};
+		this.width = function (val){
+			if(val != null) width = value;
+			return width;
+		};
+		this.height = function (){
+			return r;
 		};
 		this.create_date = function (value){
 			if(value != null) create_date = value;
@@ -241,8 +255,12 @@ $(function(){
 		this.draw = function (ctx){
 			context.globalAlpha = alpha;
 			ctx.beginPath();
-			ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+			ctx.font = r+'px TEX';
+			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
+			ctx.textBaseline = 'middle';
+			ctx.fillText(val, x, y);
+			// ctx.arc(x, y, r, 0, 2 * Math.PI, false);
 			ctx.fill();
 		}
 		
@@ -250,6 +268,20 @@ $(function(){
 			if(obj instanceof Ressource){
 				
 				return Math.sqrt( Math.pow(obj.x() - x, 2) + Math.pow(obj.y() - y, 2) ) - (obj.radius() + r);
+				
+			}
+		}
+		
+		this.spaceBeetween = function (obj){
+			if(obj instanceof Ressource){
+				
+				var v = getVector({x:x,y:y}, obj.getPos());
+				var space = {x:0,y:0};
+				
+				space.x = Math.abs( v.x ) - ( (obj.width() + width)/2 );
+				space.y = Math.abs( v.y ) - ( (obj.height() + r)/2 );
+				
+				return space;
 				
 			}
 		}
@@ -331,12 +363,28 @@ $(function(){
 					var pos = obj.getPos();			
 					var dir = {x:0,y:0};
 					
-					ressources.forEach(function(objBis){
-						if(obj != objBis && objBis.visible() && obj.distanceTo(objBis) <= 1){
-							var tempV = resizeVector( getVector( objBis.getPos(), pos ) , 1);
-							dir = addVector(dir, tempV);
-							movement = 1;
+					ressources.forEach(function(objB){
+						if(obj != objB && objB.visible()){
+							
+							// var pathTo = getVector(pos, objB.getPos());
+							var RpathTo = getVector(objB.getPos(), pos);
+							// var pathToB = {x: Math.abs( pathTo.x ), y: Math.abs( pathTo.y )};
+							var translate = {x:0,y:0};
+							
+							var spaces = obj.spaceBeetween( objB );
+							
+							if(	spaces.x >= 5 || spaces.y >= 5){
+								// translate = resizeVector( getVector(obj.getPos(), {x: winW_m, y: winH_m}) ,0.01);
+							}else{
+								RpathTo = resizeVector(RpathTo, 2);
+								if(spaces.x < 5) translate.x = RpathTo.x;
+								if(spaces.y < 5) translate.y = RpathTo.y*2;
+								movement = 1;
+							}
+							dir = addVector(dir, translate);
+						
 						}
+						
 					});
 					
 					dir = resizeVector(dir, 2);
@@ -360,7 +408,7 @@ $(function(){
 		ressources[cursor].visible(true);
 		cursor++;
 		if(cursor < ressources.length)
-			setTimeout(showSlowly, 100);
+			setTimeout(showSlowly, 200);
 		
 	}
 	
@@ -739,6 +787,7 @@ $(function(){
 						+ ( Math.sin( rand*Math.PI )*r )
 					);
 					
+					ress.calculWidth(context);
 					ressources.push( ress );
 					
 				});
