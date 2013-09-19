@@ -532,6 +532,7 @@ $(function(){
 				
 			txt += '</div>';
 			txt += '<div id="add_entry">Nouvelle entrée</div>';
+			txt += '<div id="add_ressource">Nouvelle ressource</div>';
 			$("#top_panel").html("");
 			$("#top_panel").append(txt);
 			
@@ -552,6 +553,26 @@ $(function(){
 							refreshIndex();
 							$("#top_left_corner #part_one, #top_left_corner #part_two").html("");
 						});
+					}
+				});
+				
+			});
+			
+			$("#add_ressource").click(function(){
+				cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="" placeholder="Contenu de la ressource" />',
+				'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+				cache_panel.open();
+				$(".cliquable").click(function(){
+					if($(this).html() == "Annuler"){
+						cache_panel.close();
+					}
+					if($(this).html() == "Ajouter"){
+						// sendNewRessource ($('#input_entry_val').val(), function(){
+							// setTimeout(function(){cache_panel.close();}, 2000);
+							// refreshIndex();
+							// $("#top_left_corner #part_one, #top_left_corner #part_two").html("");
+						// });
+						cache_panel.close();
 					}
 				});
 				

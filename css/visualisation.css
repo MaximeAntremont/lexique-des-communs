@@ -129,6 +129,22 @@ body{
 		background: rgb(110,110,110);
 		color: rgb(220,220,220);
 	}
+	
+	#top_panel #add_ressource{
+		float: left;
+		height: 35px;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 5px;
+		font-weight: bold;
+		border-right: 1px solid rgb(200,200,200);
+	}
+	
+	#top_panel #add_ressource:hover{
+		cursor: pointer;
+		background: rgb(110,110,110);
+		color: rgb(220,220,220);
+	}
 
  /*************************************************
 				  TOP_LEFT_CORNER
