@@ -5,7 +5,8 @@ $(function(){
 	var DIAGONAL = 600;
 	var ENTRYS = [];
 	var LETTERS = [];
-	var ressource_selected;
+	var entry_selected_id;
+	var entry_selected;
 	var cache_panel = new Cache($('#cache_panel'),
 	$('#cache_panel #header'),
 	$('#cache_panel #content'),
@@ -559,22 +560,27 @@ $(function(){
 			});
 			
 			$("#add_ressource").click(function(){
-				cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="" placeholder="Contenu de la ressource" />',
-				'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
-				cache_panel.open();
-				$(".cliquable").click(function(){
-					if($(this).html() == "Annuler"){
-						cache_panel.close();
-					}
-					if($(this).html() == "Ajouter"){
-						// sendNewRessource ($('#input_entry_val').val(), function(){
-							// setTimeout(function(){cache_panel.close();}, 2000);
-							// refreshIndex();
-							// $("#top_left_corner #part_one, #top_left_corner #part_two").html("");
-						// });
-						cache_panel.close();
-					}
-				});
+				if(entry_selected_id != null && entry_selected_id > 0){
+				
+					cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" />',
+					'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+					cache_panel.open();
+					
+					$(".cliquable").click(function(){
+						if($(this).html() == "Annuler"){
+							cache_panel.close();
+						}
+						if($(this).html() == "Ajouter"){
+							sendNewRessource ($('#input_ress_val').val(), function(){
+								setTimeout(function(){fetchEntryData( entry_selected_id, function(){cache_panel.stopWaiting(true);} );}, 2000);
+								
+							});
+							// cache_panel.close();
+						}
+						
+					});
+					
+				}
 				
 			});
 			
@@ -612,7 +618,26 @@ $(function(){
 		});
 	}
 	
-	
+	function sendNewRessource (ress_val, callback){
+		
+		$.ajax({
+			type: "POST",
+			url: "utils/addRessource.util.php",
+			data : {ress_val: ress_val, ress_entry_id: entry_selected_id},
+			dataType: "json"
+		}).done(function(data) {
+			
+			if(data['return']){
+				cache_panel.content("Ressource sauvegardée !");
+				if(callback) callback();
+			}
+			
+		}).fail(function (a, b, c){
+			// cache_panel.content( '<input type="text" placeholder="Nom de l\'entrée" />' + '<div>Erreur de communication</div>' );
+			alert(a+", "+b+", "+c);
+		});
+		
+	}
 	
 	
 	
@@ -703,7 +728,8 @@ $(function(){
 	*************************************************************/
 	
 	function fetchEntryData(entry_id, callback){
-		
+	
+		entry_selected_id = entry_id;
 		if(ENTRYS != null)
 			ENTRYS.forEach(function(obj){
 				if(obj.id == entry_id){

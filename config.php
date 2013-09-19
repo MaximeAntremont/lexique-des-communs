@@ -28,17 +28,17 @@
 		);
 	code:
 		1** - vidéo
-		2** -
+		2** - mots
 		3** -
 		4** -
 		5** -
 	
 */
-	
+	$ress_mo = array(
+		'^*{20}'
+	);
 	$ress_video_vimeo = array(
-		'name' => 'vimeo',
-		'regexp' => "vimeo+\.+com",
-		'embed' => "<iframe src=\"//player.vimeo.com/video/$0\" width=\"500\" height=\"281\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href=\"http://vimeo.com/70443172\">Don't Fear Death</a> from <a href=\"http://vimeo.com/diceproductions\">Dice Productions</a> on <a href=\"https://vimeo.com\">Vimeo</a>.</p>"
+		"vimeo+\.+com"
 	);
 	$ress_video_youtube = array(
 		'name' => 'youtube',
@@ -48,7 +48,8 @@
 	
 	$ress_dico = array(
 		101 => $ress_video_vimeo,
-		102 => $ress_video_youtube
+		102 => $ress_video_youtube,
+		201 => $ress_mo
 	);
 	
 	
