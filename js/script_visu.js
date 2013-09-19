@@ -809,7 +809,7 @@ $(function(){
 					
 					var ress = new Ressource(obj);
 					
-					ress.radius( (ress.trend()*1)+10 );
+					ress.radius( (ress.trend()*1)+10.5 );
 					
 					var rand = Math.random();
 					

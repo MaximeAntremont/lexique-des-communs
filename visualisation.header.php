@@ -17,6 +17,6 @@
 		<link rel="stylesheet" href="css/visualisation.css" type="text/css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Encyclopétrie</title>
-		<script src="utils/jquery.js"></script>
+		<script src="js/jquery.js"></script>
 	</head>
 	<body>
