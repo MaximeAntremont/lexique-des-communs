@@ -167,15 +167,14 @@ $(function(){
 			category_id = tab.category_id,
 			alert = tab.alert;
 		
-		var x = 0,
-			y = 0,
+		var center = {x:0,y:0},
 			width = 0,
-			font = 0,
 			r = 0,
 			direction = {x:0,y:0},
 			vitesse = 1,
 			visible = false,
 			alpha = 0.5;
+		this.top_left_center = {x: 0, y: 0};
 		
 		this.id = function (value){
 			if(value != null) id = value;
@@ -225,12 +224,18 @@ $(function(){
 		};
 		
 		this.x = function (value){
-			if(value != null) x = value;
-			return x;
+			if(value != null){
+				center.x = value;
+				this.top_left_center.x = value-(width/2);
+			}
+			return center.x;
 		};
 		this.y = function (value){
-			if(value != null) y = value;
-			return y;
+			if(value != null){
+				center.y = value;
+				this.top_left_center.y = value-(r/2);
+			}
+			return center.y;
 		};
 		this.w = function (value){
 			if(value != null) w = value;
@@ -239,10 +244,6 @@ $(function(){
 		this.radius = function (value){
 			if(value != null) r = value;
 			return r;
-		};
-		this.font = function (value){
-			if(value != null) font = value;
-			return font;
 		};
 		this.visible = function (value){
 			if(value != null) visible = value;
@@ -260,15 +261,14 @@ $(function(){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText(val, x, y);
-			// ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+			ctx.fillText(val, center.x, center.y);
 			ctx.fill();
 		}
 		
 		this.distanceTo = function (obj){
 			if(obj instanceof Ressource){
 				
-				return Math.sqrt( Math.pow(obj.x() - x, 2) + Math.pow(obj.y() - y, 2) ) - (obj.radius() + r);
+				return Math.sqrt( Math.pow(obj.x() - center.x, 2) + Math.pow(obj.y() - center.y, 2) ) - (obj.radius() + r);
 				
 			}
 		}
@@ -276,7 +276,7 @@ $(function(){
 		this.spaceBeetween = function (obj){
 			if(obj instanceof Ressource){
 				
-				var v = getVector({x:x,y:y}, obj.getPos());
+				var v = getVector({x:center.x,y:center.y}, obj.getPos());
 				var space = {x:0,y:0};
 				
 				space.x = Math.abs( v.x ) - ( (obj.width() + width)/2 );
@@ -294,17 +294,23 @@ $(function(){
 		
 		this.move = function (){
 			
-			x += direction.x*vitesse;
-			y += direction.y*vitesse;
+			center.x += direction.x*vitesse;
+			center.y += direction.y*vitesse;
+			
+			this.top_left_center.x = center.x - (width/2);
+			this.top_left_center.y = center.y - (r/2);
 			
 		};
 		
 		this.getPos = function (){
-			return {x: x, y: y};
+			return center;
 		};
 		
 		this.isOver = function (mouse){
-			return (normeVector( {x: mouse.x-x, y: mouse.y-y}) < r) ? true : false;
+			return (mouse.x >= this.top_left_center.x 
+			&& mouse.x <= this.top_left_center.x + width 
+			&& mouse.y >= this.top_left_center.y 
+			&& mouse.y <= this.top_left_center.y + r) ? true : false;
 		};
 		
 	}
@@ -420,6 +426,7 @@ $(function(){
 			
 				if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
 					
+					// console.debug(obj.top_left_center.x);
 					$('#canvas').css('cursor', 'pointer');
 					isNoOver = false;
 				}
