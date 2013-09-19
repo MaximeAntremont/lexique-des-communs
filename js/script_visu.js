@@ -160,7 +160,7 @@ $(function(){
 		var id = tab.id,
 			val = tab.val,
 			create_date = tab.create_date,
-			trend = tab.trend,
+			trend = ((tab.trend > 20) ? 20 : tab.trend),
 			type = tab.type,
 			entry_id = tab.entry_id,
 			category_id = tab.category_id,
