@@ -16,6 +16,11 @@
 		<div id="part_one" ></div>
 		<div id="part_two" ></div>
 	</div>
+	<div id="top_right_corner">
+		<div id="type" ></div>
+		<div id="category" ></div>
+		<div id="val" ></div>
+	</div>
 	
 	<div id="cache_panel" >
 		<div style="height: 100%;vertical-align: middle;display: inline-block;" ></div>

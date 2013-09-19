@@ -5,6 +5,7 @@ $(function(){
 	var DIAGONAL = 600;
 	var ENTRYS = [];
 	var LETTERS = [];
+	var ressource_selected;
 	var cache_panel = new Cache($('#cache_panel'),
 	$('#cache_panel #header'),
 	$('#cache_panel #content'),
@@ -19,7 +20,7 @@ $(function(){
 	var screen = new GPUScreen({
 		canvas : canvas,
 		autoRefresh : true,
-		delay : 3,
+		delay : 2,
 		autoClear : true
 	});
 	var anim = new GPUFrame (false);
@@ -28,13 +29,24 @@ $(function(){
 	
 	
 	$(window).resize(function (){
+		var oldMiddle = {x: winW_m,y: winH_m};
 		detectScreen();
+		var offset = {x: winW_m-oldMiddle.x, y: winH_m-oldMiddle.y};
+		
 		$('#canvas').attr('width', winW);
 		$('#canvas').attr('height', winH);
 		$('#canvas').css('position', 'fixed');
 		$('#canvas').css('top', '40px');
 		$('#canvas').css('left', '40px');
 		$('#canvas').css('z-index', '5');
+		
+		if(ressources.length > 0)
+			ressources.forEach(function(obj){
+				obj.x( obj.x() + offset.x );
+				obj.y( obj.y() + offset.y );
+			});
+		
+		screen.draw(gpu.getFrame(), true);
 	});
 	
 	
@@ -151,6 +163,7 @@ $(function(){
 			trend = tab.trend,
 			type = tab.type,
 			entry_id = tab.entry_id,
+			category_id = tab.category_id,
 			alert = tab.alert;
 		
 		var x = 0,
@@ -174,6 +187,10 @@ $(function(){
 		this.create_date = function (value){
 			if(value != null) create_date = value;
 			return create_date;
+		};
+		this.category_id = function (value){
+			if(value != null) category_id = value;
+			return category_id;
 		};
 		this.trend = function (value){
 			if(value != null) trend = value;
@@ -334,7 +351,7 @@ $(function(){
 		}
 		
 		console.debug(frame);
-		if(movement == -1 && cursor >= ressources.length) screen.isAutoRefresh(false);
+		if(movement == -1 && cursor >= ressources.length) screen.stop();
 	});
 	
 	var cursor = 0;
@@ -349,23 +366,83 @@ $(function(){
 	
 	$('#canvas').mousemove(function(e){
 		if(ressources.length > 0){
+			var isNoOver = true;
 			ressources.forEach(function(obj){
-				var temp = obj.isOver({x: e.pageX-40, y: e.pageY-40});
-				if(obj.visible() && temp && obj.alpha() == 0.5){
+			
+				if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
 					
-					obj.alpha(0.8);
-					ressource_selected = obj;
-					screen.draw(gpu.getFrame(), true);
-					
-				}else if(!temp){
-					
-					obj.alpha(0.5);
-					
+					$('#canvas').css('cursor', 'pointer');
+					isNoOver = false;
 				}
-				
-				//TODO partie à optimiser ( pour le screen.draw(//,//); )
-				 
+								 
 			});
+			if(isNoOver) $(this).css('cursor', 'default');
+		}
+	});
+	
+	$('#canvas').click(function(e){
+		if(ressources.length > 0){
+			var isNoOver = true;
+			ressources.forEach(function(obj){
+			
+				if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
+					
+					ressource_selected = obj;
+					$("#right_panel #addTrend").css('color', 'rgb(160,160,160)');
+					$("#right_panel #subTrend").css('color', 'rgb(160,160,160)');
+					$("#right_panel #addAlert").css('color', 'rgb(160,160,160)');
+					obj.alpha(0.8);
+					isNoOver = false;
+					printRessourceInfos();
+					
+				}else{
+					obj.alpha(0.5);
+				}
+								 
+			});
+			if(isNoOver){
+				$("#right_panel #addTrend").css('color', 'rgb(200,200,200)');
+				$("#right_panel #subTrend").css('color', 'rgb(200,200,200)');
+				$("#right_panel #addAlert").css('color', 'rgb(200,200,200)');
+				
+				ressources.forEach(function(objB){objB.alpha(0.5);});
+				ressource_selected = null;
+				printRessourceInfos();
+				
+			}
+			screen.draw(gpu.getFrame(), true);
+		}
+	});
+	
+	$('#right_panel #addTrend').click(function (){
+		if(ressource_selected instanceof Ressource){
+			$.ajax({
+				type: "POST",
+				url: "utils/incrementRessource_trend.util.php",
+				data: {ress_id: ressource_selected.id()},
+				dataType: "json"
+			}).done(function(data) {
+				if(data['return']){
+					ressource_selected.radius( ressource_selected.radius()+1 );
+					screen.restart(gpu.getFrame());
+				}
+			}).fail(function(a,b,c){alert(a+", "+b+", "+c);});
+		}
+	});
+	
+	$('#right_panel #subTrend').click(function (){
+		if(ressource_selected instanceof Ressource){
+			$.ajax({
+				type: "POST",
+				url: "utils/decrementRessource_trend.util.php",
+				data: {ress_id: ressource_selected.id()},
+				dataType: "json"
+			}).done(function(data) {
+				if(data['return']){
+					ressource_selected.radius( ressource_selected.radius()-1 );
+					screen.restart(gpu.getFrame());
+				}
+			}).fail(function(a,b,c){alert(a+", "+b+", "+c);});
 		}
 	});
 	
@@ -386,6 +463,22 @@ $(function(){
 			fetchEntryData( this.id.replace("id", ""), cache_panel.stopWaiting(true) );
 			window.location.hash = this.id.replace("id", "");
 		});
+	}
+	
+	
+	
+	function printRessourceInfos (){
+		
+		if(ressource_selected instanceof Ressource){
+			$("#top_right_corner #type").html(ressource_selected.type());
+			$("#top_right_corner #category").html(ressource_selected.category_id());
+			$("#top_right_corner #val").html(ressource_selected.val());
+			$("#top_right_corner").show();
+		}else{
+			$("#top_right_corner #val").html("");
+			$("#top_right_corner").hide();
+		}
+		
 	}
 	
 	

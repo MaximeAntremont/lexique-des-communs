@@ -404,6 +404,17 @@ class Manager
 		
 	}
 	
+	public function getLastTrendChange ($ress){
+		
+		if($ress instanceof Ressource){
+			$req = $this->_db->query("SELECT log_id, log_type FROM log WHERE 
+				log_type >= 301 AND log_type <= 302 AND log_ip = '". $_SERVER['REMOTE_ADDR'] ."' AND log_entry_id = '". $ress->entry_id() ."' AND log_val = 'id$". $ress->id() ."' ORDER BY log_id DESC LIMIT 0,1");
+			
+			return ($don = $req->fetch()) ? $don['log_type'] : false;
+		}else return false;
+		
+	}
+	
 	
 	
 	/**************************************************************************
@@ -472,7 +483,24 @@ class Manager
 		$req->bindValue(':category_id', $obj->category_id());
 		$req->bindValue(':id', $obj->id());
 		
-		$req->execute();
+		return ($req->execute()) ? true : false;
+		
+	}
+	
+	public function updateRessource_trend ($id, $offset){
+		
+		if(is_numeric($id) && is_numeric($offset) && $id > 0){
+			
+			$req = $this->_db->prepare('UPDATE ressource SET 
+			ress_trend = :offset + ress_trend 
+			WHERE ress_id = :id');
+		
+			$req->bindValue(':offset', $offset);
+			$req->bindValue(':id', $id);
+			
+			return ($req->execute()) ? true : false;
+			
+		}else return false;
 		
 	}
 	

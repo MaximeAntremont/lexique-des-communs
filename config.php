@@ -62,5 +62,8 @@
 
 	$log_dico = array(
 		201 => "enregistrement d'une entrée dans le serveur",
-		202 => "enregistrement d'une ressource dans le serveur"
+		202 => "enregistrement d'une ressource dans le serveur",
+		
+		301 => "incrementation du trend d'une ressource",
+		302 => "decrementation du trend d'une ressource"
 	);
