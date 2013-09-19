@@ -65,5 +65,6 @@
 		202 => "enregistrement d'une ressource dans le serveur",
 		
 		301 => "incrementation du trend d'une ressource",
-		302 => "decrementation du trend d'une ressource"
+		302 => "decrementation du trend d'une ressource",
+		303 => "alerte d'une ressource"
 	);

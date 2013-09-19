@@ -446,6 +446,25 @@ $(function(){
 		}
 	});
 	
+	$('#right_panel #addAlert').click(function (){
+		if(ressource_selected instanceof Ressource){
+			$.ajax({
+				type: "POST",
+				url: "utils/incrementRessource_alert.util.php",
+				data: {ress_id: ressource_selected.id()},
+				dataType: "json"
+			}).done(function(data) {
+				if(data['return']){
+					
+					cache_panel.modify('alerte de contenu','Merci de nous avoir alerté.','');
+					cache_panel.open();
+					setTimeout(function(){cache_panel.close();},2000);
+					
+				}
+			}).fail(function(a,b,c){alert(a+", "+b+", "+c);});
+		}
+	});
+	
 /************************************************************
 					printEntrysFromLetter
 *************************************************************/

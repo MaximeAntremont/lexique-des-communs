@@ -415,6 +415,17 @@ class Manager
 		
 	}
 	
+	public function isRessourceAlerted ($ress){
+		
+		if($ress instanceof Ressource){
+			$req = $this->_db->query("SELECT log_id FROM log WHERE 
+				log_type = 303 AND log_ip = '". $_SERVER['REMOTE_ADDR'] ."' AND log_entry_id = '". $ress->entry_id() ."' AND log_val = 'id$". $ress->id() ."' ORDER BY log_id DESC LIMIT 0,1");
+			
+			return ($don = $req->fetch()) ? true : false;
+		}else return false;
+		
+	}
+	
 	
 	
 	/**************************************************************************
