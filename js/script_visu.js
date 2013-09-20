@@ -783,12 +783,20 @@ $(function(){
 			
 			if(refresh)screen.draw(gpu.getFrame(), true);
 			
+			context.globalAlpha = 0.6;
 			linksToDraw.forEach(function (link){
 				var from = ressources[link.from()];
 				var to = ressources[link.to()];
 				context.beginPath();
 				context.moveTo(from.top_left_center.x, from.top_left_center.y);
 				context.lineTo(to.top_left_center.x, to.top_left_center.y);
+				switch(link.type()){
+					case '0': context.strokeStyle = 'rgb(255,0,0)'; break;
+					case '100': context.strokeStyle = 'rgb(0,255,0)'; break;
+					case '200': context.strokeStyle = 'rgb(0,0,255)'; break;
+					case '300': context.strokeStyle = 'rgb(0,0,0)'; break;
+					default: context.strokeStyle = 'rgb(0,0,0)';
+				}
 				context.stroke();
 			});
 			
