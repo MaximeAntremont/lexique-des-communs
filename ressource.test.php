@@ -114,7 +114,7 @@
 					?></select></label><br />
 					<input type="text" placeholder="value" name="link_val" /><br />
 					<label>Type<select name="link_type">
-					<option value="000" selected>conflitctuel</option>
+					<option value="0" selected>conflitctuel</option>
 					<option value="100">implicite</option>
 					<option value="200">explicite</option>
 					<option value="300">direct</option>

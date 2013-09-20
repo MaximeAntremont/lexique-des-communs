@@ -511,7 +511,7 @@ $(function(){
 					printRessourceInfos();
 					
 					if(selecting){
-						cache_panel.modify('<span>Nouveau Lien</span>', '<select><option>type</option></select>',
+						cache_panel.modify('<span>Nouveau Lien</span>', '<select id="link_type" name="link_type" ><option value="0" selected>conflitctuel</option><option value="100">implicite</option><option value="200">explicite</option><option value="300">direct</option></select>',
 											'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 						cache_panel.open();
 						
@@ -519,8 +519,8 @@ $(function(){
 							if($(this).html() == "Annuler"){
 								cache_panel.close();
 							}
-							/* if($(this).html() == "Ajouter"){
-								sendNewLink ($('#input_ress_val').val(), function(){
+							if($(this).html() == "Ajouter"){
+								sendNewLink ($('#link_type').val(), function(){
 									setTimeout(function(){
 										fetchEntryData( entry_selected_id, function(){
 											cache_panel.stopWaiting(true);
@@ -528,7 +528,7 @@ $(function(){
 										});
 									}, 2000);
 								});
-							} */
+							}
 							
 						});
 					}
@@ -895,7 +895,6 @@ $(function(){
 									});
 								}, 2000);
 							});
-							// cache_panel.close();
 						}
 						
 					});
@@ -962,6 +961,31 @@ $(function(){
 			
 		}).fail(function (a, b, c){
 			// cache_panel.content( '<input type="text" placeholder="Nom de l\'entrée" />' + '<div>Erreur de communication</div>' );
+			alert(a+", "+b+", "+c);
+		});
+		
+	}
+	
+	function sendNewLink (link_type, callback){
+		
+		$.ajax({
+			type: "POST",
+			url: "utils/addLink.util.php",
+			data : {
+				link_type: link_type,
+				link_from: lastRessource_selected.id(),
+				link_to: ressource_selected.id(),
+				link_entry_id: entry_selected_id
+			},
+			dataType: "json"
+		}).done(function(data) {
+			
+			if(data['return']){
+				cache_panel.content("Lien sauvegardé !");
+				if(callback) callback();
+			}
+			
+		}).fail(function (a, b, c){
 			alert(a+", "+b+", "+c);
 		});
 		

@@ -256,9 +256,7 @@ class Manager
 			$req->bindValue(':type', $obj->type());
 			$req->bindValue(':entry_id', $obj->entry_id());
 			
-			$req->execute();
-		
-			return true;
+			return ($req->execute()) ? true : false;
 			
 		}else{
 		
