@@ -161,7 +161,7 @@ $(function(){
 	
 	
 /************************************************************
-						  Ressource
+						  OBJETS
 *************************************************************/
 	function Link (tab){
 		
@@ -204,7 +204,7 @@ $(function(){
 			val = tab.val,
 			create_date = tab.create_date,
 			trend = ((tab.trend > 20) ? 20 : tab.trend),
-			type = tab.type,
+			type = parseInt(tab.type),
 			entry_id = tab.entry_id,
 			category_id = tab.category_id,
 			alert = tab.alert,
@@ -219,6 +219,11 @@ $(function(){
 			alpha = 0.5;
 		this.top_left_center = {x: 0, y: 0};
 		
+		if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
+			r = 20;
+			width = r;
+		}
+		
 		this.id = function (value){
 			if(value != null) id = value;
 			return id;
@@ -228,9 +233,9 @@ $(function(){
 			return val;
 		};
 		this.calculWidth = function (ctx){
+			if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ) return;
 			ctx.font = r+'px TEX';
 			ctx.textAlign = 'center';
-			ctx.fillStyle = 'black';
 			var metrics = ctx.measureText(val);
 			width = metrics.width;
 		};
@@ -285,7 +290,10 @@ $(function(){
 			return w;
 		};
 		this.radius = function (value){
-			if(value != null) r = value;
+			if(value != null){
+				r = value;
+				if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){r*=2; width = r;}
+			}
 			return r;
 		};
 		this.visible = function (value){
@@ -298,14 +306,29 @@ $(function(){
 		};
 		
 		this.draw = function (ctx){
+		
 			context.globalAlpha = alpha;
-			ctx.beginPath();
-			ctx.font = r+'px TEX';
-			ctx.textAlign = 'center';
-			ctx.fillStyle = 'black';
-			ctx.textBaseline = 'middle';
-			ctx.fillText(val, center.x, center.y);
-			ctx.fill();
+			
+			if(type >= 100 && type < 200 || (type >= 500 && type < 600) ){
+				ctx.fillStyle = 'black';
+				ctx.fillRect(center.x - (width/2), center.y - (r/2), width, r);
+				ctx.beginPath();
+				ctx.font = '10px TEX';
+				ctx.textAlign = 'center';
+				ctx.fillStyle = 'white';
+				ctx.textBaseline = 'middle';
+				ctx.fillText((type >= 500 && type < 600) ? "lien" : "vidéo", center.x, center.y);
+				ctx.fill();
+			}else{
+				ctx.beginPath();
+				ctx.font = r+'px TEX';
+				ctx.textAlign = 'center';
+				ctx.fillStyle = 'black';
+				ctx.textBaseline = 'middle';
+				ctx.fillText(val, center.x, center.y);
+				ctx.fill();
+			}
+			
 		}
 		
 		this.addLink = function (obj){
@@ -329,8 +352,13 @@ $(function(){
 				var v = getVector({x:center.x,y:center.y}, obj.getPos());
 				var space = {x:0,y:0};
 				
-				space.x = Math.abs( v.x ) - ( (obj.width() + width)/2 );
-				space.y = Math.abs( v.y ) - ( (obj.height() + r)/2 );
+				if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
+					space.x = Math.abs( v.x ) - ( (obj.width() + width)/2 );
+					space.y = Math.abs( v.y ) - ( (obj.height() + r)/2 );
+				}else{
+					space.x = Math.abs( v.x ) - ( (obj.width() + width)/2 );
+					space.y = Math.abs( v.y ) - ( (obj.height() + r)/2 );
+				}
 				
 				return space;
 				

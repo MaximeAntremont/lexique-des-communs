@@ -34,7 +34,7 @@
 		5** -
 	
 */
-	$ress_mo = array(
+	$ress_mot = array(
 		'^*{20}'
 	);
 	$ress_video_vimeo = array(
@@ -49,7 +49,7 @@
 	$ress_dico = array(
 		101 => $ress_video_vimeo,
 		102 => $ress_video_youtube,
-		201 => $ress_mo
+		201 => $ress_mot
 	);
 	
 	
