@@ -804,8 +804,12 @@ $(function(){
 						}
 						if($(this).html() == "Ajouter"){
 							sendNewRessource ($('#input_ress_val').val(), function(){
-								setTimeout(function(){fetchEntryData( entry_selected_id, function(){cache_panel.stopWaiting(true);} );}, 2000);
-								
+								setTimeout(function(){
+									fetchEntryData( entry_selected_id, function(){
+										cache_panel.stopWaiting(true);
+										cache_panel.close();
+									});
+								}, 2000);
 							});
 							// cache_panel.close();
 						}
