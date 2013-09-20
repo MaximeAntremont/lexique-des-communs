@@ -7,6 +7,9 @@ $(function(){
 	var LETTERS = [];
 	var entry_selected_id;
 	var entry_selected;
+	var zoomFactor = 1;
+	var zoom = 0;
+	var CTRL = false;
 	var cache_panel = new Cache($('#cache_panel'),
 	$('#cache_panel #header'),
 	$('#cache_panel #content'),
@@ -335,14 +338,17 @@ $(function(){
 			return direction;
 		}
 		
-		this.move = function (){
+		this.move = function (vector){
 			
-			center.x += direction.x*vitesse;
-			center.y += direction.y*vitesse;
-			
-			this.top_left_center.x = center.x - (width/2);
-			this.top_left_center.y = center.y - (r/2);
-			
+			if(vector != null){
+				center.x += vector.x*vitesse;
+				center.y += vector.y*vitesse;
+			}else{
+				center.x += direction.x*vitesse;
+				center.y += direction.y*vitesse;
+			}
+				this.top_left_center.x = center.x - (width/2);
+				this.top_left_center.y = center.y - (r/2);
 		};
 		
 		this.getPos = function (){
@@ -462,6 +468,18 @@ $(function(){
 		}
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+/************************************************************
+							EVENTS
+*************************************************************/
+	
 	$('#canvas').mousemove(function(e){
 		if(ressources.length > 0){
 			var isNoOver = true;
@@ -565,6 +583,29 @@ $(function(){
 		}
 	});
 	
+	$('body').keydown(function (e){
+		
+		if(e.keyCode == 17) CTRL = true;
+		if(e.keyCode == 39 && CTRL && cursor >= cursorRefs.length){
+			if(zoom <= 0.3) zoomFactor += 0.05;
+			calculZoom();
+		}
+		if(e.keyCode == 37 && CTRL && cursor >= cursorRefs.length){
+			if(zoom >= -0.3) zoomFactor -= 0.05;
+			calculZoom();
+		}
+		
+	});
+	$('body').keyup(function (e){
+		
+		if(e.keyCode == 17) CTRL = false;
+		// if(e.keyCode == 107 && !MOINS) PLUS = false;
+		// if(e.keyCode == 109 && !PLUS) MOINS = false;
+		
+	});
+	
+	
+	
 	
 	
 	
@@ -606,26 +647,40 @@ $(function(){
 	}
 	
 	function drawLinks (){
-		
 		if(ressources.length > 0 && ressource_selected != null){
 			var from = ressource_selected;
 			context.lineCap = 'round';
 			context.lineWidth = 2;
-			
 			from.getLinks().forEach(function (link){
-				
 				var to = ressources[link.to()];
 				context.beginPath();
 				context.moveTo(from.top_left_center.x, from.top_left_center.y);
 				context.lineTo(to.top_left_center.x, to.top_left_center.y);
 				context.stroke();
-				
-			});
-			
-			
+			});	
 		}
-		
 	}
+	
+	function calculZoom (){
+		
+		ressources.forEach(function (obj){
+			
+			obj.radius( obj.radius()*zoomFactor );
+			obj.calculWidth(context);
+			var pos = obj.getPos();
+			var vect = getVector(pos, {x:winW_m,y:winH_m});
+			vect.x *= 1-zoomFactor;
+			vect.y *= 1-zoomFactor;
+			
+			obj.move(vect);
+			
+		});
+		console.debug("calcul zoom: "+zoom);
+		screen.draw(gpu.getFrame(), true);
+		zoom += zoomFactor-1;
+		zoomFactor = 1;
+	}
+	
 	
 	
 	
