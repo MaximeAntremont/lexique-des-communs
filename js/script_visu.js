@@ -10,6 +10,9 @@ $(function(){
 	var ressource_selected;
 	var zoomFactor = 1;
 	var zoom = 0;
+	var mouseClicked = false;
+	var lastRessource_selected;
+	var selecting = false;
 	var CTRL = false;
 	var cache_panel = new Cache($('#cache_panel'),
 	$('#cache_panel #header'),
@@ -481,37 +484,54 @@ $(function(){
 							EVENTS
 *************************************************************/
 	
-	$('#canvas').mousemove(function(e){
-		if(ressources.length > 0){
-			var isNoOver = true;
-			ressources.forEach(function(obj){
-			
-				if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
-					
-					// console.debug(obj.top_left_center.x);
-					$('#canvas').css('cursor', 'pointer');
-					isNoOver = false;
-				}
-								 
-			});
-			if(isNoOver) $(this).css('cursor', 'default');
-		}
-	});
 	
-	$('#canvas').click(function(e){
+	$('#canvas').mousedown(function(){
+		console.debug('mouseClicked: '+mouseClicked);
+		mouseClicked = true;
+	});
+
+	$('#canvas').mouseup(function(e){
+		console.debug('mouseClicked: '+mouseClicked);
+		mouseClicked = false;
+		lastRessource_selected = ressource_selected;
+		
 		if(ressources.length > 0){
+		
 			var isNoOver = true;
 			ressources.forEach(function(obj){
 			
 				if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
 					
 					ressource_selected = obj;
+					isNoOver = false;
 					$("#right_panel #addTrend").css('color', 'rgb(160,160,160)');
 					$("#right_panel #subTrend").css('color', 'rgb(160,160,160)');
 					$("#right_panel #addAlert").css('color', 'rgb(160,160,160)');
 					obj.alpha(0.8);
-					isNoOver = false;
 					printRessourceInfos();
+					
+					if(selecting){
+						cache_panel.modify('<span>Nouveau Lien</span>', '<select><option>type</option></select>',
+											'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+						cache_panel.open();
+						
+						$(".cliquable").click(function(){
+							if($(this).html() == "Annuler"){
+								cache_panel.close();
+							}
+							/* if($(this).html() == "Ajouter"){
+								sendNewLink ($('#input_ress_val').val(), function(){
+									setTimeout(function(){
+										fetchEntryData( entry_selected_id, function(){
+											cache_panel.stopWaiting(true);
+											cache_panel.close();
+										});
+									}, 2000);
+								});
+							} */
+							
+						});
+					}
 					
 				}else{
 					obj.alpha(0.5);
@@ -530,8 +550,72 @@ $(function(){
 			}
 			if(ressource_selected == null)screen.draw(gpu.getFrame(), true);
 			drawLinks(true);
+			
+		}
+		
+	});
+	
+	$('#canvas').mousemove(function(e){
+		if(ressources.length > 0){
+			var isNoOver = true;
+			ressources.forEach(function(obj){
+			
+				if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
+					
+					$('#canvas').css('cursor', 'pointer');
+					isNoOver = false;
+				}
+								 
+			});
+			if(isNoOver) $(this).css('cursor', 'default');
+		}
+		if(mouseClicked && ressource_selected != null){
+			var cursor = {x: e.pageX-40, y: e.pageY-40};
+			selecting = true;
+			screen.draw(gpu.getFrame(), true);
+			context.beginPath();
+			context.moveTo(ressource_selected.top_left_center.x, ressource_selected.top_left_center.y);
+			context.lineTo(cursor.x, cursor.y);
+			context.stroke();
+		}else{
+			selecting = false;
 		}
 	});
+	
+	// $('#canvas').click(function(e){
+		// if(ressources.length > 0){
+			// var isNoOver = true;
+			// ressources.forEach(function(obj){
+			
+				// if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
+					
+					// ressource_selected = obj;
+					// $("#right_panel #addTrend").css('color', 'rgb(160,160,160)');
+					// $("#right_panel #subTrend").css('color', 'rgb(160,160,160)');
+					// $("#right_panel #addAlert").css('color', 'rgb(160,160,160)');
+					// obj.alpha(0.8);
+					// isNoOver = false;
+					// printRessourceInfos();
+					
+				// }else{
+					// obj.alpha(0.5);
+				// }
+								 
+			// });
+			// if(isNoOver){
+				// $("#right_panel #addTrend").css('color', 'rgb(200,200,200)');
+				// $("#right_panel #subTrend").css('color', 'rgb(200,200,200)');
+				// $("#right_panel #addAlert").css('color', 'rgb(200,200,200)');
+				
+				// ressources.forEach(function(objB){objB.alpha(0.5);});
+				// ressource_selected = null;
+				// printRessourceInfos();
+				
+			// }
+			// if(ressource_selected == null)screen.draw(gpu.getFrame(), true);
+			// drawLinks(true);
+		// }
+	// });
 	
 	$('#right_panel #addTrend').click(function (){
 		if(ressource_selected instanceof Ressource){
@@ -820,6 +904,8 @@ $(function(){
 				
 			});
 			
+			
+			
 			if(callback) callback();
 			
 		}).fail(function (a,b,c){
@@ -827,8 +913,6 @@ $(function(){
 		});
 		
 	}
-
-	
 	
 	
 	

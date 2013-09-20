@@ -5,10 +5,10 @@ class Link
 	private $id,
 			$val,
 			$create_date,
-			$from,
-			$to,
-			$entry_id,
-			$type;
+			$from, //required
+			$to, //required
+			$entry_id, //required
+			$type; //required
 	
 	/***************
 	 * CONSTRUCTOR
