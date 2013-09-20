@@ -220,7 +220,7 @@ $(function(){
 		this.top_left_center = {x: 0, y: 0};
 		
 		if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
-			r = 20;
+			r = 10;
 			width = r;
 		}
 		
@@ -292,7 +292,7 @@ $(function(){
 		this.radius = function (value){
 			if(value != null){
 				r = value;
-				if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){r*=2; width = r;}
+				if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){width = r;}
 			}
 			return r;
 		};
@@ -1181,7 +1181,7 @@ $(function(){
 					data['links'].forEach(function(obj){
 						
 						var link = new Link(obj);
-						ressources[obj.from].addLink(link);
+						if(ressources[obj.from]) ressources[obj.from].addLink(link);
 						
 					});
 				}
