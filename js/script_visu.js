@@ -596,6 +596,24 @@ $(function(){
 		}
 		
 	});
+	
+	$('#addZoom').click(function (){
+		
+		if(cursor >= cursorRefs.length){
+			if(zoom <= 0.3) zoomFactor += 0.05;
+			calculZoom();
+		}
+		
+	});
+	
+	$('#subZoom').click(function (){
+		
+		if(cursor >= cursorRefs.length){
+			if(zoom >= -0.3) zoomFactor -= 0.05;
+			calculZoom();
+		}
+		
+	});
 	$('body').keyup(function (e){
 		
 		if(e.keyCode == 17) CTRL = false;

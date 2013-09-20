@@ -2,7 +2,10 @@
 	<canvas id="canvas" ></canvas>
 
 	<div id="top_panel"></div>
-	<div id="left_panel"></div>
+	<div id="left_panel">
+		<div id="addZoom" class="panel_button" >+</div>
+		<div id="subZoom" class="panel_button" >-</div>
+	</div>
 	<div id="right_panel">
 		<div id="addTrend" class="panel_button" >+</div>
 		<div id="subTrend" class="panel_button" >-</div>

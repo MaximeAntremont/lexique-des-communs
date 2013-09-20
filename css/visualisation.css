@@ -38,7 +38,10 @@ body{
 		top: 0; left: 0;
 		height: 100%;
 		width: 40px;
+		text-align: center;
+		font-weight: bold;
 		color: rgb(110,110,110);
+		background: rgb(220,220,220);
 	}
 	#right_panel{
 		position: fixed;
@@ -158,6 +161,7 @@ body{
 	
 	#top_left_corner #part_one h1{
 		margin-right: 15px;
+		margin-left: 15px;
 		font-size: 40px;
 		color: rgb(50,50,50);
 	}
@@ -209,6 +213,30 @@ body{
 	}
 	
 	#right_panel #addAlert {
+		width: 100%;
+		border-bottom: 1px solid rgb(200,200,200);
+		padding-bottom: 2px;
+	}
+	
+ /*************************************************
+				   LEFT PANEL
+ *************************************************/
+	
+	#left_panel .panel_button:hover {
+		cursor: pointer;
+		background: rgb(110,110,110);
+		color: rgb(220,220,220);
+	}
+	
+	#left_panel #addZoom {
+		width: 100%;
+		margin-top: 40px;
+		border-top: 1px solid rgb(200,200,200);
+		border-bottom: 1px solid rgb(200,200,200);
+		padding-bottom: 2px;
+	}
+	
+	#left_panel #subZoom {
 		width: 100%;
 		border-bottom: 1px solid rgb(200,200,200);
 		padding-bottom: 2px;
