@@ -486,7 +486,7 @@ $(function(){
 			if(movement == 0) movement = -1;
 		}
 		
-		console.debug(frame);
+		// console.debug(frame);
 		if(movement == -1 && cursor >= cursorRefs.length) screen.stop();
 	});
 	
@@ -514,12 +514,12 @@ $(function(){
 	
 	
 	$('#canvas').mousedown(function(){
-		console.debug('mouseClicked: '+mouseClicked);
+		// console.debug('mouseClicked: '+mouseClicked);
 		mouseClicked = true;
 	});
 
 	$('#canvas').mouseup(function(e){
-		console.debug('mouseClicked: '+mouseClicked);
+		// console.debug('mouseClicked: '+mouseClicked);
 		mouseClicked = false;
 		lastRessource_selected = ressource_selected;
 		
@@ -554,7 +554,7 @@ $(function(){
 											cache_panel.stopWaiting(true);
 											cache_panel.close();
 										});
-									}, 2000);
+									}, 1000);
 								});
 							}
 							
@@ -689,7 +689,7 @@ $(function(){
 					
 					cache_panel.modify('alerte de contenu','Merci de nous avoir alerté.','');
 					cache_panel.open();
-					setTimeout(function(){cache_panel.close();},2000);
+					setTimeout(function(){cache_panel.close();},1000);
 					
 				}
 			}).fail(function(a,b,c){alert(a+", "+b+", "+c);});
@@ -902,7 +902,7 @@ $(function(){
 					}
 					if($(this).html() == "Ajouter"){
 						sendNewEntry ($('#input_entry_val').val(), function(){
-							setTimeout(function(){cache_panel.close();}, 2000);
+							setTimeout(function(){cache_panel.close();}, 1000);
 							refreshIndex();
 							$("#top_left_corner #part_one, #top_left_corner #part_two").html("");
 						});
@@ -929,7 +929,7 @@ $(function(){
 										cache_panel.stopWaiting(true);
 										cache_panel.close();
 									});
-								}, 2000);
+								}, 1000);
 							});
 						}
 						
@@ -1155,6 +1155,7 @@ $(function(){
 			cursorRefs = [];
 			var r = 10;
 			var l = data['ressources'];
+			zoom = 0;
 			
 			if(data.ressources != null){
 				data['ressources'].forEach(function(obj){
