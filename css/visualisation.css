@@ -48,6 +48,7 @@ body{
 		top: 0; right: 0;
 		height: 100%;
 		width: 40px;
+		padding-top: 40px;
 		text-align: center;
 		font-weight: bold;
 		color: rgb(200,200,200);
@@ -200,22 +201,24 @@ body{
 	
 	#right_panel #addTrend {
 		width: 100%;
-		margin-top: 40px;
 		border-top: 1px solid rgb(200,200,200);
 		border-bottom: 1px solid rgb(200,200,200);
 		padding-bottom: 2px;
+		display: none;
 	}
 	
 	#right_panel #subTrend {
 		width: 100%;
 		border-bottom: 1px solid rgb(200,200,200);
 		padding-bottom: 2px;
+		display: none;
 	}
 	
 	#right_panel #addAlert {
 		width: 100%;
 		border-bottom: 1px solid rgb(200,200,200);
 		padding-bottom: 2px;
+		display: none;
 	}
 	
  /*************************************************

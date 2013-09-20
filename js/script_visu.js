@@ -7,6 +7,7 @@ $(function(){
 	var LETTERS = [];
 	var entry_selected_id;
 	var entry_selected;
+	var ressource_selected;
 	var zoomFactor = 1;
 	var zoom = 0;
 	var CTRL = false;
@@ -527,8 +528,8 @@ $(function(){
 				printRessourceInfos();
 				
 			}
-			screen.draw(gpu.getFrame(), true);
-			drawLinks();
+			if(ressource_selected == null)screen.draw(gpu.getFrame(), true);
+			drawLinks(true);
 		}
 	});
 	
@@ -583,7 +584,7 @@ $(function(){
 		}
 	});
 	
-	$('body').keydown(function (e){
+	$(document).keydown(function (e){
 		
 		if(e.keyCode == 17) CTRL = true;
 		if(e.keyCode == 39 && CTRL && cursor >= cursorRefs.length){
@@ -614,15 +615,13 @@ $(function(){
 		}
 		
 	});
-	$('body').keyup(function (e){
+	$(document).keyup(function (e){
 		
 		if(e.keyCode == 17) CTRL = false;
 		// if(e.keyCode == 107 && !MOINS) PLUS = false;
 		// if(e.keyCode == 109 && !PLUS) MOINS = false;
 		
 	});
-	
-	
 	
 	
 	
@@ -653,29 +652,62 @@ $(function(){
 	function printRessourceInfos (){
 		
 		if(ressource_selected instanceof Ressource){
-			$("#top_right_corner #type").html(ressource_selected.type());
-			$("#top_right_corner #category").html(ressource_selected.category_id());
-			$("#top_right_corner #val").html(ressource_selected.val());
+			$("#top_right_corner #type").html( "type: "+ressource_selected.type() );
+			$("#top_right_corner #category").html( "catégorie: "+ressource_selected.category_id() );
+			$("#top_right_corner #val").html( ressource_selected.val() );
 			$("#top_right_corner").show();
+			$("#right_panel #addTrend").show();
+			$("#right_panel #subTrend").show();
+			$("#right_panel #addAlert").show();
 		}else{
 			$("#top_right_corner #val").html("");
 			$("#top_right_corner").hide();
+			$("#right_panel #addTrend").hide();
+			$("#right_panel #subTrend").hide();
+			$("#right_panel #addAlert").hide();
 		}
 		
 	}
 	
-	function drawLinks (){
-		if(ressources.length > 0 && ressource_selected != null){
+	function drawLinks (refresh){
+		if(ressource_selected != null && ressources.length > 0){
+		
 			var from = ressource_selected;
+			var linksToDraw = [];
 			context.lineCap = 'round';
 			context.lineWidth = 2;
+			
+			//recherche de liens arrivants + opacitée (s'il faut)
+			ressources.forEach(function(ress){
+				if(ress != from){
+					var linked = false;
+					ress.getLinks().forEach(function (link){
+						if(link.to() == from.id()){
+							linksToDraw.push(link);
+							linked = true;
+						}
+					});
+					if(linked) ress.alpha(0.7);
+					else ress.alpha(0.3);
+				}else{ress.alpha(1);}
+			});
+			
 			from.getLinks().forEach(function (link){
+				ressources[link.to()].alpha(0.7);
+				linksToDraw.push(link);
+			});
+			
+			if(refresh)screen.draw(gpu.getFrame(), true);
+			
+			linksToDraw.forEach(function (link){
+				var from = ressources[link.from()];
 				var to = ressources[link.to()];
 				context.beginPath();
 				context.moveTo(from.top_left_center.x, from.top_left_center.y);
 				context.lineTo(to.top_left_center.x, to.top_left_center.y);
 				context.stroke();
-			});	
+			});
+			
 		}
 	}
 	
@@ -693,8 +725,9 @@ $(function(){
 			obj.move(vect);
 			
 		});
-		console.debug("calcul zoom: "+zoom);
+		// console.debug("calcul zoom: "+zoom);
 		screen.draw(gpu.getFrame(), true);
+		drawLinks(false);
 		zoom += zoomFactor-1;
 		zoomFactor = 1;
 	}
