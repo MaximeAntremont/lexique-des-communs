@@ -159,10 +159,10 @@ $(function(){
 					&& obj.isOver({x: e.pageX-40, y: e.pageY-40})){
 					
 					ressource_selected = obj;
-					obj.alpha(0.8);
+					obj.alpha(0.7);
 					
 				}else{
-					obj.alpha(0.5);
+					obj.alpha(0.3);
 				}
 								 
 			});
@@ -178,6 +178,7 @@ $(function(){
 				printRessourceInfos();
 				
 			}else{
+				// ressource_selected.backgroundColor('rgb(140,100,200)');
 				drawLinks();
 				
 				$("#right_panel #addTrend").css('color', 'rgb(160,160,160)');
@@ -297,7 +298,7 @@ $(function(){
 		
 		if(e.keyCode == 17) CTRL = true;
 		if(e.keyCode == 39 && CTRL && cursor >= cursorRefs.length){
-			if(zoom <= 0.3) zoomFactor += 0.05;
+			if(zoom <= 0.5) zoomFactor += 0.05;
 			calculZoom();
 		}
 		if(e.keyCode == 37 && CTRL && cursor >= cursorRefs.length){
@@ -359,7 +360,7 @@ $(function(){
 	function printRessourceInfos (){
 		
 		if(ressource_selected instanceof Ressource){
-			$("#top_right_corner #type").html( "type: "+ressource_selected.type() );
+			$("#top_right_corner #type").html( returnType(ressource_selected.type()) );
 			$("#top_right_corner #category").html( "catégorie: "+ressource_selected.category_id() );
 			$("#top_right_corner #val").html( ressource_selected.val() );
 			$("#top_right_corner").show();
@@ -421,7 +422,7 @@ $(function(){
 	}
 	
 	function calculZoom (){
-		
+	
 		ressources.forEach(function (obj){
 			
 			obj.radius( obj.radius()*zoomFactor );
@@ -437,9 +438,22 @@ $(function(){
 		screen.draw(gpu.getFrame(), true);
 		zoom += zoomFactor-1;
 		zoomFactor = 1;
+	
 	}
 	
-	
+	function returnType (type){
+		switch(type){
+			case 100: return "[vidéo]";break;
+			case 101: return "[vidéo] viméo";break;
+			case 102: return "[vidéo] youtube";break;
+			
+			case 201: return "[mot]";break;
+			
+			case 500: return "[lien]";break;
+			
+			default: return "undefined: "+type;
+		}
+	}
 	
 	
 	
@@ -748,7 +762,7 @@ $(function(){
 				data['ressources'].forEach(function(obj){
 					
 					var ress = new Ressource(obj, context);
-					
+					ress.alpha(0.5);
 					ress.radius( (ress.trend()*1)+10.5 );
 					
 					var rand = Math.random();
