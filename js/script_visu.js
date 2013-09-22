@@ -22,6 +22,10 @@ $(function(){
 		'zoomDown' : -0.7
 	};
 	
+	constantes = {
+		'delaiApparitionMots' : 100
+	};
+	
 	var CTRL = false;
 	var cache_panel = new Cache($('#cache_panel'),
 	$('#cache_panel #header'),
@@ -124,13 +128,14 @@ $(function(){
 		if(movement == -1 && cursor >= cursorRefs.length) screen.stop();
 	});
 	
+	
 	var cursor = 0;
 	var cursorRefs = [];
 	function showSlowly (){
 		if(cursor < cursorRefs.length){
 			ressources[cursorRefs[cursor]].visible(true);
 			cursor++;
-			setTimeout(showSlowly, 200);
+			setTimeout(showSlowly, constantes.delaiApparitionMots);
 		}
 	}
 	
@@ -807,6 +812,7 @@ $(function(){
 				showSlowly();
 				if(!screen.isAutoRefresh()) screen.restart(gpu.getFrame());
 			}else{
+				screen.clear();
 				screen.stop();
 			}
 			
@@ -819,8 +825,5 @@ $(function(){
 		});
 		
 	}
-	
-	// screen.setFrame(anim);
-	// GPU.addCanvas(screen);
 	
 });
