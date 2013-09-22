@@ -226,32 +226,6 @@ function Link (tab){
 				
 	};
 	
-	/*
-	unction (ctx){
-
-	context.globalAlpha = alpha;
-	
-	if(type >= 100 && type < 200 || (type >= 500 && type < 600) ){
-		ctx.fillStyle = 'black';
-		ctx.fillRect(center.x - (size.x/2), center.y - (size.y/2), size.x, size.y);
-		ctx.beginPath();
-		ctx.font = '10px TEX';
-		ctx.textAlign = 'center';
-		ctx.fillStyle = 'white';
-		ctx.textBaseline = 'middle';
-		ctx.fillText((type >= 500 && type < 600) ? "lien" : "vidéo", center.x, center.y);
-		ctx.fill();
-	}else{
-		ctx.beginPath();
-		ctx.font = size.y+'px TEX';
-		ctx.textAlign = 'center';
-		ctx.fillStyle = 'black';
-		ctx.textBaseline = 'middle';
-		ctx.fillText(val, center.x, center.y);
-		ctx.fill();
-	}
-	*/
-	
 }
 
 
