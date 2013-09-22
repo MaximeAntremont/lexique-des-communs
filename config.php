@@ -37,6 +37,9 @@
 	$ress_mot = array(
 		'^*{20}'
 	);
+	$ress_lien = array(
+		''
+	);
 	$ress_video_vimeo = array(
 		"vimeo+\.+com"
 	);
@@ -49,7 +52,8 @@
 	$ress_dico = array(
 		101 => $ress_video_vimeo,
 		102 => $ress_video_youtube,
-		201 => $ress_mot
+		201 => $ress_mot,
+		500 => $ress_lien
 	);
 	
 	
