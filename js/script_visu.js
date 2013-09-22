@@ -14,6 +14,12 @@ $(function(){
 	var lastRessource_selected;
 	var linksToDraw = [];
 	var selecting = false;
+	
+	marges = {
+		'mouseMovePressInteration': 0,
+		'mouseMovePressLimit': 20
+	};
+	
 	var CTRL = false;
 	var cache_panel = new Cache($('#cache_panel'),
 	$('#cache_panel #header'),
@@ -112,7 +118,7 @@ $(function(){
 				link.draw(context, ressources);
 			});
 			
-		console.debug(frame);
+		// console.debug(frame);
 		if(movement == -1 && cursor >= cursorRefs.length) screen.stop();
 	});
 	
@@ -149,6 +155,7 @@ $(function(){
 		mouseClicked = false;
 		lastRessource_selected = ressource_selected;
 		ressource_selected = null;
+		marges.mouseMovePressInteration = 0;
 		
 		if(ressources.length > 0){
 		
@@ -231,13 +238,17 @@ $(function(){
 			if(isNoOver) $(this).css('cursor', 'default');
 		}
 		if(mouseClicked && ressource_selected != null){
-			var cursor = {x: e.pageX-40, y: e.pageY-40};
-			selecting = true;
-			screen.draw(gpu.getFrame(), true);
-			context.beginPath();
-			context.moveTo(ressource_selected.top_left_center.x, ressource_selected.top_left_center.y);
-			context.lineTo(cursor.x, cursor.y);
-			context.stroke();
+			if(marges.mouseMovePressInteration >= marges.mouseMovePressLimit){
+				var cursor = {x: e.pageX-40, y: e.pageY-40};
+				selecting = true;
+				screen.draw(gpu.getFrame(), true);
+				context.beginPath();
+				context.moveTo(ressource_selected.top_left_center.x, ressource_selected.top_left_center.y);
+				context.lineTo(cursor.x, cursor.y);
+				context.stroke();
+			}else{
+				marges.mouseMovePressInteration++;
+			}
 		}else{
 			selecting = false;
 		}
