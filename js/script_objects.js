@@ -23,31 +23,6 @@ function Vector (xa,ya,xb,yb){
 	};
 	
 }
-// function normeVector (v){
-	// return Math.sqrt( Math.pow(v.x,2) + Math.pow(v.y,2) );
-// }
-
-// function addVector(a, b){
-	// return {x: b.x+a.x, y: b.y+a.y};
-// }
-
-// function resizeVector(v, factor){
-	// var norme = normeVector(v);
-	// if(v.x == 0 && v.y == 0)
-		// return {
-			// x: 0,
-			// y: 0
-		// };
-	// else
-		// return {
-			// x: (v.x*factor)/norme,
-			// y: (v.y*factor)/norme
-		// };
-// }
-
-// function getVector (a, b){
-	// return {x: b.x-a.x, y: b.y-a.y};
-// }
 
 
 /************************************************************
@@ -221,6 +196,7 @@ function Link (tab){
 			ctx.beginPath();
 			ctx.moveTo(ressFrom.top_left_center.x, ressFrom.top_left_center.y);
 			ctx.lineTo(ressTo.top_left_center.x, ressTo.top_left_center.y);
+			ctx.closePath();
 			ctx.stroke();
 		}
 				
@@ -254,7 +230,8 @@ function Ressource (tab, context){
 		direction = {x:0,y:0},
 		vitesse = 1,
 		visible = false,
-		alpha = 0.5;
+		alpha = 0.5,
+		backgroundColor = "rgb(0,0,0)";
 
 	this.top_left_center = {x: 0, y: 0};
 
@@ -343,29 +320,48 @@ function Ressource (tab, context){
 		if(value != null) alpha = value;
 		return alpha;
 	};
+	this.backgroundColor = function (value){
+		if(value != null) backgroundColor = value;
+		return backgroundColor;
+	};
 
 	this.draw = function (ctx){
 
-		context.globalAlpha = alpha;
+		ctx.globalAlpha = alpha;
+		ctx.fillStyle = backgroundColor;
 		
-		if(type >= 100 && type < 200 || (type >= 500 && type < 600) ){
-			ctx.fillStyle = 'black';
+		if(type >= 100 && type < 200){
+		
+			// ctx.fillStyle = backgroundColor;
 			ctx.fillRect(center.x - (size.x/2), center.y - (size.y/2), size.x, size.y);
-			ctx.beginPath();
 			ctx.font = '10px TEX';
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'white';
 			ctx.textBaseline = 'middle';
-			ctx.fillText((type >= 500 && type < 600) ? "lien" : "vidéo", center.x, center.y);
-			ctx.fill();
-		}else{
+			ctx.fillText("vidéo", center.x, center.y);
+			
+		}else if(type >= 500 && type < 600){
+		
+			
 			ctx.beginPath();
+			ctx.arc(center.x, center.y, size.y, 0, 2 * Math.PI, false);
+			ctx.closePath();
+			ctx.fill();
+			
+			ctx.font = '10px TEX';
+			ctx.textAlign = 'center';
+			ctx.fillStyle = 'white';
+			ctx.textBaseline = 'middle';
+			ctx.fillText("lien", center.x, center.y);
+			
+		}else{
+		
 			ctx.font = size.y+'px TEX';
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
 			ctx.fillText(val, center.x, center.y);
-			ctx.fill();
+			
 		}
 		
 	}
@@ -386,17 +382,22 @@ function Ressource (tab, context){
 	}
 
 	this.spaceBeetween = function (obj){
+	
 		if(obj instanceof Ressource){
 			
 			var v = new Vector(center.x,center.y, obj.x(), obj.y());
 			var space = {x:0,y:0};
 			
 			if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
+			
 				space.x = Math.abs( v.x() ) - ( (obj.width() + size.x)/2 );
 				space.y = Math.abs( v.y() ) - ( (obj.height() + size.y)/2 );
+				
 			}else{
+			
 				space.x = Math.abs( v.x() ) - ( (obj.width() + size.x)/2 );
 				space.y = Math.abs( v.y() ) - ( (obj.height() + size.y)/2 );
+				
 			}
 			
 			return space;
