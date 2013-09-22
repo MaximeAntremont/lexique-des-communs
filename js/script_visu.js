@@ -769,14 +769,17 @@ $(function(){
 			cursorRefs = [];
 			var r = 10;
 			var l = data['ressources'];
-			zoom = 0;
+			// zoom = 0;
 			
 			if(data.ressources != null){
 				data['ressources'].forEach(function(obj){
 					
 					var ress = new Ressource(obj, context);
 					ress.alpha(0.5);
-					ress.radius( (ress.trend()*1)+12 );
+					if(zoom != 0)
+						ress.radius( ((ress.trend()*1)+12)*(zoom+1) );
+					else
+						ress.radius( ((ress.trend()*1)+12) );
 					
 					var rand = Math.random();
 					
