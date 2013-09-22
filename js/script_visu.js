@@ -17,7 +17,9 @@ $(function(){
 	
 	marges = {
 		'mouseMovePressInteration': 0,
-		'mouseMovePressLimit': 20
+		'mouseMovePressLimit': 20,
+		'zoomUp' : 0.7,
+		'zoomDown' : -0.7
 	};
 	
 	var CTRL = false;
@@ -309,11 +311,11 @@ $(function(){
 		
 		if(e.keyCode == 17) CTRL = true;
 		if(e.keyCode == 39 && CTRL && cursor >= cursorRefs.length){
-			if(zoom <= 0.5) zoomFactor += 0.05;
+			if(zoom <= marges.zoomUp) zoomFactor += 0.05;
 			calculZoom();
 		}
 		if(e.keyCode == 37 && CTRL && cursor >= cursorRefs.length){
-			if(zoom >= -0.3) zoomFactor -= 0.05;
+			if(zoom >= marges.zoomDown) zoomFactor -= 0.05;
 			calculZoom();
 		}
 		
@@ -322,7 +324,7 @@ $(function(){
 	$('#addZoom').click(function (){
 		
 		if(cursor >= cursorRefs.length){
-			if(zoom <= 0.3) zoomFactor += 0.05;
+			if(zoom <= marges.zoomUp) zoomFactor += 0.05;
 			calculZoom();
 		}
 		
@@ -331,7 +333,7 @@ $(function(){
 	$('#subZoom').click(function (){
 		
 		if(cursor >= cursorRefs.length){
-			if(zoom >= -0.3) zoomFactor -= 0.05;
+			if(zoom >= marges.zoomDown) zoomFactor -= 0.05;
 			calculZoom();
 		}
 		
