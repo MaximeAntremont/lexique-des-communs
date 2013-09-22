@@ -168,6 +168,8 @@ function Link (tab){
 		to = tab.to,
 		type = tab.type;
 	
+	var toDraw = false;
+	
 	this.id = function (val){
 		if(val != null) id = val;
 		return id;
@@ -192,6 +194,63 @@ function Link (tab){
 		if(val != null) type = val;
 		return type;
 	};
+	this.isToDraw = function (val){
+		if(val != true || val == false) toDraw = val;
+		return toDraw;
+	};
+	
+	this.draw = function (ctx, ressources){
+		
+		if(ressources != null){
+		
+			var ressFrom = ressources[from];
+			var ressTo = ressources[to];
+			
+			ctx.lineCap = 'round';
+			ctx.lineWidth = 1.5;
+			ctx.globalAlpha = 0.6;
+			
+			switch(type){
+				case   '0': ctx.strokeStyle = 'rgb(255,0,0)'; break;
+				case '100': ctx.strokeStyle = 'rgb(0,255,0)'; break;
+				case '200': ctx.strokeStyle = 'rgb(0,0,255)'; break;
+				case '300': ctx.strokeStyle = 'rgb(0,0,0)'; break;
+				default:    ctx.strokeStyle = 'rgb(0,0,0)';
+			}
+			
+			ctx.beginPath();
+			ctx.moveTo(ressFrom.top_left_center.x, ressFrom.top_left_center.y);
+			ctx.lineTo(ressTo.top_left_center.x, ressTo.top_left_center.y);
+			ctx.stroke();
+		}
+				
+	};
+	
+	/*
+	unction (ctx){
+
+	context.globalAlpha = alpha;
+	
+	if(type >= 100 && type < 200 || (type >= 500 && type < 600) ){
+		ctx.fillStyle = 'black';
+		ctx.fillRect(center.x - (size.x/2), center.y - (size.y/2), size.x, size.y);
+		ctx.beginPath();
+		ctx.font = '10px TEX';
+		ctx.textAlign = 'center';
+		ctx.fillStyle = 'white';
+		ctx.textBaseline = 'middle';
+		ctx.fillText((type >= 500 && type < 600) ? "lien" : "vidéo", center.x, center.y);
+		ctx.fill();
+	}else{
+		ctx.beginPath();
+		ctx.font = size.y+'px TEX';
+		ctx.textAlign = 'center';
+		ctx.fillStyle = 'black';
+		ctx.textBaseline = 'middle';
+		ctx.fillText(val, center.x, center.y);
+		ctx.fill();
+	}
+	*/
 	
 }
 

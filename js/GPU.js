@@ -15,10 +15,11 @@ window.GPUScreen = function (par){
 		fframe      = false,
 		delay       = par.delay || 1,
 		autoClear   = par.autoClear,
-		delayTemp   = 0;
+		delayTemp   = 0,
+		lastFrame	= 0;
 	 
 	this.draw = function (frame, force){
-		if(delay == 1 || (delayTemp + delay) == frame || force == true){
+		if(delay == 1 || (delayTemp + delay) == frame || (force == true && lastFrame < frame)){
 			
 			if(autoClear)
 				context.clearRect(0, 0, canvas.width, canvas.height);
@@ -27,8 +28,8 @@ window.GPUScreen = function (par){
 				fframe.read(canvas, context, frame, fframe.getVariables());
 			
 			delayTemp = frame;
-			
 		}
+		lastFrame = frame;
 	}
 	
 	this.clear = function (){context.clearRect(0, 0, canvas.width, canvas.height);};

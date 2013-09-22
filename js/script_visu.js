@@ -12,6 +12,7 @@ $(function(){
 	var zoom = 0;
 	var mouseClicked = false;
 	var lastRessource_selected;
+	var linksToDraw = [];
 	var selecting = false;
 	var CTRL = false;
 	var cache_panel = new Cache($('#cache_panel'),
@@ -67,7 +68,7 @@ $(function(){
 		
 		var movement = 0;
 		
-		if(ressources.length > 0){
+		if(ressources.length > 0){ //on dessine les ressources
 			ressources.forEach(function(obj){
 				
 				if(obj.visible()){
@@ -106,6 +107,11 @@ $(function(){
 			if(movement == 0) movement = -1;
 		}
 		
+		if(linksToDraw.length > 0) //on dessine les liens
+			linksToDraw.forEach(function (link){
+				link.draw(context, ressources);
+			});
+			
 		console.debug(frame);
 		if(movement == -1 && cursor >= cursorRefs.length) screen.stop();
 	});
@@ -142,62 +148,68 @@ $(function(){
 		// console.debug('mouseClicked: '+mouseClicked);
 		mouseClicked = false;
 		lastRessource_selected = ressource_selected;
+		ressource_selected = null;
 		
 		if(ressources.length > 0){
 		
-			var isNoOver = true;
 			ressources.forEach(function(obj){
 			
-				if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
+				if(ressource_selected == null
+					&& obj.visible()
+					&& obj.isOver({x: e.pageX-40, y: e.pageY-40})){
 					
 					ressource_selected = obj;
-					isNoOver = false;
-					$("#right_panel #addTrend").css('color', 'rgb(160,160,160)');
-					$("#right_panel #subTrend").css('color', 'rgb(160,160,160)');
-					$("#right_panel #addAlert").css('color', 'rgb(160,160,160)');
 					obj.alpha(0.8);
-					printRessourceInfos();
-					
-					if(selecting){
-						cache_panel.modify('<span>Nouveau Lien</span>', '<select id="link_type" name="link_type" ><option value="0" selected>conflitctuel</option><option value="100">implicite</option><option value="200">explicite</option><option value="300">direct</option></select>',
-											'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
-						cache_panel.open();
-						
-						$(".cliquable").click(function(){
-							if($(this).html() == "Annuler"){
-								cache_panel.close();
-							}
-							if($(this).html() == "Ajouter"){
-								sendNewLink ($('#link_type').val(), function(){
-									setTimeout(function(){
-										fetchEntryData( entry_selected_id, function(){
-											cache_panel.stopWaiting(true);
-											cache_panel.close();
-										});
-									}, 1000);
-								});
-							}
-							
-						});
-					}
 					
 				}else{
 					obj.alpha(0.5);
 				}
 								 
 			});
-			if(isNoOver){
+			
+			if(ressource_selected == null){
 				$("#right_panel #addTrend").css('color', 'rgb(200,200,200)');
 				$("#right_panel #subTrend").css('color', 'rgb(200,200,200)');
 				$("#right_panel #addAlert").css('color', 'rgb(200,200,200)');
 				
 				ressources.forEach(function(objB){objB.alpha(0.5);});
 				ressource_selected = null;
+				linksToDraw = [];
 				printRessourceInfos();
 				
+			}else{
+				drawLinks();
+				
+				$("#right_panel #addTrend").css('color', 'rgb(160,160,160)');
+				$("#right_panel #subTrend").css('color', 'rgb(160,160,160)');
+				$("#right_panel #addAlert").css('color', 'rgb(160,160,160)');
+				printRessourceInfos();
+				
+				if(selecting){
+					cache_panel.modify('<span>Nouveau Lien</span>', '<select id="link_type" name="link_type" ><option value="0" selected>conflitctuel</option><option value="100">implicite</option><option value="200">explicite</option><option value="300">direct</option></select>',
+										'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+					cache_panel.open();
+					
+					$(".cliquable").click(function(){
+						if($(this).html() == "Annuler"){
+							cache_panel.close();
+						}
+						if($(this).html() == "Ajouter"){
+							sendNewLink ($('#link_type').val(), function(){
+								setTimeout(function(){
+									fetchEntryData( entry_selected_id, function(){
+										cache_panel.stopWaiting(true);
+										cache_panel.close();
+									});
+								}, 1000);
+							});
+						}
+						
+					});
+				}
 			}
-			if(ressource_selected == null)screen.draw(gpu.getFrame(), true);
-			drawLinks(true);
+			
+			screen.draw(gpu.getFrame(), true);
 			
 		}
 		
@@ -315,8 +327,6 @@ $(function(){
 	$(document).keyup(function (e){
 		
 		if(e.keyCode == 17) CTRL = false;
-		// if(e.keyCode == 107 && !MOINS) PLUS = false;
-		// if(e.keyCode == 109 && !PLUS) MOINS = false;
 		
 	});
 	
@@ -368,49 +378,43 @@ $(function(){
 	
 	function drawLinks (refresh){
 		if(ressource_selected != null && ressources.length > 0){
-		
-			var from = ressource_selected;
-			var linksToDraw = [];
-			context.lineCap = 'round';
-			context.lineWidth = 2;
+			
+			linksToDraw = [];
 			
 			//recherche de liens arrivants + opacitée (s'il faut)
 			ressources.forEach(function(ress){
-				if(ress != from){
+			
+				if(ress != ressource_selected){
+				
 					var linked = false;
+					
 					ress.getLinks().forEach(function (link){
-						if(link.to() == from.id()){
+					
+						if(link.to() == ressource_selected.id()){
 							linksToDraw.push(link);
 							linked = true;
 						}
+						
 					});
+					
 					if(linked) ress.alpha(0.7);
 					else ress.alpha(0.3);
+					
 				}else{ress.alpha(1);}
+			
 			});
 			
-			from.getLinks().forEach(function (link){
+			ressource_selected.getLinks().forEach(function (link){
+			
 				ressources[link.to()].alpha(0.7);
 				linksToDraw.push(link);
+			
 			});
 			
-			if(refresh)screen.draw(gpu.getFrame(), true);
+			// if(refresh)screen.draw(gpu.getFrame(), true);
 			
-			context.globalAlpha = 0.6;
 			linksToDraw.forEach(function (link){
-				var from = ressources[link.from()];
-				var to = ressources[link.to()];
-				context.beginPath();
-				context.moveTo(from.top_left_center.x, from.top_left_center.y);
-				context.lineTo(to.top_left_center.x, to.top_left_center.y);
-				switch(link.type()){
-					case '0': context.strokeStyle = 'rgb(255,0,0)'; break;
-					case '100': context.strokeStyle = 'rgb(0,255,0)'; break;
-					case '200': context.strokeStyle = 'rgb(0,0,255)'; break;
-					case '300': context.strokeStyle = 'rgb(0,0,0)'; break;
-					default: context.strokeStyle = 'rgb(0,0,0)';
-				}
-				context.stroke();
+				link.draw(context, ressources);
 			});
 			
 		}
@@ -431,7 +435,6 @@ $(function(){
 			
 		});
 		screen.draw(gpu.getFrame(), true);
-		drawLinks(false);
 		zoom += zoomFactor-1;
 		zoomFactor = 1;
 	}
