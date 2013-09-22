@@ -59,382 +59,6 @@ $(function(){
 	
 	
 	
-
-/************************************************************
-						CACHE
-*************************************************************/
-
-	function Cache (JQueryCache, JQueryHeader, JQueryContent, JQueryFooter){
-		
-		var JQcache = JQueryCache;
-		var JQheader = JQueryHeader;
-		var JQcontent = JQueryContent;
-		var JQfooter = JQueryFooter;
-		var wait = false, waitCallback = null;
-		var header = '';
-		var content = '';
-		var footer = '';
-		
-		this.startWaiting = function (open){
-			if(open == true) JQcache.show();
-			
-			header = '';
-			content = '.';
-			footer = '~ chargement en cours ~';
-			
-			updateCache();
-			
-			wait = true;
-			waiting();
-		}
-		
-		this.stopWaiting = function (close){
-			if(close == true) waitCallback = function (){JQcache.hide();};
-			else if(close) waitCallback = close;
-			wait = false;
-		}
-		
-		this.open = function (){
-			JQcache.show();
-		}
-		
-		this.close = function (){
-			JQcache.hide();
-		}
-		
-		this.header = function (val){
-			if(val != null){
-				header = val;
-				JQheader.html(header);
-			}
-			return header;
-		}
-		
-		this.content = function (val){
-			if(val != null){
-				content = val;
-				JQcontent.html(content);
-			}
-			return content;
-		}
-		
-		this.footer = function (val){
-			if(val != null){
-				footer = val;
-				JQfooter.html(footer);
-			}
-			return footer;
-		}
-		
-		this.modify = function (top, mid, bot){
-			if(top != null && mid != null && bot != null){
-				header = top;
-				content = mid;
-				footer = bot;
-				updateCache();
-				return true;
-			}
-			return false;
-		}
-		
-		function updateCache (){
-			JQheader.html(header);
-			JQcontent.html(content);
-			JQfooter.html(footer);
-		};
-			
-		function waiting (){
-			
-			updateCache();
-			if(content == '...') content = '';
-			else content += '.';
-			
-			if(wait) setTimeout(waiting, 1000);
-			else if(waitCallback != null) {waitCallback(JQcache, JQheader, JQcontent, JQfooter);waitCallback = null};
-			
-		}
-		
-	}
-	
-	
-	
-	
-	
-/************************************************************
-						  OBJETS
-*************************************************************/
-	function Link (tab){
-		
-		var id = tab.id,
-			val = tab.val,
-			create_date = tab.create_date,
-			from = tab.from,
-			to = tab.to,
-			type = tab.type;
-		
-		this.id = function (val){
-			if(val != null) id = val;
-			return id;
-		};
-		this.val = function (valu){
-			if(valu != null) val = valu;
-			return val;
-		};
-		this.create_date = function (val){
-			if(val != null) create_date = val;
-			return create_date;
-		};
-		this.from = function (val){
-			if(val != null) from = val;
-			return from;
-		};
-		this.to = function (val){
-			if(val != null) to = val;
-			return to;
-		};
-		this.type = function (val){
-			if(val != null) type = val;
-			return type;
-		};
-		
-	}
-	function Ressource (tab){
-		
-		var id = tab.id,
-			val = tab.val,
-			create_date = tab.create_date,
-			trend = ((tab.trend > 20) ? 20 : tab.trend),
-			type = parseInt(tab.type),
-			entry_id = tab.entry_id,
-			category_id = tab.category_id,
-			alert = tab.alert,
-			links = [];
-		
-		var center = {x:0,y:0},
-			width = 0,
-			r = 0,
-			direction = {x:0,y:0},
-			vitesse = 1,
-			visible = false,
-			alpha = 0.5;
-		this.top_left_center = {x: 0, y: 0};
-		
-		if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
-			r = 10;
-			width = r;
-		}
-		
-		this.id = function (value){
-			if(value != null) id = value;
-			return id;
-		};
-		this.val = function (value){
-			if(value != null) val = value;
-			return val;
-		};
-		this.calculWidth = function (ctx){
-			if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ) return;
-			ctx.font = r+'px TEX';
-			ctx.textAlign = 'center';
-			var metrics = ctx.measureText(val);
-			width = metrics.width;
-		};
-		this.width = function (val){
-			if(val != null) width = value;
-			return width;
-		};
-		this.height = function (){
-			return r;
-		};
-		this.create_date = function (value){
-			if(value != null) create_date = value;
-			return create_date;
-		};
-		this.category_id = function (value){
-			if(value != null) category_id = value;
-			return category_id;
-		};
-		this.trend = function (value){
-			if(value != null) trend = value;
-			return trend;
-		};
-		this.type = function (value){
-			if(value != null) type = value;
-			return type;
-		};
-		this.entry_id = function (value){
-			if(value != null) entry_id = value;
-			return entry_id;
-		};
-		this.alert = function (value){
-			if(value != null) alert = value;
-			return alert;
-		};
-		
-		this.x = function (value){
-			if(value != null){
-				center.x = value;
-				this.top_left_center.x = value-(width/2);
-			}
-			return center.x;
-		};
-		this.y = function (value){
-			if(value != null){
-				center.y = value;
-				this.top_left_center.y = value-(r/2);
-			}
-			return center.y;
-		};
-		this.w = function (value){
-			if(value != null) w = value;
-			return w;
-		};
-		this.radius = function (value){
-			if(value != null){
-				r = value;
-				if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){width = r;}
-			}
-			return r;
-		};
-		this.visible = function (value){
-			if(value != null) visible = value;
-			return visible;
-		};
-		this.alpha = function (value){
-			if(value != null) alpha = value;
-			return alpha;
-		};
-		
-		this.draw = function (ctx){
-		
-			context.globalAlpha = alpha;
-			
-			if(type >= 100 && type < 200 || (type >= 500 && type < 600) ){
-				ctx.fillStyle = 'black';
-				ctx.fillRect(center.x - (width/2), center.y - (r/2), width, r);
-				ctx.beginPath();
-				ctx.font = '10px TEX';
-				ctx.textAlign = 'center';
-				ctx.fillStyle = 'white';
-				ctx.textBaseline = 'middle';
-				ctx.fillText((type >= 500 && type < 600) ? "lien" : "vidéo", center.x, center.y);
-				ctx.fill();
-			}else{
-				ctx.beginPath();
-				ctx.font = r+'px TEX';
-				ctx.textAlign = 'center';
-				ctx.fillStyle = 'black';
-				ctx.textBaseline = 'middle';
-				ctx.fillText(val, center.x, center.y);
-				ctx.fill();
-			}
-			
-		}
-		
-		this.addLink = function (obj){
-			if(obj instanceof Link) links.push(obj);
-		};
-		this.getLinks = function (){
-			return links;
-		};
-		
-		this.distanceTo = function (obj){
-			if(obj instanceof Ressource){
-				
-				return Math.sqrt( Math.pow(obj.x() - center.x, 2) + Math.pow(obj.y() - center.y, 2) ) - (obj.radius() + r);
-				
-			}
-		}
-		
-		this.spaceBeetween = function (obj){
-			if(obj instanceof Ressource){
-				
-				var v = getVector({x:center.x,y:center.y}, obj.getPos());
-				var space = {x:0,y:0};
-				
-				if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
-					space.x = Math.abs( v.x ) - ( (obj.width() + width)/2 );
-					space.y = Math.abs( v.y ) - ( (obj.height() + r)/2 );
-				}else{
-					space.x = Math.abs( v.x ) - ( (obj.width() + width)/2 );
-					space.y = Math.abs( v.y ) - ( (obj.height() + r)/2 );
-				}
-				
-				return space;
-				
-			}
-		}
-		
-		this.direction = function (val){
-			if(val != null) direction = val;
-			return direction;
-		}
-		
-		this.move = function (vector){
-			
-			if(vector != null){
-				center.x += vector.x*vitesse;
-				center.y += vector.y*vitesse;
-			}else{
-				center.x += direction.x*vitesse;
-				center.y += direction.y*vitesse;
-			}
-				this.top_left_center.x = center.x - (width/2);
-				this.top_left_center.y = center.y - (r/2);
-		};
-		
-		this.getPos = function (){
-			return center;
-		};
-		
-		this.isOver = function (mouse){
-			return (mouse.x >= this.top_left_center.x 
-			&& mouse.x <= this.top_left_center.x + width 
-			&& mouse.y >= this.top_left_center.y 
-			&& mouse.y <= this.top_left_center.y + r) ? true : false;
-		};
-		
-	}
-	
-	
-	
-	
-	
-	
-/************************************************************
-							VECTORS
-*************************************************************/
-	
-	function normeVector (v){
-		return Math.sqrt( Math.pow(v.x,2) + Math.pow(v.y,2) );
-	}
-	
-	function addVector(a, b){
-		return {x: b.x+a.x, y: b.y+a.y};
-	}
-	
-	function resizeVector(v, factor){
-		var norme = normeVector(v);
-		if(v.x == 0 && v.y == 0)
-			return {
-				x: 0,
-				y: 0
-			};
-		else
-			return {
-				x: (v.x*factor)/norme,
-				y: (v.y*factor)/norme
-			};
-	}
-	
-	function getVector (a, b){
-		return {x: b.x-a.x, y: b.y-a.y};
-	}
-	
-	
-	
-	
-	
 	
 /************************************************************
 							FRAME
@@ -448,35 +72,31 @@ $(function(){
 				
 				if(obj.visible()){
 				
-					var pos = obj.getPos();			
-					var dir = {x:0,y:0};
+					var dir = new Vector (0,0);
 					
 					ressources.forEach(function(objB){
 						if(obj != objB && objB.visible()){
 							
-							// var pathTo = getVector(pos, objB.getPos());
-							var RpathTo = getVector(objB.getPos(), pos);
-							// var pathToB = {x: Math.abs( pathTo.x ), y: Math.abs( pathTo.y )};
-							var translate = {x:0,y:0};
+							var RpathTo = new Vector(objB.x(), objB.y(), obj.x(), obj.y());
+							var translate = new Vector (0,0);
 							
 							var spaces = obj.spaceBeetween( objB );
 							
 							if(	spaces.x >= 5 || spaces.y >= 5){
-								// translate = resizeVector( getVector(obj.getPos(), {x: winW_m, y: winH_m}) ,0.01);
 							}else{
-								RpathTo = resizeVector(RpathTo, 2);
-								if(spaces.x < 5) translate.x = RpathTo.x;
-								if(spaces.y < 5) translate.y = RpathTo.y*2;
+								RpathTo.resize(2);
+								if(spaces.x < 5) translate.x(RpathTo.x());
+								if(spaces.y < 5) translate.y(RpathTo.y()*2);
 								movement = 1;
 							}
-							dir = addVector(dir, translate);
+							dir.add(translate);
 						
 						}
 						
 					});
 					
-					dir = resizeVector(dir, 2);
-					obj.direction(dir);
+					dir.resize(2);
+					obj.direction(dir.toArray());
 					
 					obj.move();
 					obj.draw(ctx);
@@ -486,7 +106,7 @@ $(function(){
 			if(movement == 0) movement = -1;
 		}
 		
-		// console.debug(frame);
+		console.debug(frame);
 		if(movement == -1 && cursor >= cursorRefs.length) screen.stop();
 	});
 	
@@ -609,41 +229,6 @@ $(function(){
 			selecting = false;
 		}
 	});
-	
-	// $('#canvas').click(function(e){
-		// if(ressources.length > 0){
-			// var isNoOver = true;
-			// ressources.forEach(function(obj){
-			
-				// if(obj.visible() && obj.isOver({x: e.pageX-40, y: e.pageY-40})){
-					
-					// ressource_selected = obj;
-					// $("#right_panel #addTrend").css('color', 'rgb(160,160,160)');
-					// $("#right_panel #subTrend").css('color', 'rgb(160,160,160)');
-					// $("#right_panel #addAlert").css('color', 'rgb(160,160,160)');
-					// obj.alpha(0.8);
-					// isNoOver = false;
-					// printRessourceInfos();
-					
-				// }else{
-					// obj.alpha(0.5);
-				// }
-								 
-			// });
-			// if(isNoOver){
-				// $("#right_panel #addTrend").css('color', 'rgb(200,200,200)');
-				// $("#right_panel #subTrend").css('color', 'rgb(200,200,200)');
-				// $("#right_panel #addAlert").css('color', 'rgb(200,200,200)');
-				
-				// ressources.forEach(function(objB){objB.alpha(0.5);});
-				// ressource_selected = null;
-				// printRessourceInfos();
-				
-			// }
-			// if(ressource_selected == null)screen.draw(gpu.getFrame(), true);
-			// drawLinks(true);
-		// }
-	// });
 	
 	$('#right_panel #addTrend').click(function (){
 		if(ressource_selected instanceof Ressource){
@@ -838,14 +423,13 @@ $(function(){
 			obj.radius( obj.radius()*zoomFactor );
 			obj.calculWidth(context);
 			var pos = obj.getPos();
-			var vect = getVector(pos, {x:winW_m,y:winH_m});
-			vect.x *= 1-zoomFactor;
-			vect.y *= 1-zoomFactor;
+			var vect = new Vector(pos.x, pos.y, winW_m, winH_m);
+			vect.x( vect.x()*(1-zoomFactor) );
+			vect.y( vect.y()*(1-zoomFactor) );
 			
-			obj.move(vect);
+			obj.move(vect.toArray());
 			
 		});
-		// console.debug("calcul zoom: "+zoom);
 		screen.draw(gpu.getFrame(), true);
 		drawLinks(false);
 		zoom += zoomFactor-1;
@@ -1160,7 +744,7 @@ $(function(){
 			if(data.ressources != null){
 				data['ressources'].forEach(function(obj){
 					
-					var ress = new Ressource(obj);
+					var ress = new Ressource(obj, context);
 					
 					ress.radius( (ress.trend()*1)+10.5 );
 					
