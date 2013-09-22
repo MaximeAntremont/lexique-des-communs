@@ -334,7 +334,7 @@ function Ressource (tab, context){
 		
 			// ctx.fillStyle = backgroundColor;
 			ctx.fillRect(center.x - (size.x/2), center.y - (size.y/2), size.x, size.y);
-			ctx.font = '10px TEX';
+			ctx.font = '12px Jura';
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'white';
 			ctx.textBaseline = 'middle';
@@ -348,7 +348,7 @@ function Ressource (tab, context){
 			ctx.closePath();
 			ctx.fill();
 			
-			ctx.font = '10px TEX';
+			ctx.font = '12px Jura';
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'white';
 			ctx.textBaseline = 'middle';
@@ -356,7 +356,7 @@ function Ressource (tab, context){
 			
 		}else{
 		
-			ctx.font = size.y+'px TEX';
+			ctx.font = size.y+'px Jura';
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';

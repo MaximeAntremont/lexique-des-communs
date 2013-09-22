@@ -774,7 +774,7 @@ $(function(){
 					
 					var ress = new Ressource(obj, context);
 					ress.alpha(0.5);
-					ress.radius( (ress.trend()*1)+10.5 );
+					ress.radius( (ress.trend()*1)+12 );
 					
 					var rand = Math.random();
 					

@@ -10,7 +10,21 @@ font-family: TEX;
 	src: url('../fonts/texgyreadventor-regular-webfont.ttf'),
 		 url('../fonts/texgyreadventor-regular-webfont.eot'); /* IE9 */
 	font-weight: normal;
-} 
+}
+
+@font-face{
+font-family: JuraBold;
+	src: url('../fonts/Jura-Bold.ttf'),
+		 url('../fonts/Jura-Bold.eot'); /* IE9 */
+}
+
+@font-face{
+font-family: Jura;
+	src: url('../fonts/Jura-Regular.ttf'),
+		 url('../fonts/Jura-Regular.eot'); /* IE9 */
+	font-weight: normal;
+}
+
 *{
 	font-family: TEX;
 	margin: 0;
