@@ -99,7 +99,7 @@ body{
 	#top_right_corner{
 		position: fixed;
 		top: 40px; right: 50px;
-		width: 200px;
+		width: 300px;
 		z-index: 10;
 		text-align: right;
 	}
@@ -205,6 +205,11 @@ body{
 	#top_left_corner #part_two h3 .entry_selected{
 		cursor: default;
 		color: rgb(50,50,50);
+	}
+	
+	#top_left_corner .iframe{
+		width: 100%;
+		
 	}
 	
  /*************************************************
