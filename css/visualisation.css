@@ -312,8 +312,23 @@ body{
 		display: block;
 		width: 100%;
 		margin-top: 10px;
+		font-size: 14px;
 		border: none;
 		border-bottom: dotted 1px rgb(220,220,220);
+		background: rgb(200,200,200);
+	}
+	
+	#cache_panel #middle_window textarea{
+		display: block;
+		width: 100%;
+		height: 200px;
+		margin-top: 10px;
+		border: none;
+		font-size: 14px;
+		resize: none;
+		border-bottom: dotted 1px rgb(220,220,220);
+		border-left: dotted 1px rgb(220,220,220);
+		border-right: dotted 1px rgb(220,220,220);
 		background: rgb(200,200,200);
 	}
 	

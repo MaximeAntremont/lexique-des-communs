@@ -15,6 +15,22 @@ $(function(){
 	var linksToDraw = [];
 	var selecting = false;
 	
+	$.fn.selectRange = function(start, end) {
+		if(!end) end = start; 
+		return this.each(function() {
+			if (this.setSelectionRange) {
+				this.focus();
+				this.setSelectionRange(start, end);
+			} else if (this.createTextRange) {
+				var range = this.createTextRange();
+				range.collapse(true);
+				range.moveEnd('character', end);
+				range.moveStart('character', start);
+				range.select();
+			}
+		});
+	};
+	
 	marges = {
 		'mouseMovePressInteration': 0,
 		'mouseMovePressLimit': 20,
@@ -527,7 +543,6 @@ $(function(){
 						});
 					}
 				});
-				
 			});
 			
 			$("#add_ressource").click(function(){
@@ -554,6 +569,26 @@ $(function(){
 						
 					});
 					
+					$("body").on("keyup", "#input_ress_val", function (){
+						
+						if(cursor < cursorRefs.length) return;
+						
+						var temp = $(this);
+						var val = temp.val();
+						var l = val.length;
+						
+						if(l > 20 && temp.prop("tagName") == "INPUT"){
+							
+							$("#input_ress_val").replaceWith( '<textarea id="input_ress_val">'+ val +'</textarea>' );
+							$("#input_ress_val").selectRange(21);
+							
+						}else if(l <= 20 && temp.prop("tagName") == "TEXTAREA"){
+						
+							$("#input_ress_val").replaceWith( '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" value="'+ val +'" />' );
+							$("#input_ress_val").selectRange(20);
+							
+						}
+					});
 				}
 				
 			});
