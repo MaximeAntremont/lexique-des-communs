@@ -235,10 +235,10 @@ function Ressource (tab, context){
 
 	this.top_left_center = {x: 0, y: 0};
 
-	if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
-		size.y = 10;
-		size.x = size.y;
-	}
+	// if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
+		// size.y = 10;
+		// size.x = size.y;
+	// }
 
 	this.id = function (value){
 		if(value != null) id = value;
@@ -249,10 +249,12 @@ function Ressource (tab, context){
 		return val;
 	};
 	this.calculWidth = function (ctx){
-		if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ) return;
-		ctx.font = size.y+'px TEX';
+		
+		 ctx.font = size.y+'px Jura';
 		ctx.textAlign = 'center';
-		var metrics = ctx.measureText(val);
+		if(type >= 100 && type < 200) var metrics = ctx.measureText("Vidéo");
+		else if(type >= 500 && type < 600) var metrics = ctx.measureText("Lien");
+		else var metrics = ctx.measureText(val);
 		size.x = metrics.width;
 	};
 	this.width = function (val){
@@ -308,7 +310,7 @@ function Ressource (tab, context){
 	this.radius = function (value){
 		if(value != null){
 			size.y = value;
-			if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){size.x = size.y;}
+			// if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){size.x = size.y;}
 		}
 		return size.y;
 	};
@@ -333,26 +335,38 @@ function Ressource (tab, context){
 		if(type >= 100 && type < 200){
 		
 			// ctx.fillStyle = backgroundColor;
-			ctx.fillRect(center.x - (size.x/2), center.y - (size.y/2), size.x, size.y);
-			ctx.font = '12px Jura';
+			// ctx.fillRect(center.x - (size.x/2), center.y - (size.y/2), size.x, size.y);
+			// ctx.font = '12px Jura';
+			// ctx.textAlign = 'center';
+			// ctx.fillStyle = 'white';
+			// ctx.textBaseline = 'middle';
+			// ctx.fillText("vidéo", center.x, center.y);
+			
+			ctx.font = size.y+'px Jura';
 			ctx.textAlign = 'center';
-			ctx.fillStyle = 'white';
+			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText("vidéo", center.x, center.y);
+			ctx.fillText("Vidéo", center.x, center.y);
 			
 		}else if(type >= 500 && type < 600){
 		
 			
-			ctx.beginPath();
-			ctx.arc(center.x, center.y, size.y, 0, 2 * Math.PI, false);
-			ctx.closePath();
-			ctx.fill();
+			// ctx.beginPath();
+			// ctx.arc(center.x, center.y, size.y, 0, 2 * Math.PI, false);
+			// ctx.closePath();
+			// ctx.fill();
 			
-			ctx.font = '12px Jura';
+			// ctx.font = '12px Jura';
+			// ctx.textAlign = 'center';
+			// ctx.fillStyle = 'white';
+			// ctx.textBaseline = 'middle';
+			// ctx.fillText("lien", center.x, center.y);
+			
+			ctx.font = size.y+'px Jura';
 			ctx.textAlign = 'center';
-			ctx.fillStyle = 'white';
+			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText("lien", center.x, center.y);
+			ctx.fillText("Lien", center.x, center.y);
 			
 		}else{
 		
@@ -387,18 +401,9 @@ function Ressource (tab, context){
 			
 			var v = new Vector(center.x,center.y, obj.x(), obj.y());
 			var space = {x:0,y:0};
-			
-			if( (type >= 100 && type < 200) || (type >= 500 && type < 600) ){
-			
-				space.x = Math.abs( v.x() ) - ( (obj.width() + size.x)/2 );
-				space.y = Math.abs( v.y() ) - ( (obj.height() + size.y)/2 );
-				
-			}else{
-			
-				space.x = Math.abs( v.x() ) - ( (obj.width() + size.x)/2 );
-				space.y = Math.abs( v.y() ) - ( (obj.height() + size.y)/2 );
-				
-			}
+		
+			space.x = Math.abs( v.x() ) - ( (obj.width() + size.x)/2 );
+			space.y = Math.abs( v.y() ) - ( (obj.height() + size.y)/2 );
 			
 			return space;
 			

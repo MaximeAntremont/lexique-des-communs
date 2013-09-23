@@ -31,7 +31,7 @@
 		2** - mots
 		3** -
 		4** -
-		5** -
+		5** - liens
 	
 */
 	$ress_mot = array(
