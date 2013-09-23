@@ -41,12 +41,18 @@
 		''
 	);
 	$ress_video_vimeo = array(
-		"vimeo+\.+com"
+		'regex' => "#^https://vimeo.com/+[0-9]{8,10}#",
+		'embed' => function($id){
+			return '<iframe src="//player.vimeo.com/video/'. $id .'" width="300" height="225" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+		},
+		'replace' => 'https://vimeo.com/'
 	);
 	$ress_video_youtube = array(
-		'name' => 'youtube',
-		'regexp' => "",
-		'embed' => ""
+		'regex' => "#^http://www.youtube.com/watch?v=+*#",
+		'embed' => function($id){
+			return '<div class="iframe"><iframe width="300" height="225" src="'. $id .'" frameborder="0" allowfullscreen></iframe></div>';
+		},
+		'replace' => 'http://www.youtube.com/watch?v='
 	);
 	
 	$ress_dico = array(
