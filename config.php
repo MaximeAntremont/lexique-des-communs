@@ -41,7 +41,7 @@
 		''
 	);
 	$ress_video_vimeo = array(
-		'regex' => "#^https://vimeo.com/+[0-9]{8,10}#",
+		'regex' => "#^https://vimeo.com/+[0-9]*#",
 		'embed' => function($id){
 			return '<iframe src="//player.vimeo.com/video/'. $id .'" width="300" height="225" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 		},

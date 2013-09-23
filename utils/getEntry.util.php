@@ -27,7 +27,7 @@
 			foreach($ressources as $ress){
 			
 				$type = $ress->type();
-				if( isset($ress_dico[$type]) ){
+				if( isset($ress_dico[$type]) && isset($ress_dico[$type]['embed']) ){
 					$dico = $ress_dico[$type];
 					$ress->val( $dico['embed']( str_replace($dico['replace'], "", $ress->val() ) ) );
 				}
