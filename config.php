@@ -48,9 +48,9 @@
 		'replace' => 'https://vimeo.com/'
 	);
 	$ress_video_youtube = array(
-		'regex' => "#^http://www.youtube.com/watch?v=+*#",
+		'regex' => "#^http://www.youtube.com/watch\?v=+[0-9a-zA-Z]*#",
 		'embed' => function($id){
-			return '<div class="iframe"><iframe width="300" height="225" src="'. $id .'" frameborder="0" allowfullscreen></iframe></div>';
+			return '<div class="iframe"><iframe width="300" height="225" src="//www.youtube.com/embed/'. $id .'" frameborder="0" allowfullscreen></iframe></div>';
 		},
 		'replace' => 'http://www.youtube.com/watch?v='
 	);
