@@ -28,9 +28,7 @@
 		foreach($ress_dico as $key => $dico){
 			if(isset($dico['regex']))
 				if( preg_match($dico['regex'], $ress->val()) ) $ress->type( $key );
-			
 		}
-		if( strlen( $ress->val() ) <= 20 ) $ress->type(201);
 		
 		if($return = $manager->sendNewRessource( $ress ))
 			echo json_encode(array('return'=> true));

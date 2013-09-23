@@ -29,8 +29,12 @@
 				$type = $ress->type();
 				if( isset($ress_dico[$type]) && isset($ress_dico[$type]['embed']) ){
 					$dico = $ress_dico[$type];
-					$ress->val( $dico['embed']( str_replace($dico['replace'], "", $ress->val() ) ) );
+					$ress->val( 
+						$dico['embed'](
+							(isset($dico['replace'])) ? preg_replace($dico['replace'], "", $ress->val() ) : $ress->val() ) 
+					);
 				}
+			
 			}
 			
 			echo json_encode($entry->getArray());

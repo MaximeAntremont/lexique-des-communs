@@ -35,24 +35,27 @@
 	
 */
 	$ress_mot = array(
-		'^*{20}'
+		'regex' => "#^[0-9A-Za-z]{2,20}$#"
 	);
 	$ress_lien = array(
-		''
+		'regex' => "#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#",
+		'embed' => function($id){
+			return '<a href="'. $id .'" target="_BLANK">'. preg_replace('#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#', "$2.$3", $id  ) .'</a>';
+		}
 	);
 	$ress_video_vimeo = array(
 		'regex' => "#^https://vimeo.com/+[0-9]*#",
 		'embed' => function($id){
 			return '<iframe src="//player.vimeo.com/video/'. $id .'" width="300" height="225" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 		},
-		'replace' => 'https://vimeo.com/'
+		'replace' => '#^https://vimeo.com/#'
 	);
 	$ress_video_youtube = array(
 		'regex' => "#^http://www.youtube.com/watch\?v=+[0-9a-zA-Z]*#",
 		'embed' => function($id){
 			return '<div class="iframe"><iframe width="300" height="225" src="//www.youtube.com/embed/'. $id .'" frameborder="0" allowfullscreen></iframe></div>';
 		},
-		'replace' => 'http://www.youtube.com/watch?v='
+		'replace' => '#^http://www.youtube.com/watch?v=#'
 	);
 	
 	$ress_dico = array(
