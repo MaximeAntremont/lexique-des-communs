@@ -18,5 +18,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Encyclopétrie</title>
 		<script src="js/jquery.js"></script>
+		<script src="js/jquery.mobile.custom.min.js"></script>
 	</head>
 	<body>
