@@ -38,7 +38,7 @@ class Manager
 			
 				$log->type(201);
 				$log->ip($_SERVER['REMOTE_ADDR']);
-				$log->val("NO IDEA OF THE CONTENT TO PUT HERE");
+				$log->val("null");
 				$log->entry_id( $this->_db->lastInsertId() );
 				
 				$this->sendNewLog($log);
@@ -458,7 +458,7 @@ class Manager
 			
 				$log->type(202);
 				$log->ip($_SERVER['REMOTE_ADDR']);
-				$log->val("NO IDEA OF THE CONTENT TO PUT HERE");
+				$log->val("null");
 				$log->entry_id($obj->entry_id());
 				
 				$this->sendNewLog($log);
