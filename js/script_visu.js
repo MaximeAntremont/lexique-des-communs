@@ -769,7 +769,15 @@ $(function(){
 			dataType: "json",
 			data: {entry_id: entry_id}
 		}).done(function(data) {
-						
+			
+			$("#top_right_corner #type").html( "" );
+			$("#top_right_corner #category").html( "" );
+			$("#top_right_corner #val").html( "" );
+			$("#top_right_corner").hide();
+			$("#right_panel #addTrend").hide();
+			$("#right_panel #subTrend").hide();
+			$("#right_panel #addAlert").hide();
+			
 			ressources = [];
 			cursorRefs = [];
 			var r = 10;
