@@ -22,6 +22,16 @@
 		
 		if($entry = $manager->getEntryBy_id( $entry_id, true, true )){
 			
+			$ressources = $entry->ressources();
+			
+			foreach($ressources as $ress){
+			
+				$type = $ress->type();
+				if( isset($ress_dico[$type]) ){
+					$dico = $ress_dico[$type];
+					$ress->val( $dico['embed']( str_replace($dico['replace'], "", $ress->val() ) ) );
+				}
+			}
 			
 			echo json_encode($entry->getArray());
 			
