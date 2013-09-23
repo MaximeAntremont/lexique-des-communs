@@ -28,7 +28,7 @@
 		);
 	code:
 		1** - vidéo
-		2** - mots
+		2** - textuel
 		3** -
 		4** -
 		5** - liens
@@ -36,6 +36,9 @@
 */
 	$ress_mot = array(
 		'regex' => "#^[0-9A-Za-z]{2,20}$#"
+	);
+	$ress_texte = array(
+		'regex' => "#^[0-9A-Za-z]{21,}$#"
 	);
 	$ress_lien = array(
 		'regex' => "#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#",
@@ -62,6 +65,7 @@
 		101 => $ress_video_vimeo,
 		102 => $ress_video_youtube,
 		201 => $ress_mot,
+		202 => $ress_texte,
 		500 => $ress_lien
 	);
 	
