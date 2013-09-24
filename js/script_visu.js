@@ -221,11 +221,13 @@ $(function(){
 										'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 					cache_panel.open();
 					
+					var isAddRequest = false;
 					$(".cliquable").click(function(){
 						if($(this).html() == "Annuler"){
 							cache_panel.close();
 						}
-						if($(this).html() == "Ajouter"){
+						if($(this).html() == "Ajouter" && !isAddRequest){
+							isAddRequest = true;
 							sendNewLink ($('#link_type').val(), function(){
 								setTimeout(function(){
 									fetchEntryData( entry_selected_id, function(){
@@ -546,6 +548,8 @@ $(function(){
 			});
 			
 			$("#add_ressource").click(function(){
+				var isAddRequest = false;
+				
 				if(entry_selected_id != null && entry_selected_id > 0){
 				
 					cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" />',
@@ -556,7 +560,8 @@ $(function(){
 						if($(this).html() == "Annuler"){
 							cache_panel.close();
 						}
-						if($(this).html() == "Ajouter"){
+						if($(this).html() == "Ajouter" && !isAddRequest){
+							isAddRequest = true;
 							sendNewRessource ($('#input_ress_val').val(), function(){
 								setTimeout(function(){
 									fetchEntryData( entry_selected_id, function(){
