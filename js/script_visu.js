@@ -815,6 +815,8 @@ $(function(){
 			
 			ressources = [];
 			cursorRefs = [];
+			linksToDraw = [];
+			
 			var r = 10;
 			var l = data['ressources'];
 			// zoom = 0;
