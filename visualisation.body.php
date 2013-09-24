@@ -13,7 +13,7 @@
 		<div id="pause" class="panel_button" >||</div>
 		<div id="start" class="panel_button" >></div>
 	</div>
-	<div id="bottom_panel"></div>
+	<div id="bottom_panel"><div id="alertBug" class="panel_button" style="margin-left: 40px;">Alerter d'un Bug</div></div>
 	
 	<div id="top_left_corner">
 		<div id="part_one" ></div>

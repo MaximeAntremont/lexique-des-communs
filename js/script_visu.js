@@ -311,23 +311,61 @@ $(function(){
 		}
 	});
 	
-	$('#right_panel #addAlert').click(function (){
-		if(ressource_selected instanceof Ressource){
-			$.ajax({
-				type: "POST",
-				url: "utils/incrementRessource_alert.util.php",
-				data: {ress_id: ressource_selected.id()},
-				dataType: "json"
-			}).done(function(data) {
-				if(data['return']){
-					
-					cache_panel.modify('alerte de contenu','Merci de nous avoir alerté.','');
-					cache_panel.open();
-					setTimeout(function(){cache_panel.close();},1000);
-					
-				}
-			}).fail(function(a,b,c){alert(a+", "+b+", "+c);});
-		}
+	$('#bottom_panel #alertBug').click(function (){
+		var isAddRequest = false;
+			
+		cache_panel.modify('<span>Repport un bug</span>', '<input type="text" id="input_log_val" placeholder="Expliquez votre problème..." />',
+		'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+		cache_panel.open();
+		
+		$(".cliquable").click(function(){
+			if($(this).html() == "Annuler"){
+				cache_panel.close();
+			}
+			if($(this).html() == "Ajouter" && !isAddRequest){
+				isAddRequest = true;
+				
+				$.ajax({
+					type: "POST",
+					url: "utils/addBug.util.php",
+					dataType: "json",
+					data:{log_val: $('#input_log_val').val()}
+				}).done(function(data) {
+					cache_panel.content("Merci de votre aide.<br/>Nous tenterons de résoudre cela dans le plus bref délai possibles.");
+					setTimeout(function(){cache_panel.close();}, 3000);
+				}).fail(function(a,b,c){
+					alert(a+", "+b+", "+c);
+				});
+			}
+			
+		});
+		
+		$("body").on("keyup", "#input_log_val", function (){
+			
+			if(cursor < cursorRefs.length) return;
+			
+			var temp = $(this);
+			var val = temp.val();
+			var l = val.length;
+			
+			if(l > 20 && temp.prop("tagName") == "INPUT"){
+				
+				$("#input_log_val").replaceWith( '<textarea id="input_log_val">'+ val +'</textarea>' );
+				$("#input_log_val").selectRange(21);
+				
+			}else if(l <= 20 && temp.prop("tagName") == "TEXTAREA"){
+			
+				$("#input_log_val").replaceWith( '<input type="text" id="input_log_val" placeholder="Contenu de la ressource" value="'+ val +'" />' );
+				$("#input_log_val").selectRange(20);
+				
+			}
+		});
+	});
+	
+	$('#right_panel #alertBug').click(function (){
+		cache_panel.modify('Repporter un Bug','Merci de nous avoir alerté.','');
+		cache_panel.open();
+		setTimeout(function(){cache_panel.close();},1000);
 	});
 	
 	$(document).keydown(function (e){

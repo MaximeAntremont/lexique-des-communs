@@ -657,10 +657,10 @@ class Manager
 		}elseif($obj instanceof Log){
 			
 			$val = $obj->val();
-			$entry_id = $obj->entry_id();
+			// $entry_id = $obj->entry_id();
 			$ip = $obj->ip();
 			$type = $obj->type();
-			return (!empty($val) && is_numeric($entry_id) && !empty($ip) && is_numeric($type) ) ? true : false;
+			return (!empty($val) && !empty($ip) && is_numeric($type) ) ? true : false;
 			
 		}else{
 		

@@ -78,6 +78,7 @@ body{
 		height: 40px;
 		width: 100%;
 		color: rgb(110,110,110);
+		background: rgb(220,220,220);
 	}
 	#cache_panel{
 		position: fixed;
@@ -163,6 +164,34 @@ body{
 	}
 	
 	#top_panel #add_ressource:hover{
+		cursor: pointer;
+		background: rgb(110,110,110);
+		color: rgb(220,220,220);
+	}
+
+ /*************************************************
+					BOTTOM_PANEL
+ *************************************************/
+	
+	#bottom_panel #index{
+		margin-left: 40px;
+		margin-top: 5px;
+		float: left;
+	}
+	
+	#bottom_panel .panel_button{
+		float: left;
+		height: 35px;
+		margin-left: 5px;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 5px;
+		font-weight: bold;
+		border-left: 1px solid rgb(200,200,200);
+		border-right: 1px solid rgb(200,200,200);
+	}
+	
+	#bottom_panel .panel_button:hover{
 		cursor: pointer;
 		background: rgb(110,110,110);
 		color: rgb(220,220,220);

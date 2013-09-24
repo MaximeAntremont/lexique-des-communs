@@ -67,8 +67,10 @@
 	$ress_dico = array(
 		101 => $ress_video_vimeo,
 		102 => $ress_video_youtube,
+		
 		201 => $ress_mot,
 		202 => $ress_texte,
+		
 		500 => $ress_lien
 	);
 	
@@ -82,6 +84,8 @@
 */
 
 	$log_dico = array(
+		101 => "Alerte d'un bug par un visiteur",
+		
 		201 => "enregistrement d'une entrée dans le serveur",
 		202 => "enregistrement d'une ressource dans le serveur",
 		
