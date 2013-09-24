@@ -31,7 +31,8 @@
 					$dico = $ress_dico[$type];
 					$ress->val( 
 						$dico['embed'](
-							(isset($dico['replace'])) ? preg_replace($dico['replace'], "", $ress->val() ) : $ress->val() ) 
+								(isset($dico['replace'])) ? preg_replace($dico['replace'], "", $ress->val() ) : $ress->val() 
+							) 
 					);
 				}
 			

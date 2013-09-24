@@ -61,7 +61,7 @@
 		'embed' => function($id){
 			return '<div class="iframe"><iframe width="300" height="225" src="//www.youtube.com/embed/'. $id .'" frameborder="0" allowfullscreen></iframe></div>';
 		},
-		'replace' => '#^http://www.youtube.com/watch?v=#'
+		'replace' => '#^http://www\.youtube\.com/watch\?v=#'
 	);
 	
 	$ress_dico = array(
