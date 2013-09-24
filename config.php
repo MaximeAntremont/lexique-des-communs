@@ -41,6 +41,7 @@
 		'regex' => "#^.{21,}$#",
 		'embed' => function($id){
 			return '<a href="'. $id .'" target="_BLANK">'. preg_replace('#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#', "$2.$3", $id  ) .'</a>';
+		}
 	);
 	$ress_lien = array(
 		'regex' => "#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#",
