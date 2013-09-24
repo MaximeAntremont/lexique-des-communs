@@ -26,8 +26,10 @@
 		$ress = new Ressource($_POST);
 		
 		foreach($ress_dico as $key => $dico){
-			if(isset($dico['regex']))
-				if( preg_match($dico['regex'], $ress->val()) ) $ress->type( $key );
+			if(isset($dico['regex'])){
+				if( preg_match($dico['regex'], $ress->val()) ){ $ress->type( $key );
+				break;}
+			}
 		}
 		
 		if($return = $manager->sendNewRessource( $ress ))

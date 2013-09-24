@@ -40,7 +40,7 @@
 	$ress_texte = array(
 		'regex' => "#^.{21,}$#",
 		'embed' => function($id){
-			return '<a href="'. $id .'" target="_BLANK">'. preg_replace('#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#', "$2.$3", $id  ) .'</a>';
+			return $id;
 		}
 	);
 	$ress_lien = array(
@@ -57,7 +57,7 @@
 		'replace' => '#^https://vimeo.com/#'
 	);
 	$ress_video_youtube = array(
-		'regex' => "#^http://www.youtube.com/watch\?v=+[0-9a-zA-Z]*#",
+		'regex' => "#^http://www\.youtube\.com/watch\?v=+[0-9a-zA-Z]*#",
 		'embed' => function($id){
 			return '<div class="iframe"><iframe width="300" height="225" src="//www.youtube.com/embed/'. $id .'" frameborder="0" allowfullscreen></iframe></div>';
 		},
