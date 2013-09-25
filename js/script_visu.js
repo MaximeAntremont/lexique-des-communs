@@ -56,7 +56,7 @@ $(function(){
 	
 	var screen = new GPUScreen({
 		canvas : canvas,
-		autoRefresh : true,
+		autoRefresh : false,
 		delay : 2,
 		autoClear : true
 	});
