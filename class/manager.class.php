@@ -412,6 +412,24 @@ class Manager
 		
 	}
 	
+	public function getLogBy_type ($type, $culumns = '*'){
+		
+		if(is_numeric($type)){
+			$logs = array();
+			
+			$req = $this->_db->query('SELECT '. $culumns .' FROM log WHERE log_type = "'. $type .'"');
+			
+			while($don = $req->fetch()){
+				$logs[] = new Log($don);
+			}
+			
+			return $logs;
+		}else{
+			return false;
+		}
+		
+	}
+	
 	public function getLastTrendChange ($ress){
 		
 		if($ress instanceof Ressource){
