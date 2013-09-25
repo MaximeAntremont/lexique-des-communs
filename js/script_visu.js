@@ -362,10 +362,28 @@ $(function(){
 		});
 	});
 	
-	$('#right_panel #alertBug').click(function (){
-		cache_panel.modify('Repporter un Bug','Merci de nous avoir alerté.','');
+	$('#bottom_panel #infos').click(function (){
+	
+		cache_panel.modify('<span>Note de versions</span>', '', '<div><span class="cliquable">Fermer</span></div>');
 		cache_panel.open();
-		setTimeout(function(){cache_panel.close();},1000);
+		
+		$.ajax({
+			type: "POST",
+			url: "version.html",
+			dataType: "html"
+		}).done(function(data) {
+			cache_panel.content(data);
+		}).fail(function(a,b,c){
+			alert(a+", "+b+", "+c);
+		});
+		
+		
+		$(".cliquable").click(function(){
+			if($(this).html() == "Fermer"){
+				cache_panel.close();
+			}
+		});
+		
 	});
 	
 	$(document).keydown(function (e){

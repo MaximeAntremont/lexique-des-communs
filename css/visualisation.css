@@ -46,6 +46,8 @@ body{
 		width: 100%;
 		color: rgb(110,110,110);
 		background: rgb(220,220,220);
+		-moz-user-select: none;
+		-webkit-user-select: none;
 	}
 	#left_panel{
 		position: fixed;
@@ -79,6 +81,8 @@ body{
 		width: 100%;
 		color: rgb(110,110,110);
 		background: rgb(220,220,220);
+		-moz-user-select: none;
+		-webkit-user-select: none;
 	}
 	#cache_panel{
 		position: fixed;
@@ -182,12 +186,10 @@ body{
 	#bottom_panel .panel_button{
 		float: left;
 		height: 35px;
-		margin-left: 5px;
 		padding-left: 10px;
 		padding-right: 10px;
 		padding-top: 5px;
 		font-weight: bold;
-		border-left: 1px solid rgb(200,200,200);
 		border-right: 1px solid rgb(200,200,200);
 	}
 	
@@ -333,8 +335,16 @@ body{
 		width: 380px;
 		height: 224px;
 		z-index: 53;
+		overflow: auto;
 		border-top: 1px solid rgb(220,220,220);
 		border-bottom: 1px solid rgb(220,220,220);
+	}
+	
+	#cache_panel #middle_window #content div li{
+		list-style-type: decimal;
+		font-size: 11px;
+		text-align: left;
+		margin-left: 20px;
 	}
 	
 	#cache_panel #middle_window input{

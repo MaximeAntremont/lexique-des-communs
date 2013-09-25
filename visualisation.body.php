@@ -13,7 +13,10 @@
 		<div id="pause" class="panel_button" >||</div>
 		<div id="start" class="panel_button" >></div>
 	</div>
-	<div id="bottom_panel"><div id="alertBug" class="panel_button" style="margin-left: 40px;">Alerter d'un Bug</div></div>
+	<div id="bottom_panel">
+		<div id="alertBug" class="panel_button" style="margin-left: 40px;border-left: 1px solid rgb(200,200,200);">Alerter d'un Bug</div>
+		<div id="infos" class="panel_button">Version IN-DEV</div>
+	</div>
 	
 	<div id="top_left_corner">
 		<div id="part_one" ></div>
