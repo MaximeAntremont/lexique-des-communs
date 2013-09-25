@@ -198,9 +198,6 @@ $(function(){
 			});
 			
 			if(ressource_selected == null){
-				$("#right_panel #addTrend").css('color', 'rgb(200,200,200)');
-				$("#right_panel #subTrend").css('color', 'rgb(200,200,200)');
-				$("#right_panel #addAlert").css('color', 'rgb(200,200,200)');
 				
 				ressources.forEach(function(objB){objB.alpha(0.5);});
 				ressource_selected = null;
@@ -208,12 +205,7 @@ $(function(){
 				printRessourceInfos();
 				
 			}else{
-				// ressource_selected.backgroundColor('rgb(140,100,200)');
 				drawLinks();
-				
-				$("#right_panel #addTrend").css('color', 'rgb(160,160,160)');
-				$("#right_panel #subTrend").css('color', 'rgb(160,160,160)');
-				$("#right_panel #addAlert").css('color', 'rgb(160,160,160)');
 				printRessourceInfos();
 				
 				if(selecting){
@@ -386,6 +378,12 @@ $(function(){
 		
 	});
 	
+	// $('#right_panel #showLinks').mouse(function (){
+	
+		
+		
+	// });
+	
 	$(document).keydown(function (e){
 		
 		if(e.keyCode == 17) CTRL = true;
@@ -459,12 +457,14 @@ $(function(){
 			$("#right_panel #addTrend").show();
 			$("#right_panel #subTrend").show();
 			$("#right_panel #addAlert").show();
+			$("#right_panel #showLinks").show();
 		}else{
 			$("#top_right_corner #val").html("");
 			$("#top_right_corner").hide();
 			$("#right_panel #addTrend").hide();
 			$("#right_panel #subTrend").hide();
 			$("#right_panel #addAlert").hide();
+			$("#right_panel #showLinks").hide();
 		}
 		
 	}
