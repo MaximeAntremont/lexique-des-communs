@@ -398,7 +398,17 @@ class Manager
 		
 	}
 	
-	public function getLog (){
+	public function getLogAll ($culumns = '*'){
+		
+		$logs = array();
+		
+		$req = $this->_db->query('SELECT '. $culumns .' FROM log');
+		
+		while($don = $req->fetch()){
+			$logs[] = new Log($don);
+		}
+		
+		return $logs;
 		
 	}
 	
