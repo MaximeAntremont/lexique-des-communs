@@ -252,7 +252,7 @@ $(function(){
 				}
 								 
 			});
-			if(isNoOver) $(this).css('cursor', 'default');
+			if(isNoOver) $(this).css('cursor', 'crosshair');
 		}
 		if(mouseClicked && ressource_selected != null){
 			if(marges.mouseMovePressInteration >= marges.mouseMovePressLimit){
