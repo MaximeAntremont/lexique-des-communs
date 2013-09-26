@@ -27,15 +27,17 @@
 		
 		foreach($ress_dico as $key => $dico){
 			if(isset($dico['regex'])){
-				if( preg_match($dico['regex'], $ress->val()) ){ $ress->type( $key );
-				break;}
+				if( preg_match($dico['regex'], $ress->val()) ){
+					$ress->type( $key );
+					break;
+				}
 			}
 		}
 		
 		if($return = $manager->sendNewRessource( $ress ))
 			echo json_encode(array('return'=> true));
 		else
-			echo json_encode(array('return' => false, 'obj' => $ress->getArray()));
+			echo json_encode(array('return' => false, 'obj' => $ress->getArray(), 'val' => $_POST['ress_val']));
 		
 	}else
 		echo json_encode(array('return' => false));

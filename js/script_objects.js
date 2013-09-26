@@ -250,11 +250,11 @@ function Ressource (tab, context){
 	};
 	this.calculWidth = function (ctx){
 		
-		 ctx.font = size.y+'px Jura';
+		ctx.font = size.y+'px Jura';
 		ctx.textAlign = 'center';
 		if(type >= 100 && type < 200) var metrics = ctx.measureText("Vidéo");
 		else if(type >= 500 && type < 600) var metrics = ctx.measureText("Lien");
-		else var metrics = ctx.measureText(val);
+		else var metrics = ctx.measureText( (type == 202) ? val.substring(0, 16)+"..." : val );
 		size.x = metrics.width;
 	};
 	this.width = function (val){
@@ -374,7 +374,7 @@ function Ressource (tab, context){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText(val, center.x, center.y);
+			ctx.fillText( (type == 202) ? val.substring(0, 16)+"..." : val , center.x, center.y);
 			
 		}
 		

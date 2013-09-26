@@ -38,7 +38,7 @@
 		'regex' => "#^.{2,20}$#"
 	);
 	$ress_texte = array(
-		'regex' => "#^.{21,}$#",
+		'regex' => "#.{21,}#",
 		'embed' => function($id){
 			return $id;
 		}
