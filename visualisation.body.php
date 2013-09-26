@@ -11,8 +11,8 @@
 		<div id="subTrend" class="panel_button" >-</div>
 		<div id="addAlert" class="panel_button" >!</div>
 		<div id="showLinks" class="panel_button" ><div></div></div>
-		<div id="pause" class="panel_button" >||</div>
-		<div id="start" class="panel_button" >></div>
+		<!-- <div id="pause" class="panel_button" >||</div>
+		<div id="start" class="panel_button" >></div> -->
 	</div>
 	<div id="bottom_panel">
 		<div id="alertBug" class="panel_button" style="margin-left: 40px;border-left: 1px solid rgb(200,200,200);">Alerter d'un Bug</div>
