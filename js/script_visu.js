@@ -583,6 +583,10 @@ $(function(){
 			$("#top_panel").append(txt);
 			
 			$(".letter-on").click(function(){
+				ressources = [];
+				cursorRefs = [];
+				linksToDraw = [];
+				screen.draw(gpu.getFrame(), true);
 				printEntrysFromLetter(letters, this.id);
 			});
 			
