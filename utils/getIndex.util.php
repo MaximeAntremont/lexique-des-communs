@@ -30,7 +30,7 @@
 				
 				$val = $entry->val();
 				if(strtoupper($val[0]) === $letter){
-					$selected[] = array('id' => $entry->id(), 'val' => $entry->val());
+					$selected[] = array('id' => $entry->id(), 'val' => stripcslashes($entry->val()) );
 				}
 				
 			}

@@ -27,7 +27,7 @@ class Ressource
 			$method = 'set_'.$key;
 			if (method_exists($this, $method))
 			{
-			  $this->$method($value);
+			  $this->$method( stripcslashes(htmlspecialchars_decode($value)) );
 			}
 		}
 	}
