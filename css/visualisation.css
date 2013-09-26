@@ -98,7 +98,7 @@ body{
 		position: fixed;
 		top: 40px; left: 40px;
 		height: 100px;
-		width: 50%;	
+		width: 600px;	
 		z-index: 10;
 	}
 	#top_right_corner{
@@ -206,6 +206,7 @@ body{
 	#top_left_corner #part_one{
 		float: left;
 		height: 100%;
+		width: 299px;
 		border-right: 1px solid rgb(180,180,180);
 	}
 	
@@ -219,6 +220,7 @@ body{
 	#top_left_corner #part_two{
 		float: left;
 		height: 100%;
+		width: 300px;
 		color: rgb(150,150,150);
 	}
 	
