@@ -499,8 +499,10 @@ $(function(){
 			
 			ressource_selected.getLinks().forEach(function (link){
 			
-				ressources[link.to()].alpha(0.7);
-				linksToDraw.push(link);
+				if(ressources[link.to()] != undefined){ 
+					ressources[link.to()].alpha(0.7);
+					linksToDraw.push(link);
+				}
 			
 			});
 			
