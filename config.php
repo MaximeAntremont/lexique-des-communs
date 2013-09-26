@@ -50,19 +50,19 @@
 		}
 	);
 	$ress_video_vimeo = array(
-		'regex' => "#^(https://)?(www\.)?vimeo.com/+[0-9]*#",
+		'regex' => "#^(https?://)?(www\.)?vimeo.com/+[0-9]*#",
 		'embed' => function($id){
 			return '<iframe src="//player.vimeo.com/video/'. $id .'" width="300" height="225" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 		},
-		'replace' => '#^https://vimeo.com/#'
+		'replace' => '#^(https?://)?(www\.)?vimeo.com/#'
 	);
 	$ress_video_youtube = array(
-		'regex' => "#^(http://)?(www\.)?youtu(be)?\.(com|be)/(watch\?v=)?+.*#",
+		'regex' => "#^(https?://)?(www\.)?youtu(be)?\.(com|be)/(watch\?v=)?+.*#",
 		// http://youtu.be/-gwQhX5nZy8
 		'embed' => function($id){
 			return '<div class="iframe"><iframe width="300" height="225" src="//www.youtube.com/embed/'. $id .'" frameborder="0" allowfullscreen></iframe></div>';
 		},
-		'replace' => '#^(http://)?(www\.)?youtu(be)?\.(com|be)/(watch\?v=)?#'
+		'replace' => '#^(https?://)?(www\.)?youtu(be)?\.(com|be)/(watch\?v=)?#'
 	);
 	
 	$ress_dico = array(
