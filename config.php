@@ -32,23 +32,6 @@
 		3** - img
 		4** - liens
 		5** - textuel
-	
-	$ress_video_vimeo = array(
-		'regex' => "#^(https?://)?(www\.)?vimeo.com/+[0-9]*#",
-		'embed' => function($id){
-			return '<iframe src="//player.vimeo.com/video/'. $id .'" width="300" height="225" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-		},
-		'replace' => '#^(https?://)?(www\.)?vimeo.com/#'
-	);
-	
-	$ress_video_youtube = array(
-		'regex' => "#^(https?://)?(www\.)?youtu(be)?\.(com|be)/(watch\?v=)?+.*#",
-		http://youtu.be/-gwQhX5nZy8
-		'embed' => function($id){
-			return '<div class="iframe"><iframe width="300" height="225" src="//www.youtube.com/embed/'. $id .'" frameborder="0" allowfullscreen></iframe></div>';
-		},
-		'replace' => '#^(https?://)?(www\.)?youtu(be)?\.(com|be)/(watch\?v=)?#'
-	);
 */
 	$ress_mot = array(
 		'regex' => function ($val){
@@ -124,6 +107,29 @@
 		}
 	);
 	
+	
+	$ress_video_dailymotion = array(
+		'regex' => function ($val){
+			
+			return preg_match('#http://www\.dailymotion\.com/embed/video/([[:alnum:]]+)#', $val);
+			
+		},
+		'embed' => function($id){
+		
+			return '<iframe frameborder="0" width="300" height="200" src="http://www.dailymotion.com/embed/video/'. $id .'"></iframe>';
+			
+		},
+		'get' => function ($val){
+			
+			return preg_filter(
+				'#.*src="https?://www\.dailymotion\.com/embed/video/([a-zA-Z0-9]+)".*#',
+				"$1",
+				$val);
+			
+		}
+	);
+	
+	
 	$ress_audio_soundCloud = array(
 		'regex' => function ($val){
 			
@@ -187,6 +193,7 @@
 	$ress_dico = array(
 		101 => $ress_video_vimeo,
 		102 => $ress_video_youtube,
+		103 => $ress_video_dailymotion,
 				
 		201 => $ress_audio_soundCloud,
 		
