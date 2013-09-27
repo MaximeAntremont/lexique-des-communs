@@ -27,7 +27,7 @@
 		
 		foreach($ress_dico as $key => $dico){
 			if(isset($dico['regex'])){
-				if( preg_match($dico['regex'], $ress->val()) ){
+				if( preg_match($dico['regex'], htmlspecialchars_decode($ress->val())) ){
 					$ress->type( $key );
 					break;
 				}
