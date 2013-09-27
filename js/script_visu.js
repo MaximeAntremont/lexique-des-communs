@@ -447,7 +447,7 @@ $(function(){
 		cursorRefs = [];
 		linksToDraw = [];
 		screen.draw(gpu.getFrame(), true);
-		printEntrysFromLetter(letters, this.id);
+		printEntrysFromLetter(LETTERS, this.id);
 	});
 	
 	
@@ -663,8 +663,8 @@ $(function(){
 			dataType: "json"
 		}).done(function(data) {
 			
-			var letters = [];
-			var txt = '<div id="index">';
+			// var letters = [];
+			var txt = "";
 			
 			if(data != null)
 				data.forEach(function(obj){
@@ -672,18 +672,16 @@ $(function(){
 						txt += '<div class="letter-on" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
 					else
 						txt += '<div class="letter-off" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
-					letters['char-'+obj['char']] = obj['select'];
+					// letters['char-'+obj['char']] = obj['select'];
 					
 					LETTERS['char-'+obj['char']] = obj['select'];
 					if(obj['select'] && obj['select'].length > 0)
 						obj['select'].forEach(function(o){ENTRYS.push(o);});
 				});
 				
-			txt += '</div>';
-			txt += '<div id="add_entry">Nouvelle entrée</div>';
-			txt += '<div id="add_ressource">Nouvelle ressource</div>';
-			$("#top_panel").html("");
-			$("#top_panel").append(txt);
+			// txt += '<div id="add_ressource">Nouvelle ressource</div>';
+			$("#top_panel #index").html("");
+			$("#top_panel #index").append(txt);
 			
 			if(callback) callback();
 			

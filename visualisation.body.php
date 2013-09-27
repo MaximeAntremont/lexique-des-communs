@@ -1,7 +1,7 @@
 
 	<canvas id="canvas" ></canvas>
 
-	<div id="top_panel"></div>
+	<div id="top_panel"><div id="index" ></div><div id="add_entry">Nouvelle entrée</div></div>
 	<div id="left_panel">
 		<div id="addZoom" class="panel_button" >+</div>
 		<div id="subZoom" class="panel_button" >-</div>
