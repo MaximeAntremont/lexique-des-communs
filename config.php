@@ -28,10 +28,10 @@
 		);
 	code:
 		1** - vidéo
-		2** - textuel
+		2** - son
 		3** -
-		4** -
-		5** - liens
+		4** - liens
+		5** - textuel
 	
 */
 	$ress_mot = array(
@@ -56,6 +56,7 @@
 		},
 		'replace' => '#^(https?://)?(www\.)?vimeo.com/#'
 	);
+	
 	$ress_video_youtube = array(
 		'regex' => "#^(https?://)?(www\.)?youtu(be)?\.(com|be)/(watch\?v=)?+.*#",
 		// http://youtu.be/-gwQhX5nZy8
@@ -65,14 +66,35 @@
 		'replace' => '#^(https?://)?(www\.)?youtu(be)?\.(com|be)/(watch\?v=)?#'
 	);
 	
+	$ress_audio_soundCloud = array(
+		'regex' => '#"https?://w\.soundcloud\.com/player/\?url=.*"#',
+		'embed' => function($id){
+		
+			return '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='. $id .'"></iframe>';
+		
+		},
+		'get' => function ($val){
+			
+			return preg_filter(
+				'#.*"https?://w\.soundcloud\.com/player/\?url=(.*)".*#',
+				"$1",
+				$val
+				);
+		
+		}
+	);
+	
+	
 	$ress_dico = array(
 		101 => $ress_video_vimeo,
 		102 => $ress_video_youtube,
+				
+		201 => $ress_audio_soundCloud,
 		
-		201 => $ress_mot,
-		202 => $ress_texte,
+		401 => $ress_lien,
 		
-		500 => $ress_lien
+		501 => $ress_mot,
+		502 => $ress_texte
 	);
 	
 	

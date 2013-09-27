@@ -257,8 +257,9 @@ function Ressource (tab, context){
 		ctx.font = size.y+'px Jura';
 		ctx.textAlign = 'center';
 		if(type >= 100 && type < 200) var metrics = ctx.measureText("Vidéo");
-		else if(type >= 500 && type < 600) var metrics = ctx.measureText("Lien");
-		else var metrics = ctx.measureText( (type == 202) ? val.substring(0, 16)+"..." : val );
+		else if(type >= 200 && type < 300) var metrics = ctx.measureText("Audio");
+		else if(type >= 400 && type < 500) var metrics = ctx.measureText("Lien");
+		else var metrics = ctx.measureText( (type == 502) ? val.substring(0, 16)+"..." : val );
 		size.x = metrics.width;
 	};
 	this.width = function (val){
@@ -338,34 +339,22 @@ function Ressource (tab, context){
 		
 		if(type >= 100 && type < 200){
 		
-			// ctx.fillStyle = backgroundColor;
-			// ctx.fillRect(center.x - (size.x/2), center.y - (size.y/2), size.x, size.y);
-			// ctx.font = '12px Jura';
-			// ctx.textAlign = 'center';
-			// ctx.fillStyle = 'white';
-			// ctx.textBaseline = 'middle';
-			// ctx.fillText("vidéo", center.x, center.y);
-			
 			ctx.font = size.y+'px Jura';
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
 			ctx.fillText("Vidéo", center.x, center.y);
 			
-		}else if(type >= 500 && type < 600){
+		}else if(type >= 200 && type < 300){
 		
+			ctx.font = size.y+'px Jura';
+			ctx.textAlign = 'center';
+			ctx.fillStyle = 'black';
+			ctx.textBaseline = 'middle';
+			ctx.fillText("Audio", center.x, center.y);
 			
-			// ctx.beginPath();
-			// ctx.arc(center.x, center.y, size.y, 0, 2 * Math.PI, false);
-			// ctx.closePath();
-			// ctx.fill();
-			
-			// ctx.font = '12px Jura';
-			// ctx.textAlign = 'center';
-			// ctx.fillStyle = 'white';
-			// ctx.textBaseline = 'middle';
-			// ctx.fillText("lien", center.x, center.y);
-			
+		}else if(type >= 400 && type < 500){
+		
 			ctx.font = size.y+'px Jura';
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
@@ -378,7 +367,7 @@ function Ressource (tab, context){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText( (type == 202) ? val.substring(0, 16)+"..." : val , center.x, center.y);
+			ctx.fillText( (type == 502) ? val.substring(0, 16)+"..." : val , center.x, center.y);
 			
 		}
 		

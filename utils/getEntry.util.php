@@ -11,7 +11,7 @@
 	include_once('../class/category.class.php');
 	include_once('../class/manager.class.php');
 	
-	header('Content-type: application/json');
+	// header('Content-type: application/json');
 	
 	$manager = new Manager(getConnection());
 	
@@ -29,11 +29,21 @@
 				$type = $ress->type();
 				if( isset($ress_dico[$type]) && isset($ress_dico[$type]['embed']) ){
 					$dico = $ress_dico[$type];
-					$ress->val( 
-						$dico['embed'](
-								(isset($dico['replace'])) ? preg_replace($dico['replace'], "", $ress->val() ) : $ress->val() 
-							) 
-					);
+					
+					if(isset($dico['get'])){
+						
+						$answer = $dico['get']( $ress->val() );
+						$answer = $dico['embed']( $answer );
+						
+						$ress->val( $answer );
+						
+					}
+					
+					// $ress->val( 
+						// $dico['embed'](
+								// (isset($dico['replace'])) ? preg_replace($dico['replace'], "", $ress->val() ) : ((isset($dico['get'])) ? preg_filter($dico['get'], "", $ress->val() ) : $ress->val())
+							// ) 
+					// );
 				}
 			
 			}
