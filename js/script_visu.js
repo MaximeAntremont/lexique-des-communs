@@ -316,7 +316,7 @@ $(function(){
 	$('#bottom_panel #alertBug').click(function (){
 		var isAddRequest = false;
 			
-		cache_panel.modify('<span>Repport un bug</span>', '<input type="text" id="input_log_val" placeholder="Expliquez votre problème..." />',
+		cache_panel.modify('<span>Rapporter un Bug</span>', '<input type="text" id="input_log_val" placeholder="Expliquez votre problème..." />',
 		'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 		cache_panel.open();
 		
