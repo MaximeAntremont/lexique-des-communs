@@ -226,6 +226,7 @@ function Ressource (tab, context){
 		entry_id = tab.entry_id,
 		category_id = tab.category_id,
 		alert = tab.alert,
+		titre = tab.titre,
 		links = [],
 		context = context;
 
@@ -256,10 +257,10 @@ function Ressource (tab, context){
 		
 		ctx.font = size.y+'px Jura';
 		ctx.textAlign = 'center';
-		if(type >= 100 && type < 200) var metrics = ctx.measureText("Vidéo");
-		else if(type >= 200 && type < 300) var metrics = ctx.measureText("Audio");
-		else if(type >= 300 && type < 400) var metrics = ctx.measureText("Image");
-		else if(type >= 400 && type < 500) var metrics = ctx.measureText("Lien");
+		if(type >= 100 && type < 200) var metrics = ctx.measureText((titre != null) ? titre : "Vidéo");
+		else if(type >= 200 && type < 300) var metrics = ctx.measureText((titre != null) ? titre : "Audio");
+		else if(type >= 300 && type < 400) var metrics = ctx.measureText((titre != null) ? titre : "Image");
+		else if(type >= 400 && type < 500) var metrics = ctx.measureText((titre != null) ? titre : "Lien");
 		else var metrics = ctx.measureText( (type == 502) ? val.substring(0, 16)+"..." : val );
 		size.x = metrics.width;
 	};
@@ -344,7 +345,7 @@ function Ressource (tab, context){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText("Vidéo", center.x, center.y);
+			ctx.fillText( (titre != null) ? titre: "Vidéo" , center.x, center.y);
 			
 		}else if(type >= 200 && type < 300){
 		
@@ -352,7 +353,7 @@ function Ressource (tab, context){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText("Audio", center.x, center.y);
+			ctx.fillText((titre != null) ? titre : "Audio", center.x, center.y);
 			
 		}else if(type >= 300 && type < 400){
 		
@@ -360,7 +361,7 @@ function Ressource (tab, context){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText("Image", center.x, center.y);
+			ctx.fillText((titre != null) ? titre : "Image", center.x, center.y);
 			
 		}else if(type >= 400 && type < 500){
 		
@@ -368,7 +369,7 @@ function Ressource (tab, context){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText("Lien", center.x, center.y);
+			ctx.fillText((titre != null) ? titre : "Lien", center.x, center.y);
 			
 		}else{
 		
@@ -376,7 +377,7 @@ function Ressource (tab, context){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText( (type == 502) ? val.substring(0, 16)+"..." : val , center.x, center.y);
+			ctx.fillText( (type == 990) ? ((titre != null) ? titre : val.substring(0, 16)+"..." ) : "Texte" , center.x, center.y);
 			
 		}
 		

@@ -7,6 +7,7 @@ class Ressource
 			$create_date,
 			$trend,
 			$type,
+			$titre,
 			$entry_id,
 			$category_id,
 			$alert;
@@ -52,6 +53,10 @@ class Ressource
 		if(isset($val) && is_numeric($val)) $this->type = $val;
 		return $this->type;
 	}
+	public function titre ($val = null){
+		if(!empty($val) && is_string($val) && strlen($val) <= 20) $this->titre = $val;
+		return $this->titre;
+	}
 	public function trend ($val = null){
 		if(isset($val) && is_numeric($val)) $this->trend = $val;
 		return $this->trend;
@@ -87,6 +92,10 @@ class Ressource
 		if(isset($val) && is_numeric($val)) $this->type = $val;
 		return $this->type;
 	}
+	private function set_ress_titre ($val = null){
+		if(!empty($val) && is_string($val) && strlen($val) <= 20) $this->titre = $val;
+		return $this->titre;
+	}
 	private function set_ress_trend ($val = null){
 		if(isset($val) && is_numeric($val)) $this->trend = $val;
 		return $this->trend;
@@ -95,11 +104,11 @@ class Ressource
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->alert = $val;
 		return $this->alert;
 	}
-	public function set_ress_entry_id ($val = null){
+	private function set_ress_entry_id ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->entry_id = $val;
 		return $this->entry_id;
 	}
-	public function set_ress_category_id ($val = null){
+	private function set_ress_category_id ($val = null){
 		if(isset($val) && is_numeric($val) && $val >= 0) $this->category_id = $val;
 		return $this->category_id;
 	}
@@ -127,6 +136,7 @@ class Ressource
 			"create_date" => $this->create_date(),
 			"type" => $this->type(),
 			"trend" => $this->trend(),
+			"titre" => $this->titre(),
 			"alert" => $this->alert(),
 			"entry_id" => $this->entry_id(),
 			"category_id" => $this->category_id()

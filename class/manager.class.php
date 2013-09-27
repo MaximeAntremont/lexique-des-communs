@@ -475,6 +475,7 @@ class Manager
 				ress_type = :type,'.
 				(($obj->trend() != null) ? 'ress_trend = :trend,' : '' ).
 				(($obj->alert() != null) ? 'ress_alert = :alert,' : '' ).
+				(($obj->titre() != null) ? 'ress_titre = :titre,' : '' ).
 				(($obj->category_id() != null) ? 'ress_category_id = :category_id,' : '' ).
 				'ress_entry_id = :entry_id';
 			
@@ -484,6 +485,7 @@ class Manager
 			$req->bindValue(':type', $obj->type());
 			if($obj->trend() != null) $req->bindValue(':trend', $obj->trend());
 			if($obj->alert() != null) $req->bindValue(':alert', $obj->alert());
+			if($obj->titre() != null) $req->bindValue(':titre', $obj->titre());
 			if($obj->category_id() != null) $req->bindValue(':category_id', $obj->category_id());
 			$req->bindValue(':entry_id', $obj->entry_id());
 			
@@ -513,6 +515,7 @@ class Manager
 			ress_type = :type,
 			ress_trend = :trend,
 			ress_alert = :alert,
+			ress_titre = :titre,
 			ress_entry_id = :entry_id,
 			ress_category_id = :category_id
 			WHERE ress_id = :id');
@@ -521,6 +524,7 @@ class Manager
 		$req->bindValue(':type', $obj->type());
 		$req->bindValue(':trend', $obj->trend());
 		$req->bindValue(':alert', $obj->alert());
+		$req->bindValue(':titre', $obj->titre());
 		$req->bindValue(':entry_id', $obj->entry_id());
 		$req->bindValue(':category_id', $obj->category_id());
 		$req->bindValue(':id', $obj->id());

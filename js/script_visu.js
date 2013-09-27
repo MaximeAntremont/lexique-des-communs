@@ -373,8 +373,12 @@ $(function(){
 		
 		if(entry_selected_id != null && entry_selected_id > 0){
 		
-			cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" autofocus />',
-			'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+			cache_panel.modify(
+				'<span>Nouvelle ressource</span>',
+				
+				'<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" autofocus /><input type="text" id="input_ress_titre" placeholder="Titre" maxlength=20 />',
+				
+				'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 			cache_panel.open();
 		
 			$("#input_ress_val").focus();
@@ -386,7 +390,7 @@ $(function(){
 				if($(this).html() == "Ajouter" && !isAddRequest){
 					// isAddRequest = true;
 					// alert($('#input_ress_val').val());
-					sendNewRessource ($('#input_ress_val').val(), function(){
+					sendNewRessource ($('#input_ress_val').val(), $('#input_ress_titre').val(), function(){
 						setTimeout(function(){
 							fetchEntryData( entry_selected_id, function(){
 								cache_panel.stopWaiting(true);
@@ -725,12 +729,12 @@ $(function(){
 		});
 	}
 	
-	function sendNewRessource (ress_val, callback){
+	function sendNewRessource (ress_val, ress_titre, callback){
 		
 		$.ajax({
 			type: "POST",
 			url: "utils/addRessource.util.php",
-			data : {ress_val: ress_val, ress_entry_id: entry_selected_id},
+			data : {ress_val: ress_val, ress_titre: ress_titre, ress_entry_id: entry_selected_id},
 			dataType: "json"
 		}).done(function(data) {
 			
