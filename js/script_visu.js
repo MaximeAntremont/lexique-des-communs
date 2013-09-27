@@ -446,6 +446,7 @@ $(function(){
 		ressources = [];
 		cursorRefs = [];
 		linksToDraw = [];
+		$("#add_ressource").hide();
 		screen.draw(gpu.getFrame(), true);
 		printEntrysFromLetter(LETTERS, this.id);
 	});
@@ -474,6 +475,15 @@ $(function(){
 			}
 		});
 		
+	});
+	
+	
+	
+	$("body").on("click", "#top_left_corner #part_two h3", function(){
+		cache_panel.startWaiting(true);
+		fetchEntryData( this.id.replace("id", ""), cache_panel.stopWaiting(true) );
+		window.location.hash = this.id.replace("id", "");
+		$("#add_ressource").hide();
 	});
 	
 	
@@ -538,12 +548,6 @@ $(function(){
 			letters[id].forEach(function (entry){
 				$("#top_left_corner #part_two").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
 			});
-			
-		$("#top_left_corner #part_two h3").click(function(){
-			cache_panel.startWaiting(true);
-			fetchEntryData( this.id.replace("id", ""), cache_panel.stopWaiting(true) );
-			window.location.hash = this.id.replace("id", "");
-		});
 	}
 	
 	
@@ -663,7 +667,6 @@ $(function(){
 			dataType: "json"
 		}).done(function(data) {
 			
-			// var letters = [];
 			var txt = "";
 			
 			if(data != null)
@@ -672,14 +675,12 @@ $(function(){
 						txt += '<div class="letter-on" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
 					else
 						txt += '<div class="letter-off" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
-					// letters['char-'+obj['char']] = obj['select'];
 					
 					LETTERS['char-'+obj['char']] = obj['select'];
 					if(obj['select'] && obj['select'].length > 0)
 						obj['select'].forEach(function(o){ENTRYS.push(o);});
 				});
 				
-			// txt += '<div id="add_ressource">Nouvelle ressource</div>';
 			$("#top_panel #index").html("");
 			$("#top_panel #index").append(txt);
 			
@@ -946,7 +947,7 @@ $(function(){
 				screen.stop();
 			}
 			
-			
+			$("#add_ressource").show();
 			
 			if(callback) callback();
 			

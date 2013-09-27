@@ -179,6 +179,7 @@ body{
 		padding-top: 5px;
 		font-weight: bold;
 		border-right: 1px solid rgb(200,200,200);
+		display: none;
 	}
 	
 	#top_panel #add_ressource:hover{
