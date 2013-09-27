@@ -331,7 +331,10 @@ $(function(){
 					type: "POST",
 					url: "utils/addBug.util.php",
 					dataType: "json",
-					data:{log_val: $('#input_log_val').val()}
+					data:{
+						log_val: $('#input_log_val').val(),
+						log_entry_id: (entry_selected_id != null && entry_selected_id > 0) ? entry_selected_id : null
+					}
 				}).done(function(data) {
 					cache_panel.content("Merci de votre aide.<br/>Nous tenterons de résoudre cela dans le plus bref délai possibles.");
 					setTimeout(function(){cache_panel.close();}, 3000);

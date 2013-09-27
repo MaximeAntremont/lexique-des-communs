@@ -29,9 +29,9 @@
 		$log->ip( $_SERVER['REMOTE_ADDR'] );
 		
 		if($return = $manager->sendNewLog( $log ))
-			echo json_encode(array('return'=> true));
+			echo json_encode(array('return'=> true, 'obj' => $log->entry_id()));
 		else
-			echo json_encode(array('return' => false, 'obj' => $ress->getArray()));
+			echo json_encode(array('return' => false));
 		
 	}else
 		echo json_encode(array('return' => false));
