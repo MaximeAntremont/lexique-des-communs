@@ -391,6 +391,13 @@ body{
 		margin-left: 20px;
 	}
 	
+	#cache_panel #middle_window #content div ul ul li{
+		list-style-type: lower-alpha;
+		font-size: 11px;
+		text-align: left;
+		margin-left: 40px;
+	}
+	
 	#cache_panel #middle_window input{
 		display: block;
 		width: 378px;

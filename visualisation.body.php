@@ -20,7 +20,7 @@
 	</div>
 	<div id="bottom_panel">
 		<div id="alertBug" class="panel_button" style="margin-left: 40px;border-left: 1px solid rgb(200,200,200);">Rapporter un Bug</div>
-		<div id="infos" class="panel_button">Version a1r00</div>
+		<div id="infos" class="panel_button">Version a1r01</div>
 	</div>
 	
 	<div id="top_left_corner">
