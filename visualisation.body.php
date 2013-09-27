@@ -7,8 +7,8 @@
 		<div id="add_ressource">Nouvelle ressource</div>
 	</div>
 	<div id="left_panel">
-		<div id="addZoom" class="panel_button" >+</div>
-		<div id="subZoom" class="panel_button" >-</div>
+		<div id="addZoom" class="panel_button" ></div>
+		<div id="subZoom" class="panel_button" ></div>
 	</div>
 	<div id="right_panel">
 		<div id="addTrend" class="panel_button" >+</div>
@@ -20,7 +20,7 @@
 	</div>
 	<div id="bottom_panel">
 		<div id="alertBug" class="panel_button" style="margin-left: 40px;border-left: 1px solid rgb(200,200,200);">Rapporter un Bug</div>
-		<div id="infos" class="panel_button">Version a1r01</div>
+		<div id="infos" class="panel_button">Version a1r02</div>
 	</div>
 	
 	<div id="top_left_corner">
