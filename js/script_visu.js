@@ -172,6 +172,8 @@ $(function(){
 		// console.debug('mouseClicked: '+mouseClicked);
 		mouseClicked = true;
 	});
+	
+	
 
 	$('#canvas').mouseup(function(e){
 		// console.debug('mouseClicked: '+mouseClicked);
@@ -240,6 +242,8 @@ $(function(){
 		
 	});
 	
+	
+	
 	$('#canvas').mousemove(function(e){
 		if(ressources.length > 0){
 			var isNoOver = true;
@@ -271,6 +275,8 @@ $(function(){
 		}
 	});
 	
+	
+	
 	$('#right_panel #addTrend').click(function (){
 		if(ressource_selected instanceof Ressource){
 			$.ajax({
@@ -287,6 +293,8 @@ $(function(){
 		}
 	});
 	
+	
+	
 	$('#right_panel #subTrend').click(function (){
 		if(ressource_selected instanceof Ressource){
 			$.ajax({
@@ -302,6 +310,8 @@ $(function(){
 			}).fail(function(a,b,c){alert(a+", "+b+", "+c);});
 		}
 	});
+	
+	
 	
 	$('#bottom_panel #alertBug').click(function (){
 		var isAddRequest = false;
@@ -354,6 +364,89 @@ $(function(){
 		});
 	});
 	
+	
+	$("body").on("click", "#add_ressource", function(){
+		var isAddRequest = false;
+		
+		if(entry_selected_id != null && entry_selected_id > 0){
+		
+			cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" />',
+			'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+			cache_panel.open();
+			
+			$(".cliquable").click(function(){
+				if($(this).html() == "Annuler"){
+					cache_panel.close();
+				}
+				if($(this).html() == "Ajouter" && !isAddRequest){
+					isAddRequest = true;
+					sendNewRessource ($('#input_ress_val').val(), function(){
+						setTimeout(function(){
+							fetchEntryData( entry_selected_id, function(){
+								cache_panel.stopWaiting(true);
+								cache_panel.close();
+							});
+						}, 1000);
+					});
+				}
+				
+			});
+			
+			$("body").on("keyup", "#input_ress_val", function (){
+				
+				if(cursor < cursorRefs.length) return;
+				
+				var temp = $(this);
+				var val = temp.val();
+				var l = val.length;
+				
+				if(l > 20 && temp.prop("tagName") == "INPUT"){
+					
+					$("#input_ress_val").replaceWith( '<textarea id="input_ress_val">'+ val +'</textarea>' );
+					$("#input_ress_val").selectRange(21);
+					
+				}else if(l <= 20 && temp.prop("tagName") == "TEXTAREA"){
+				
+					$("#input_ress_val").replaceWith( '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" value="'+ val +'" />' );
+					$("#input_ress_val").selectRange(20);
+					
+				}
+			});
+		}
+		
+	});
+	
+	
+	
+	$("body").on("click", "#add_entry, .letter-off", function(){
+		cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" id="input_entry_val" placeholder="Nom de l\'entrée" />', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+		cache_panel.open();
+		$(".cliquable").click(function(){
+			if($(this).html() == "Annuler"){
+				cache_panel.close();
+			}
+			if($(this).html() == "Ajouter"){
+				sendNewEntry ($('#input_entry_val').val(), function(){
+					setTimeout(function(){cache_panel.close();}, 1000);
+					refreshIndex();
+					$("#top_left_corner #part_one, #top_left_corner #part_two").html("");
+				});
+			}
+		});
+	});
+	
+	
+	
+	$("body").on("click", ".letter-on", function(){
+		ressources = [];
+		cursorRefs = [];
+		linksToDraw = [];
+		screen.draw(gpu.getFrame(), true);
+		printEntrysFromLetter(letters, this.id);
+	});
+	
+	
+	
 	$('#bottom_panel #infos').click(function (){
 	
 		cache_panel.modify('<span>Note de versions</span>', '', '<div><span class="cliquable">Fermer</span></div>');
@@ -378,11 +471,7 @@ $(function(){
 		
 	});
 	
-	// $('#right_panel #showLinks').mouse(function (){
 	
-		
-		
-	// });
 	
 	$(document).keydown(function (e){
 		
@@ -398,6 +487,8 @@ $(function(){
 		
 	});
 	
+	
+	
 	$('#addZoom').click(function (){
 		
 		if(cursor >= cursorRefs.length){
@@ -407,6 +498,8 @@ $(function(){
 		
 	});
 	
+	
+	
 	$('#subZoom').click(function (){
 		
 		if(cursor >= cursorRefs.length){
@@ -415,6 +508,9 @@ $(function(){
 		}
 		
 	});
+	
+	
+	
 	$(document).keyup(function (e){
 		
 		if(e.keyCode == 17) CTRL = false;
@@ -584,84 +680,6 @@ $(function(){
 			$("#top_panel").html("");
 			$("#top_panel").append(txt);
 			
-			$(".letter-on").click(function(){
-				ressources = [];
-				cursorRefs = [];
-				linksToDraw = [];
-				screen.draw(gpu.getFrame(), true);
-				printEntrysFromLetter(letters, this.id);
-			});
-			
-			$("#add_entry").click(function(){
-				cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" id="input_entry_val" placeholder="Nom de l\'entrée" />', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
-				cache_panel.open();
-				$(".cliquable").click(function(){
-					if($(this).html() == "Annuler"){
-						cache_panel.close();
-					}
-					if($(this).html() == "Ajouter"){
-						sendNewEntry ($('#input_entry_val').val(), function(){
-							setTimeout(function(){cache_panel.close();}, 1000);
-							refreshIndex();
-							$("#top_left_corner #part_one, #top_left_corner #part_two").html("");
-						});
-					}
-				});
-			});
-			
-			$("#add_ressource").click(function(){
-				var isAddRequest = false;
-				
-				if(entry_selected_id != null && entry_selected_id > 0){
-				
-					cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" />',
-					'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
-					cache_panel.open();
-					
-					$(".cliquable").click(function(){
-						if($(this).html() == "Annuler"){
-							cache_panel.close();
-						}
-						if($(this).html() == "Ajouter" && !isAddRequest){
-							isAddRequest = true;
-							sendNewRessource ($('#input_ress_val').val(), function(){
-								setTimeout(function(){
-									fetchEntryData( entry_selected_id, function(){
-										cache_panel.stopWaiting(true);
-										cache_panel.close();
-									});
-								}, 1000);
-							});
-						}
-						
-					});
-					
-					$("body").on("keyup", "#input_ress_val", function (){
-						
-						if(cursor < cursorRefs.length) return;
-						
-						var temp = $(this);
-						var val = temp.val();
-						var l = val.length;
-						
-						if(l > 20 && temp.prop("tagName") == "INPUT"){
-							
-							$("#input_ress_val").replaceWith( '<textarea id="input_ress_val">'+ val +'</textarea>' );
-							$("#input_ress_val").selectRange(21);
-							
-						}else if(l <= 20 && temp.prop("tagName") == "TEXTAREA"){
-						
-							$("#input_ress_val").replaceWith( '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" value="'+ val +'" />' );
-							$("#input_ress_val").selectRange(20);
-							
-						}
-					});
-				}
-				
-			});
-			
-			
-			
 			if(callback) callback();
 			
 		}).fail(function (a,b,c){
@@ -669,9 +687,6 @@ $(function(){
 		});
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -829,12 +844,12 @@ $(function(){
 			
 		});
 		
-		$('#pause').click(function(){
-			screen.isAutoRefresh(false);
-		});
-		$('#start').click(function(){
-			screen.restart(gpu.getFrame());
-		});
+		// $('#pause').click(function(){
+			// screen.isAutoRefresh(false);
+		// });
+		// $('#start').click(function(){
+			// screen.restart(gpu.getFrame());
+		// });
 		
 		if(recall && callback) callback();
 		

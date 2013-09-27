@@ -145,6 +145,10 @@ body{
 		margin-right: 5px;
 	}
 	
+	#top_panel #index .letter-off:hover{
+		cursor: pointer;
+	}
+	
 	#top_panel #add_entry{
 		float: left;
 		height: 35px;
