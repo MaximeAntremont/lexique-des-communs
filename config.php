@@ -31,8 +31,9 @@
 		2** - son
 		3** - img
 		4** - liens
-		5** - textuel
+		9** - textuel
 */
+
 	$ress_mot = array(
 		'regex' => function ($val){
 			
@@ -58,6 +59,25 @@
 		},
 		'embed' => function($id){
 			return '<a href="'. $id .'" target="_BLANK">'. preg_replace('#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#', "$2.$3", $id  ) .'</a>';
+		}
+	);
+	
+	
+	$ress_lien_pearlTree = array(
+		'regex' => function ($val){
+			
+			return preg_match('#https?://(pear\.ly|www\.pearltrees\.com)/.+#', $val);
+			
+		},
+		'embed' => function($id){
+		
+			return '<a href="'. $id .'" target=_BLANK >Lien vers le Pearltree</a>';
+			
+		},
+		'get' => function ($val){
+			
+			return $val;
+		
 		}
 	);
 	
@@ -199,10 +219,11 @@
 		
 		301 => $ress_img_flickr,
 		
-		401 => $ress_lien,
+		401 => $ress_lien_pearlTree,
+		499 => $ress_lien,
 		
-		501 => $ress_mot,
-		502 => $ress_texte
+		950 => $ress_mot,
+		990 => $ress_texte
 	);
 	
 	
