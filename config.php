@@ -150,44 +150,33 @@
 	$ress_img_flickr = array(
 		'regex' => function ($val){
 			
-			echo preg_match_all('~
-				# Match Flickr link and embed code
-				(?:<a [^>]*href=")?		# If a tag match up to first quote of src
-				(?:				# Group Flickr url
-					https?:\/\/		# Either http or https
-					(?:[\w]+\.)*		# Optional subdomains
-					(?:               		# Group host alternatives.
-						flic\.kr     	# Either flic.kr
-								| flickr\.com	# or flickr.com 
-					)			# End Host Group
-					(?:\/photos)?		# Optional video sub directory
-					\/[^\/]+\/		# Slash and stuff before Id
-					([0-9a-zA-Z]+)	# $1: PHOTO_ID is numeric
-					[^\s]*			# Not a space
-				)				# End group
-				"?				# Match end quote if part of src
-				(?:.*></a>)?			# Match the end of the a tag
-				~ix', $val, $out);
-			return false;
+			return preg_match(
+				'#src="http://farm[0-9].staticflickr.com/([-/_@0-9a-zA-Z]+(\.[a-zA-Z]*){1})"#',
+				$val);
 		},
 		'embed' => function($tab){
 		
-			return '<a href="http://www.flickr.com/photos/'. $tab[0] .'" title="On the rocks (Explore 25.09.2013) de Keith Grafton, sur Flickr"><img src="http://farm4.staticflickr.com/'. $tab[1] .'" width="240" height="160" alt="On the rocks (Explore 25.09.2013)"></a>';
+			return '<a href="http://www.flickr.com/photos/'. $tab[0] .'" title="'. $tab[2] .'" target=_BLANK ><img src="'. $tab[1] .'" width="300" alt="'. $tab[2] .'"></a>';
 			
 		},
 		'get' => function ($val){
 			$tab = array();
 			$tab[0] = preg_filter(
-				'#.*href="http://www\.flickr\.com/photos/([/@0-9a-zA-Z]+){1}".*#',
+				'#.*href="http://www\.flickr\.com/photos/([/@0-9a-zA-Z]+)".*#',
 				"$1",
 				$val
 			);
 			$tab[1] = preg_filter(
-				'#.*src="http://farm4.staticflickr.com/([-/_@0-9a-zA-Z]+\.[a-zA-Z]*{1}){1}".*#',
+				'#.*(http://farm[0-9].staticflickr.com/([-/_@0-9a-zA-Z]+(\.[a-zA-Z]*)))".*#',
 				"$1",
 				$val
 			);
-		
+			$tab[2] = preg_filter(
+				'#.*title="([^"]*)".*#',
+				"$1",
+				$val
+			);
+			return $tab;
 		}
 	);
 	

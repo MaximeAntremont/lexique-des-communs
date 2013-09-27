@@ -75,7 +75,7 @@ class Ressource
 		return $this->id;
 	}
 	private function set_ress_val ($val = null){
-		if(!empty($val) && is_string($val) && strlen($val) <= 255) $this->val = $val;
+		if(!empty($val) && is_string($val)) $this->val = $val;
 		return $this->val;
 	}
 	private function set_ress_create_date ($val = null){

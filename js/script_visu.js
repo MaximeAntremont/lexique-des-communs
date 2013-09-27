@@ -741,7 +741,7 @@ $(function(){
 			
 		}).fail(function (a, b, c){
 			// cache_panel.content( '<input type="text" placeholder="Nom de l\'entrée" />' + '<div>Erreur de communication</div>' );
-			alert(a+", "+b+", "+c);
+			console.debug(a+", "+b+", "+c);
 		});
 		
 	}

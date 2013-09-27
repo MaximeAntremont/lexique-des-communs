@@ -14,7 +14,6 @@
 	// header('Content-type: application/json');
 	
 	$manager = new Manager(getConnection());
-	// $_POST['entry_val'] = "ma";
 	
 	if(!$manager->isHS() && !empty($_POST['ress_entry_id']) && is_numeric($_POST['ress_entry_id']) && !empty($_POST['ress_val']) && is_string($_POST['ress_val']) ){
 		
@@ -37,7 +36,7 @@
 		if($return = $manager->sendNewRessource( $ress ))
 			echo json_encode(array('return'=> true));
 		else
-			echo json_encode(array('return' => false, 'obj' => $ress->getArray(), 'val' => $_POST['ress_val']));
+			echo json_encode(array('return' => false));
 		
 	}else
 		echo json_encode(array('return' => false));
