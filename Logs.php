@@ -19,18 +19,17 @@
 	</head>
 	<body>
 		
-		<table style="font-size: 12px;table-layout: fixed;width:600px;">
+		<table border=1 style="font-size: 12px;table-layout: fixed;width:900px;">
 			<?php
 			
 				$logs = $manager->getLogBy_type(101);
 				
 				foreach($logs as $log){
 					
-					echo '<tr>
+					echo '<tr style="padding-bottom: 20px;" >
 							<th>'. $log->id() .'</th>
-							<th>'. $log->type() .'</th>
-							<th style="max-width: 300px;" >'. $log->val() .'</th>
-							<th>'. $log->id() .'</th>
+							<th>'. $log->create_date() .'</th>
+							<th style="max-width: 600px;" >'. $log->val() .'</th>
 						</tr>';
 					
 				}
