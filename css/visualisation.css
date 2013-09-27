@@ -353,16 +353,19 @@ body{
 	
 	#cache_panel #middle_window #header{
 		position: absolute;
-		left: 10px;	top: 0;
-		width: 380px;
+		left: 0;	top: 0;
+		width: 400px;
 		height: 40px;
 		z-index: 54;
+		font-weight: bold;
+		background: rgb(180,180,180);
+		color: rgb(200,200,200);
 		overflow: hidden;
 	}
 	
 	#cache_panel #middle_window #header span{
 		display: block;
-		padding-top: 10px;
+		padding-top: 5px;
 		height: 30px;
 	}
 	
@@ -373,7 +376,6 @@ body{
 		height: 224px;
 		z-index: 53;
 		overflow: auto;
-		border-top: 1px solid rgb(220,220,220);
 		border-bottom: 1px solid rgb(220,220,220);
 	}
 	
@@ -386,26 +388,26 @@ body{
 	
 	#cache_panel #middle_window input{
 		display: block;
-		width: 100%;
+		width: 378px;
 		margin-top: 10px;
 		font-size: 14px;
 		border: none;
-		border-bottom: dotted 1px rgb(220,220,220);
-		background: rgb(200,200,200);
+		border: solid 1px rgb(200,200,200);
+		color: rgb(160,160,160);
+		background: rgb(220,220,220);
 	}
 	
 	#cache_panel #middle_window textarea{
 		display: block;
-		width: 100%;
+		width: 376px;
 		height: 200px;
 		margin-top: 10px;
 		border: none;
 		font-size: 14px;
 		resize: none;
-		border-bottom: dotted 1px rgb(220,220,220);
-		border-left: dotted 1px rgb(220,220,220);
-		border-right: dotted 1px rgb(220,220,220);
-		background: rgb(200,200,200);
+		border: solid 1px rgb(200,200,200);
+		color: rgb(160,160,160);
+		background: rgb(220,220,220);
 	}
 	
 	#cache_panel #middle_window #footer{

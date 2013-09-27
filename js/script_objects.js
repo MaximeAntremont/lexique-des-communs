@@ -48,6 +48,8 @@ function Cache (JQueryCache, JQueryHeader, JQueryContent, JQueryFooter){
 		footer = '~ chargement en cours ~';
 		updateCache();
 		
+		$('body').css('cursor', 'wait');
+		
 		wait = true;
 		waiting();
 		
@@ -57,6 +59,8 @@ function Cache (JQueryCache, JQueryHeader, JQueryContent, JQueryFooter){
 	
 		if(close == true) waitCallback = function (){JQcache.hide();};
 		else if(close) waitCallback = close;
+		
+		$('body').css('cursor', 'default');
 		
 		wait = false;
 		

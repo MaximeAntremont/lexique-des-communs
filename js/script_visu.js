@@ -370,9 +370,11 @@ $(function(){
 		
 		if(entry_selected_id != null && entry_selected_id > 0){
 		
-			cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" />',
+			cache_panel.modify('<span>Nouvelle ressource</span>', '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" autofocus />',
 			'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 			cache_panel.open();
+		
+			$("#input_ress_val").focus();
 			
 			$(".cliquable").click(function(){
 				if($(this).html() == "Annuler"){
@@ -419,8 +421,11 @@ $(function(){
 	
 	
 	$("body").on("click", "#add_entry, .letter-off", function(){
-		cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" id="input_entry_val" placeholder="Nom de l\'entrée" />', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+		cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" id="input_entry_val" placeholder="Nom de l\'entrée"/>', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 		cache_panel.open();
+		
+		$("#input_entry_val").focus();
+		
 		$(".cliquable").click(function(){
 			if($(this).html() == "Annuler"){
 				cache_panel.close();
