@@ -41,7 +41,7 @@ class Ressource
 		return $this->id;
 	}
 	public function val ($val = null){
-		if(!empty($val) && is_string($val) && strlen($val) <= 255) $this->val = $val;
+		if(!empty($val) && is_string($val)) $this->val = $val;
 		return $this->val;
 	}
 	public function create_date ($val = null){
