@@ -11,7 +11,7 @@
 	include_once('../class/category.class.php');
 	include_once('../class/manager.class.php');
 	
-	header('Content-type: application/json');
+	// header('Content-type: application/json');
 	
 	$manager = new Manager(getConnection());
 	
@@ -23,7 +23,13 @@
 		$ress = $manager->getRessourceBy_id($ress_id);
 		$ress->trend( $ress->trend()-1 );
 		
-		if($ress instanceof Ressource && $manager->getLastTrendChange($ress) != 302 && $manager->updateRessource($ress) ){
+		$latestChanges = $manager->getLastTrendChange($ress);
+		
+		if($ress instanceof Ressource &&( 
+			   ( !isset($latestChanges[0]) && !isset($latestChanges[1]) )
+			|| ( $latestChanges[0] == 301 )
+			|| ( $latestChanges[0] == 302 && isset($latestChanges[1]) && $latestChanges[1] == 301 )
+		) && ($manager->updateRessource( $ress )) ){
 			
 			$log = new Log();
 			$log->type(302);
@@ -32,7 +38,7 @@
 			$log->entry_id( $ress->entry_id() );
 			$manager->sendNewLog($log);
 			
-			echo json_encode(array('return' => true));
+			echo json_encode(array('return' => true ));
 			
 		}else{
 			

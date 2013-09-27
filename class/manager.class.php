@@ -434,9 +434,14 @@ class Manager
 		
 		if($ress instanceof Ressource){
 			$req = $this->_db->query("SELECT log_id, log_type FROM log WHERE 
-				log_type >= 301 AND log_type <= 302 AND log_ip = '". $_SERVER['REMOTE_ADDR'] ."' AND log_entry_id = '". $ress->entry_id() ."' AND log_val = 'id$". $ress->id() ."' ORDER BY log_id DESC LIMIT 0,1");
+				log_type >= 301 AND log_type <= 302 AND log_ip = '". $_SERVER['REMOTE_ADDR'] ."' AND log_entry_id = '". $ress->entry_id() ."' AND log_val = 'id$". $ress->id() ."' ORDER BY log_id DESC LIMIT 0,2");
 			
-			return ($don = $req->fetch()) ? $don['log_type'] : false;
+			$changes = array();
+			while($don = $req->fetch()){
+				$changes[] = $don['log_type'];
+			}
+			
+			return $changes;
 		}else return false;
 		
 	}
