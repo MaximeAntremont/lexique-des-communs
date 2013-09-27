@@ -11,7 +11,7 @@
 	include_once('../class/category.class.php');
 	include_once('../class/manager.class.php');
 	
-	header('Content-type: application/json');
+	// header('Content-type: application/json');
 	
 	$manager = new Manager(getConnection());
 	// $_POST['entry_val'] = "ma";

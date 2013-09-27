@@ -9,6 +9,7 @@
 	// define("DB_NAME", '');
 	// define("DB_USERNAME", '');
 	// define("DB_PASSWORD", '');
+	define("DB_PREFIX", 'bc_');
 
 	header('Content-type: text/html; charset=utf-8');
 	

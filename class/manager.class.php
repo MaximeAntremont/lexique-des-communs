@@ -30,7 +30,7 @@ class Manager
 			
 			$log = new Log();
 			
-			$req = $this->_db->prepare('INSERT INTO entry SET entry_val = :val');
+			$req = $this->_db->prepare('INSERT INTO '. DB_PREFIX .'entry SET entry_val = :val');
 			
 			$req->bindValue(':val', $obj->val());
 			
@@ -58,7 +58,7 @@ class Manager
 		$tempId = $obj->id();
 		if( !empty($tempVal) && !empty($tempId) && is_numeric($tempId) ){
 		
-			$req = $this->_db->prepare('UPDATE entry SET entry_val = :val WHERE entry_id = :id');
+			$req = $this->_db->prepare('UPDATE '. DB_PREFIX .'entry SET entry_val = :val WHERE entry_id = :id');
 			
 			$req->bindValue(':id', $obj->id());
 			$req->bindValue(':val', $obj->val());
@@ -75,7 +75,7 @@ class Manager
 		
 		$entrys = array();
 		
-		$req = $this->_db->query('SELECT '. $culumns .' FROM entry');
+		$req = $this->_db->query('SELECT '. $culumns .' FROM '. DB_PREFIX .'entry');
 		
 		while($don = $req->fetch()){
 			$entrys[] = new Entry($don);
@@ -90,7 +90,7 @@ class Manager
 		if(is_numeric($id)){
 			$entry = null;
 			
-			$req = $this->_db->query('SELECT * FROM entry WHERE entry_id = '.$id);
+			$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'entry WHERE entry_id = '.$id);
 			
 			if($don = $req->fetch())
 				$entry = new Entry($don);
@@ -119,7 +119,7 @@ class Manager
 		if(is_string($myRequest) && !empty($myRequest)){
 			
 			$entrys = array();
-			$req = $this->_db->query('SELECT '. $culumns .' FROM entry WHERE '.$myRequest);
+			$req = $this->_db->query('SELECT '. $culumns .' FROM '. DB_PREFIX .'entry WHERE '.$myRequest);
 			
 			while($don = $req->fetch()){
 				$tempEntry = new Entry($don);
@@ -139,7 +139,7 @@ class Manager
 	//isEntry...
 	public function isEntrySet (Entry $entry){
 		
-		$req = $this->_db->query('SELECT entry_id FROM entry WHERE entry_val = "'.$entry->val().'"');
+		$req = $this->_db->query('SELECT entry_id FROM '. DB_PREFIX .'entry WHERE entry_val = "'.$entry->val().'"');
 		
 		return ($don = $req->fetch()) ? true : false;
 		
@@ -156,7 +156,7 @@ class Manager
 		
 		if( $this->isReadyToSend($obj) ){
 		
-			$req = $this->_db->prepare('INSERT INTO category SET category_val = :val');
+			$req = $this->_db->prepare('INSERT INTO '. DB_PREFIX .'category SET category_val = :val');
 			
 			$req->bindValue(':val', $obj->val());
 			
@@ -173,7 +173,7 @@ class Manager
 	
 	public function updateCategory (Category $obj){
 		
-		$req = $this->_db->prepare('UPDATE category SET category_val = :val WHERE category_id = :id');
+		$req = $this->_db->prepare('UPDATE '. DB_PREFIX .'category SET category_val = :val WHERE category_id = :id');
 		
 		$req->bindValue(':id', $obj->id());
 		$req->bindValue(':val', $obj->val());
@@ -208,7 +208,7 @@ class Manager
 		}
 		
 		//requête
-		$req = $this->_db->query('SELECT * FROM category' . (($filter != null)?(' WHERE ' . $reqFilter): ''));
+		$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'category' . (($filter != null)?(' WHERE ' . $reqFilter): ''));
 		
 		while($don = $req->fetch()){
 			$categorys[] = new Category($don);
@@ -221,7 +221,7 @@ class Manager
 		
 		if(is_numeric($id)){
 			
-			$req = $this->_db->query('SELECT * FROM category WHERE category_id = '.$id);
+			$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'category WHERE category_id = '.$id);
 			
 			return ($don = $req->fetch()) ? new Category($don) : false;
 			
@@ -243,7 +243,7 @@ class Manager
 		
 		if( $this->isReadyToSend($obj) ){
 		
-			$req = $this->_db->prepare('INSERT INTO link SET 
+			$req = $this->_db->prepare('INSERT INTO '. DB_PREFIX .'link SET 
 				link_val = :val,
 				link_from = :from,
 				link_to = :to,
@@ -267,7 +267,7 @@ class Manager
 	
 	public function updateLink (Link $obj){
 		
-		$req = $this->_db->prepare('UPDATE entry SET
+		$req = $this->_db->prepare('UPDATE '. DB_PREFIX .'link SET
 			link_val = :val,
 			link_from = :from,
 			link_to = to:,
@@ -290,7 +290,7 @@ class Manager
 		
 		$links = array();
 		
-		$req = $this->_db->query('SELECT * FROM link');
+		$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'link');
 		
 		while($don = $req->fetch()){
 			$links[] = new Link($don);
@@ -304,7 +304,7 @@ class Manager
 		
 		if(is_numeric($id)){
 			
-			$req = $this->_db->query('SELECT * FROM link WHERE link_id = '.$id);
+			$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'link WHERE link_id = '.$id);
 			
 			return ($don = $req->fetch()) ? new Link($don) : false;
 			
@@ -319,7 +319,7 @@ class Manager
 		if(is_numeric($id)){
 			
 			$links = array();
-			$req = $this->_db->query('SELECT * FROM link WHERE link_entry_id = '.$id);
+			$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'link WHERE link_entry_id = '.$id);
 			
 			while($don = $req->fetch()){
 				$links[] = new Link($don);
@@ -336,7 +336,7 @@ class Manager
 	//isEntry...
 	public function isLinkSet (Link $link){
 		
-		$req = $this->_db->query('SELECT link_id FROM link WHERE 
+		$req = $this->_db->query('SELECT link_id FROM '. DB_PREFIX .'link WHERE 
 			link_entry_id = "'.$link->entry_id().'"'.
 			'AND link_from = "'.$link->from().'"'.
 			'AND link_to = "'.$link->to().'"');
@@ -356,7 +356,7 @@ class Manager
 	public function sendNewLog (Log $obj){
 		if( $this->isReadyToSend($obj) ){
 			
-			$req = $this->_db->prepare('INSERT INTO log SET 
+			$req = $this->_db->prepare('INSERT INTO '. DB_PREFIX .'log SET 
 				log_type = :type,
 				log_val = :val,
 				log_ip = :ip,
@@ -381,7 +381,7 @@ class Manager
 	
 	public function updateLog (Log $obj){
 		
-		$req = $this->_db->prepare('UPDATE log SET 
+		$req = $this->_db->prepare('UPDATE '. DB_PREFIX .'log SET 
 			log_val = :val,
 			log_entry_id = :entry_id,
 			log_ip = :ip,
@@ -402,7 +402,7 @@ class Manager
 		
 		$logs = array();
 		
-		$req = $this->_db->query('SELECT '. $culumns .' FROM log');
+		$req = $this->_db->query('SELECT '. $culumns .' FROM '. DB_PREFIX .'log');
 		
 		while($don = $req->fetch()){
 			$logs[] = new Log($don);
@@ -417,7 +417,7 @@ class Manager
 		if(is_numeric($type)){
 			$logs = array();
 			
-			$req = $this->_db->query('SELECT '. $culumns .' FROM log WHERE log_type = "'. $type .'"');
+			$req = $this->_db->query('SELECT '. $culumns .' FROM '. DB_PREFIX .'log WHERE log_type = "'. $type .'"');
 			
 			while($don = $req->fetch()){
 				$logs[] = new Log($don);
@@ -433,7 +433,7 @@ class Manager
 	public function getLastTrendChange ($ress){
 		
 		if($ress instanceof Ressource){
-			$req = $this->_db->query("SELECT log_id, log_type FROM log WHERE 
+			$req = $this->_db->query("SELECT log_id, log_type FROM ". DB_PREFIX ."log WHERE 
 				log_type >= 301 AND log_type <= 302 AND log_ip = '". $_SERVER['REMOTE_ADDR'] ."' AND log_entry_id = '". $ress->entry_id() ."' AND log_val = 'id$". $ress->id() ."' ORDER BY log_id DESC LIMIT 0,2");
 			
 			$changes = array();
@@ -449,7 +449,7 @@ class Manager
 	public function isRessourceAlerted ($ress){
 		
 		if($ress instanceof Ressource){
-			$req = $this->_db->query("SELECT log_id FROM log WHERE 
+			$req = $this->_db->query("SELECT log_id FROM ". DB_PREFIX ."log WHERE 
 				log_type = 303 AND log_ip = '". $_SERVER['REMOTE_ADDR'] ."' AND log_entry_id = '". $ress->entry_id() ."' AND log_val = 'id$". $ress->id() ."' ORDER BY log_id DESC LIMIT 0,1");
 			
 			return ($don = $req->fetch()) ? true : false;
@@ -470,7 +470,7 @@ class Manager
 			
 			$log = new Log();
 			
-			$sql = 'INSERT INTO ressource SET 
+			$sql = 'INSERT INTO '. DB_PREFIX .'ressource SET 
 				ress_val = :val,
 				ress_type = :type,'.
 				(($obj->trend() != null) ? 'ress_trend = :trend,' : '' ).
@@ -508,7 +508,7 @@ class Manager
 	
 	public function updateRessource (Ressource $obj){
 		
-		$req = $this->_db->prepare('UPDATE ressource SET 
+		$req = $this->_db->prepare('UPDATE '. DB_PREFIX .'ressource SET 
 			ress_val = :val,
 			ress_type = :type,
 			ress_trend = :trend,
@@ -533,7 +533,7 @@ class Manager
 		
 		if(is_numeric($id) && is_numeric($offset) && $id > 0){
 			
-			$req = $this->_db->prepare('UPDATE ressource SET 
+			$req = $this->_db->prepare('UPDATE '. DB_PREFIX .'ressource SET 
 			ress_trend = :offset + ress_trend 
 			WHERE ress_id = :id');
 		
@@ -550,7 +550,7 @@ class Manager
 		
 		$ressources = array();
 		
-		$req = $this->_db->query('SELECT * FROM ressource');
+		$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'ressource');
 		
 		while($don = $req->fetch()){
 			$ressources[] = new Ressource($don);
@@ -564,7 +564,7 @@ class Manager
 		
 		if(is_numeric($id)){
 			
-			$req = $this->_db->query('SELECT * FROM ressource WHERE ress_id = '.$id);
+			$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'ressource WHERE ress_id = '.$id);
 			
 			return ($don = $req->fetch()) ? new Ressource($don) : false;
 			
@@ -579,7 +579,7 @@ class Manager
 		if(is_numeric($id)){
 			
 			$ressources = array();
-			$req = $this->_db->query('SELECT * FROM ressource WHERE ress_entry_id = '.$id." ORDER BY ress_trend ASC");
+			$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'ressource WHERE ress_entry_id = '.$id." ORDER BY ress_trend ASC");
 			
 			while($don = $req->fetch()){
 				$ressources[] = new Ressource($don);
@@ -604,7 +604,7 @@ class Manager
 	public function sendNewUser (User $obj){
 		
 		if( $this->isReadyToSend($obj) ){
-			$req = $this->_db->prepare('INSERT INTO user SET 
+			$req = $this->_db->prepare('INSERT INTO '. DB_PREFIX .'user SET 
 				user_name = :name,
 				user_pass = :pass,
 				user_type = :type');
@@ -626,7 +626,7 @@ class Manager
 	
 	public function updateUser (User $obj){
 		
-		$req = $this->_db->prepare('UPDATE user SET 
+		$req = $this->_db->prepare('UPDATE '. DB_PREFIX .'user SET 
 			user_name = :name,
 			user_pass = :pass,
 			user_type = :type
