@@ -261,7 +261,7 @@ function Ressource (tab, context){
 		else if(type >= 200 && type < 300) var metrics = ctx.measureText((titre != null) ? titre : "Audio");
 		else if(type >= 300 && type < 400) var metrics = ctx.measureText((titre != null) ? titre : "Image");
 		else if(type >= 400 && type < 500) var metrics = ctx.measureText((titre != null) ? titre : "Lien");
-		else var metrics = ctx.measureText( (type == 502) ? val.substring(0, 16)+"..." : val );
+		else var metrics = ctx.measureText( (type == 990) ? val.substring(0, 16)+"..." : val );
 		size.x = metrics.width;
 	};
 	this.width = function (val){
@@ -334,7 +334,7 @@ function Ressource (tab, context){
 		return backgroundColor;
 	};
 
-	this.draw = function (ctx){
+	this.draw = function (ctx, img){
 
 		ctx.globalAlpha = alpha;
 		ctx.fillStyle = backgroundColor;
@@ -346,6 +346,7 @@ function Ressource (tab, context){
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
 			ctx.fillText( (titre != null) ? titre: "Vidéo" , center.x, center.y);
+			ctx.drawImage(img.video, center.x-(size.x/2)-25, center.y-10, 20, 20);
 			
 		}else if(type >= 200 && type < 300){
 		
@@ -354,6 +355,7 @@ function Ressource (tab, context){
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
 			ctx.fillText((titre != null) ? titre : "Audio", center.x, center.y);
+			ctx.drawImage(img.audio, center.x-(size.x/2)-25, center.y-10, 20, 20);
 			
 		}else if(type >= 300 && type < 400){
 		
@@ -362,6 +364,7 @@ function Ressource (tab, context){
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
 			ctx.fillText((titre != null) ? titre : "Image", center.x, center.y);
+			ctx.drawImage(img.image, center.x-(size.x/2)-25, center.y-10, 20, 20);
 			
 		}else if(type >= 400 && type < 500){
 		
@@ -370,6 +373,7 @@ function Ressource (tab, context){
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
 			ctx.fillText((titre != null) ? titre : "Lien", center.x, center.y);
+			ctx.drawImage(img.link, center.x-(size.x/2)-25, center.y-10, 20, 20);
 			
 		}else{
 		
@@ -379,8 +383,10 @@ function Ressource (tab, context){
 			ctx.textBaseline = 'middle';
 			if(titre == null){
 				ctx.fillText( (type == 990 ) ? val.substring(0, 16)+"..." : val , center.x, center.y);
+				if(type == 990)ctx.drawImage(img.text, center.x-(size.x/2)-25, center.y-10, 20, 20);
 			}else{
 				ctx.fillText( titre , center.x, center.y);
+				ctx.drawImage(img.text, center.x-(size.x/2)-25, center.y-10, 20, 20);
 			}
 		}
 		

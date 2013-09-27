@@ -14,6 +14,7 @@ $(function(){
 	var lastRessource_selected;
 	var linksToDraw = [];
 	var selecting = false;
+	var IMAGES = {};
 	
 	$.fn.selectRange = function(start, end) {
 		if(!end) end = start; 
@@ -128,7 +129,7 @@ $(function(){
 					obj.direction(dir.toArray());
 					
 					obj.move();
-					obj.draw(ctx);
+					obj.draw(ctx, IMAGES);
 					
 				}
 			});
@@ -548,6 +549,25 @@ $(function(){
 /************************************************************
 					printEntrysFromLetter
 *************************************************************/
+	function loadImages(sources, callback) {
+		IMAGES = {};
+		var loadedImages = 0;
+		var numImages = 0;
+		// get num of sources
+		for(var src in sources) {
+			numImages++;
+		}
+		for(var src in sources) {
+			IMAGES[src] = new Image();
+			IMAGES[src].onload = function() {
+				if(++loadedImages >= numImages) {
+					callback(IMAGES);
+				}
+			};
+			IMAGES[src].src = sources[src];
+		}
+	}
+	  
 	function printEntrysFromLetter(letters, id){
 		$("#top_left_corner #part_one").html("<h1>"+ id.replace("char-", "") +"</h1>");
 		$("#top_left_corner #part_two").html("");
@@ -837,33 +857,39 @@ $(function(){
 		screen.setFrame(anim);
 		gpu.addCanvas(screen);
 		var recall = true;
-		refreshIndex(function(){
+		var sources = {
+			image: 'img/image.png',
+			video: 'img/video.png',
+			link:  'img/link-cloud.png',
+			text:  'img/text.png',
+			audio:  'img/audio.png'
+		};
 		
-			var hash = window.location.hash.substring(1);
-
-			if(hash != "" && hash > 0) {
-				if(ENTRYS != null)
-					ENTRYS.forEach(function(obj){
-						if(obj.id == hash){
-							recall = false;
-							printEntrysFromLetter(LETTERS, "char-"+obj['val'].charAt(0).toUpperCase());
-							fetchEntryData(obj.id, cache_panel.stopWaiting(true));
-						}
-					});
-				
-			}
+		loadImages(sources, function(){
 			
+			refreshIndex(function(){
+			
+				var hash = window.location.hash.substring(1);
+
+				if(hash != "" && hash > 0) {
+					if(ENTRYS != null)
+						ENTRYS.forEach(function(obj){
+							if(obj.id == hash){
+								recall = false;
+								printEntrysFromLetter(LETTERS, "char-"+obj['val'].charAt(0).toUpperCase());
+								fetchEntryData(obj.id, cache_panel.stopWaiting(true));
+							}
+						});
+					
+				}
+				
+				
+			});
+			
+			if(recall && callback) callback();
 			
 		});
 		
-		// $('#pause').click(function(){
-			// screen.isAutoRefresh(false);
-		// });
-		// $('#start').click(function(){
-			// screen.restart(gpu.getFrame());
-		// });
-		
-		if(recall && callback) callback();
 		
 	}
 
