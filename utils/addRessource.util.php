@@ -11,7 +11,7 @@
 	include_once('../class/category.class.php');
 	include_once('../class/manager.class.php');
 	
-	header('Content-type: application/json');
+	// header('Content-type: application/json');
 	
 	$manager = new Manager(getConnection());
 	// $_POST['entry_val'] = "ma";
@@ -27,7 +27,7 @@
 		
 		foreach($ress_dico as $key => $dico){
 			if(isset($dico['regex'])){
-				if( preg_match($dico['regex'], htmlspecialchars_decode($ress->val())) ){
+				if( $dico['regex']( $ress->val() ) ){
 					$ress->type( $key );
 					break;
 				}

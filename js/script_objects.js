@@ -258,6 +258,7 @@ function Ressource (tab, context){
 		ctx.textAlign = 'center';
 		if(type >= 100 && type < 200) var metrics = ctx.measureText("Vidéo");
 		else if(type >= 200 && type < 300) var metrics = ctx.measureText("Audio");
+		else if(type >= 300 && type < 400) var metrics = ctx.measureText("Image");
 		else if(type >= 400 && type < 500) var metrics = ctx.measureText("Lien");
 		else var metrics = ctx.measureText( (type == 502) ? val.substring(0, 16)+"..." : val );
 		size.x = metrics.width;
@@ -352,6 +353,14 @@ function Ressource (tab, context){
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
 			ctx.fillText("Audio", center.x, center.y);
+			
+		}else if(type >= 300 && type < 400){
+		
+			ctx.font = size.y+'px Jura';
+			ctx.textAlign = 'center';
+			ctx.fillStyle = 'black';
+			ctx.textBaseline = 'middle';
+			ctx.fillText("Image", center.x, center.y);
 			
 		}else if(type >= 400 && type < 500){
 		
