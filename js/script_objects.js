@@ -377,8 +377,11 @@ function Ressource (tab, context){
 			ctx.textAlign = 'center';
 			ctx.fillStyle = 'black';
 			ctx.textBaseline = 'middle';
-			ctx.fillText( (type == 990) ? ((titre != null) ? titre : val.substring(0, 16)+"..." ) : "Texte" , center.x, center.y);
-			
+			if(titre == null){
+				ctx.fillText( (type == 990 ) ? val.substring(0, 16)+"..." : val , center.x, center.y);
+			}else{
+				ctx.fillText( titre , center.x, center.y);
+			}
 		}
 		
 	}
