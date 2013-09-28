@@ -6,21 +6,12 @@
 	
 	if(isset($_SESSION['user_token']) && $_SESSION['user_token'] < $timestamp)
 		header('Location:dashboard.php');
-	elseif($_SESSION['user_token'])
-		session_destroy();
+	// else
+		// session_destroy();
 	
 include 'admin.header.php'; ?>
 		
 	<div id="left_panel" >
-		<div id="header" class=""></div>
-		
-	</div>
-	
-	
-	
-	
-	
-	<div id="middle_panel" >
 		<div id="header" class="on">
 			<h1>Connexion</h1>
 		</div>
@@ -31,6 +22,13 @@ include 'admin.header.php'; ?>
 			<input type="submit" value="Login !"/>
 		</form>
 		
+	</div>
+	
+	
+	
+	
+	
+	<div id="middle_panel" >
 	</div>
 	
 	

@@ -635,7 +635,7 @@ class Manager
 	public function sendNewUser (User $obj){
 		
 		if( $this->isReadyToSend($obj) ){
-			$req = $this->_db->prepare('INSERT INTO '. $this->_attr .'user SET 
+			$req = $this->_db->prepare('INSERT INTO lexique_admin_user SET 
 				user_name = :name,
 				user_pass = :pass,
 				user_type = :type');
@@ -657,7 +657,7 @@ class Manager
 	
 	public function updateUser (User $obj){
 		
-		$req = $this->_db->prepare('UPDATE '. $this->_attr .'user SET 
+		$req = $this->_db->prepare('UPDATE lexique_admin_user SET 
 			user_name = :name,
 			user_pass = :pass,
 			user_type = :type
@@ -677,7 +677,7 @@ class Manager
 		$pass = $obj->pass();
 		
 		if( !empty($name) && !empty($pass) ){
-			$req = $this->_db->query('SELECT * FROM '. $this->_attr .'user WHERE user_name="'. $name .'" AND user_pass="'. $pass .'"');
+			$req = $this->_db->query('SELECT * FROM lexique_admin_user WHERE user_name="'. $name .'" AND user_pass="'. $pass .'"');
 			
 			if($don = $req->fetch()){
 				
@@ -697,6 +697,37 @@ class Manager
 		}else{
 			return false;
 		}
+		
+	}
+	
+	public function getUserBy_id ($id){
+	
+		if(is_numeric($id) && $id > 0){
+		
+			$req = $this->_db->query('SELECT * FROM lexique_admin_user WHERE user_id='.$id);
+			
+			if($don = $req->fetch()){
+				
+				return new User($don);
+				
+			}else
+				return false;
+		}else return false;
+		
+	}
+	
+	public function getUserAll (){
+	
+		$req = $this->_db->query('SELECT * FROM lexique_admin_user');
+		$tab = array();
+		
+		while($don = $req->fetch()){
+			
+			$tab[] = new User($don);
+			
+			
+		}
+		return $tab;
 		
 	}
 	

@@ -6,7 +6,7 @@ $(function(){
 		0 - dashboard = 
 		1 - lexiques
 		2 - users
-		2 - own
+		3 - own
 	*/
 	var LEXIQUE_SELECTED = null;
 	
@@ -35,14 +35,24 @@ $(function(){
 		
 	});
 	
+	$('body').on('click', '#gestionUsers', function(){
+		
+		$('#left_panel #header').html('<h1>GESTION</h1><h3>Comptes</h3>');
+		$('#left_panel #content').load('parts/comptes.left.content.php');
+		$('#middle_panel #content').load('parts/comptes.middle.list.php');
+		$('#right_panel #content').html('');
+		
+		MODE = 2;
+		
+	});
+	
 	$('body').on('click', '#middle_panel #content .listSelector', function(){
 		var lex = $(this);
 		lex.css('background-color', 'rgb(230,230,230)');
 		if(lex.attr("lexique") != null && MODE == 1){
-			
 			$('#right_panel #content').load('parts/lexiques.printOne.php', {attr: lex.attr('lexique')});
-			// });
-			
+		}else if(lex.attr("user_id") != null && MODE == 2){
+			$('#right_panel #content').load('parts/comptes.right.printOne.php', {user_id: lex.attr('user_id')});
 		}
 		
 	});

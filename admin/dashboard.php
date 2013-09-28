@@ -5,8 +5,8 @@
 	$timestamp = time();
 	
 	if(!isset($_SESSION['user_token']) || $_SESSION['user_token'] >= $timestamp){
-		session_destroy();
-		header('Location:index.php');
+		// session_destroy();
+		header('Location:login.php');
 	}else{
 	
 include 'admin.header.php'; ?>
@@ -30,6 +30,11 @@ include 'admin.header.php'; ?>
 			<div id="gestionOwn" class="listSelector">
 				<h3>Gérer mon compte</h3>
 			</div>
+			<a href="logout.php">
+				<div id="dashExit" class="listSelector">
+					<h3>Déconnexion</h3>
+				</div>
+			</a>
 		</div>
 		
 	</div>

@@ -10,3 +10,6 @@
 <div id="gestionOwn" class="listSelector">
 	<h3>Gérer mon compte</h3>
 </div>
+<div id="dashExit" class="listSelector">
+	<h3>Déconnexion</h3>
+</div>

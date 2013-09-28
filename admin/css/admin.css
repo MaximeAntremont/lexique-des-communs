@@ -102,7 +102,7 @@ body{
 	
 	
 /*************************************************
-					   MIDDLE
+					   RIGHT
  *************************************************/	
 	
 	
@@ -129,6 +129,28 @@ body{
 		
 	}
 	
+	#right_panel input{
+		
+		width: 80%;
+		margin-left: 10%;
+		display: block;
+		border-bottom: 1px solid rgb(200,200,200);
+		
+	}
+	
+	#right_panel input[type=submit]{
+	
+		border-bottom: 0px;
+		
+	}
+	
+	#right_panel input[type=submit]:hover{
+	
+		cursor: pointer;
+		background-color: rgb(245,245,245);
+		border-bottom: 1px solid rgb(200,200,200);
+		
+	}
 	
 	
 	

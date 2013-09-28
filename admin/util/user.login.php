@@ -30,7 +30,8 @@
 			$_SESSION['user_type'] = $out['type'];
 			$_SESSION['user_token'] = $out['token'];
 			
-			header('Location:../index.php');
+			// header('Location:../dashboard.php');
+			echo '<a href="../dashboard.php">Aller dans le dashboard</a>';
 			
 		}else{
 			echo 'Mauvaise authentification !';

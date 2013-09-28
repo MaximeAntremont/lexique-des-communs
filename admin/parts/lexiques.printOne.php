@@ -27,12 +27,17 @@
 		$listSelector .= '</div>';
 		echo $listSelector;
 		
-		$listSelector = '<div class="list" class="listSelector">';
+		$listSelector = '<div class="listSelector">';
+		$listSelector .= '<h3>Modifier l\'attribut</h3>';
+		$listSelector .= '</div>';
+		echo $listSelector;
+		
+		$listSelector = '<div class="listSelector">';
 		$listSelector .= '<h3>Désactiver ce lexique</h3>';
 		$listSelector .= '</div>';
 		echo $listSelector;
 		
-		$listSelector = '<div class="list">';
+		$listSelector = '<div class="listSelector">';
 		$listSelector .= '<h3>Supprimer ce lexique</h3>';
 		$listSelector .= '</div>';
 		echo $listSelector;
