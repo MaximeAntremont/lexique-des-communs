@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.11.1deb1
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 16 Septembre 2013 à 22:11
--- Version du serveur: 5.5.31
--- Version de PHP: 5.4.6-1ubuntu1.2
+-- Généré le: Sam 28 Septembre 2013 à 11:33
+-- Version du serveur: 5.5.24-log
+-- Version de PHP: 5.3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,65 +23,45 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `category`
+-- Structure de la table `bc_category`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
+CREATE TABLE IF NOT EXISTS `bc_category` (
   `category_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `category_val` varchar(25) NOT NULL,
   `category_create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `category`
---
-
-INSERT INTO `category` (`category_id`, `category_val`, `category_create_date`) VALUES
-(1, 'catégorie', '2013-09-15 06:55:51'),
-(2, 'autre', '2013-09-15 06:55:51');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `entry`
+-- Structure de la table `bc_entry`
 --
 
-CREATE TABLE IF NOT EXISTS `entry` (
+CREATE TABLE IF NOT EXISTS `bc_entry` (
   `entry_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `entry_val` varchar(50) NOT NULL,
   `entry_create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`entry_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Contenu de la table `entry`
+-- Contenu de la table `bc_entry`
 --
 
-INSERT INTO `entry` (`entry_id`, `entry_val`, `entry_create_date`) VALUES
-(1, 'test', '2013-09-13 17:02:52'),
-(2, 'world', '2013-09-14 11:47:01'),
-(3, 'hello', '2013-09-14 12:19:19'),
-(4, 'yop', '2013-09-14 12:19:50'),
-(5, 'yop2', '2013-09-14 12:28:45'),
-(6, '&lt;br/&gt;', '2013-09-14 13:06:16'),
-(7, 'break;', '2013-09-14 13:06:33'),
-(8, 'NewEntry', '2013-09-15 08:05:13'),
-(10, 'new', '2013-09-15 10:00:02'),
-(11, 'help', '2013-09-15 10:00:44'),
-(12, 'tagada', '2013-09-15 10:15:44'),
-(13, 'Aaa', '2013-09-15 11:28:52'),
-(14, 'Ccc', '2013-09-15 11:28:57'),
-(15, 'Ceci est un test', '2013-09-15 17:15:10'),
-(16, 'ou une pipe', '2013-09-15 17:15:23');
+INSERT INTO `bc_entry` (`entry_id`, `entry_val`, `entry_create_date`) VALUES
+(1, 'Test', '2013-09-27 18:54:26'),
+(2, 'Test', '2013-09-27 18:54:55'),
+(3, 'Deuxième ressource', '2013-09-27 18:56:39');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `link`
+-- Structure de la table `bc_link`
 --
 
-CREATE TABLE IF NOT EXISTS `link` (
+CREATE TABLE IF NOT EXISTS `bc_link` (
   `link_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `link_entry_id` int(11) unsigned NOT NULL,
   `link_from` int(10) unsigned NOT NULL,
@@ -91,29 +71,15 @@ CREATE TABLE IF NOT EXISTS `link` (
   `link_create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `link_alert` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`link_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
-
---
--- Contenu de la table `link`
---
-
-INSERT INTO `link` (`link_id`, `link_entry_id`, `link_from`, `link_to`, `link_val`, `link_type`, `link_create_date`, `link_alert`) VALUES
-(1, 2, 1, 2, 'travail pour', 400, '2013-09-14 14:09:46', 0),
-(2, 2, 2, 1, 'doublon ?', 400, '2013-09-14 14:13:31', 0),
-(3, 1, 1, 1, 'test link 1 vers 1', 500, '2013-09-14 14:45:59', 0),
-(4, 2, 5, 4, 'test', 200, '2013-09-15 07:36:41', 0),
-(5, 8, 8, 7, 'Implique entre autre', 100, '2013-09-15 08:42:18', 0),
-(6, 12, 23, 24, 'il y a pas de bateau', 0, '2013-09-15 10:16:45', 0),
-(7, 2, 4, 1, 'link', 100, '2013-09-16 18:00:20', 0),
-(8, 2, 4, 26, 'link', 0, '2013-09-16 18:02:11', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `log`
+-- Structure de la table `bc_log`
 --
 
-CREATE TABLE IF NOT EXISTS `log` (
+CREATE TABLE IF NOT EXISTS `bc_log` (
   `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `log_type` int(10) unsigned DEFAULT NULL,
   `log_val` text,
@@ -121,79 +87,77 @@ CREATE TABLE IF NOT EXISTS `log` (
   `log_ip` varchar(255) DEFAULT NULL,
   `log_entry_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
--- Contenu de la table `log`
+-- Contenu de la table `bc_log`
 --
 
-INSERT INTO `log` (`log_id`, `log_type`, `log_val`, `log_create_date`, `log_ip`, `log_entry_id`) VALUES
-(1, 202, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-15 09:56:34', '::1', 1),
-(2, 202, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-15 09:57:03', '::1', 1),
-(3, 202, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-15 09:58:56', '::1', 1),
-(4, 201, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-15 10:00:44', '::1', 11),
-(5, 201, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-15 17:15:10', '192.168.1.254', 15),
-(6, 201, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-15 17:15:23', '192.168.1.254', 16),
-(7, 202, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-15 17:33:36', '78.245.9.214', 4),
-(8, 202, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-15 18:25:18', '82.224.91.103', 2),
-(9, 202, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-16 17:58:54', '::1', 2),
-(10, 202, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-16 18:03:11', '::1', 2),
-(11, 202, 'NO IDEA OF THE CONTENT TO PUT HERE', '2013-09-16 18:57:13', '::1', 1);
+INSERT INTO `bc_log` (`log_id`, `log_type`, `log_val`, `log_create_date`, `log_ip`, `log_entry_id`) VALUES
+(1, 201, 'null', '2013-09-27 18:56:39', '::1', 3),
+(2, 202, 'null', '2013-09-27 18:58:41', '::1', 2),
+(3, 202, 'null', '2013-09-27 20:54:56', '::1', 2),
+(4, 202, 'null', '2013-09-27 20:58:06', '::1', 2),
+(5, 202, 'null', '2013-09-27 20:58:28', '::1', 2),
+(6, 202, 'null', '2013-09-27 21:03:15', '::1', 2),
+(7, 202, 'null', '2013-09-27 21:03:55', '::1', 2),
+(8, 301, 'id$7', '2013-09-27 21:22:56', '::1', 2),
+(9, 101, 'Ceci est censé être un rapport de bug ! :)', '2013-09-28 10:34:18', '::1', 2),
+(10, 101, 'Lorsque le champs passe de "input" à "textarea": décalage ? -> vitesse de frappe trop rapide ?', '2013-09-28 10:47:05', '::1', 2);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ressource`
+-- Structure de la table `bc_ressource`
 --
 
-CREATE TABLE IF NOT EXISTS `ressource` (
+CREATE TABLE IF NOT EXISTS `bc_ressource` (
   `ress_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ress_entry_id` int(10) unsigned NOT NULL,
   `ress_category_id` int(10) unsigned DEFAULT NULL,
   `ress_type` int(11) unsigned NOT NULL,
-  `ress_val` varchar(255) NOT NULL,
+  `ress_val` text NOT NULL,
   `ress_trend` int(11) NOT NULL DEFAULT '0',
   `ress_create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `ress_alert` int(11) unsigned NOT NULL DEFAULT '0',
+  `ress_titre` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`ress_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
--- Contenu de la table `ressource`
+-- Contenu de la table `bc_ressource`
 --
 
-INSERT INTO `ressource` (`ress_id`, `ress_entry_id`, `ress_category_id`, `ress_type`, `ress_val`, `ress_trend`, `ress_create_date`, `ress_alert`) VALUES
-(1, 2, 1, 500, 'http://eliepse.fr', 0, '2013-09-14 13:56:43', 0),
-(2, 2, 1, 500, 'http://78.239.49.8', 0, '2013-09-14 14:07:41', 0),
-(3, 3, 1, 200, 'test', 0, '2013-09-14 14:39:36', 0),
-(4, 2, 1, 500, 'http://www.google.fr', 0, '2013-09-15 07:33:53', 0),
-(5, 2, 1, 100, 'http://www.youtube.com/watch?v=7Cv6Wo5EhzI', 0, '2013-09-15 07:35:24', 0),
-(6, 3, 1, 400, 'test2', 0, '2013-09-15 07:52:08', 0),
-(7, 8, 2, 100, 'Vidéo Autre', 0, '2013-09-15 08:41:51', 0),
-(8, 8, 1, 400, 'Mort Catégorie', 0, '2013-09-15 08:42:02', 0),
-(9, 1, 1, 400, 'hey', 0, '2013-09-15 09:41:53', 0),
-(22, 1, 1, 400, 'hop', 0, '2013-09-15 09:58:55', 0),
-(23, 12, 1, 400, 'bateau', 0, '2013-09-15 10:16:20', 0),
-(24, 12, 1, 100, 'pokemon opening', 0, '2013-09-15 10:16:27', 0),
-(25, 4, 1, 200, 'l', 0, '2013-09-15 17:33:36', 0),
-(26, 2, 1, 400, 'test', 0, '2013-09-15 18:25:18', 0),
-(27, 2, 1, 400, 'ressource', 0, '2013-09-16 17:58:54', 0),
-(28, 2, 1, 100, 'ressource2', 0, '2013-09-16 18:03:11', 0),
-(29, 1, 1, 100, 'test333', 0, '2013-09-16 18:57:13', 0);
+INSERT INTO `bc_ressource` (`ress_id`, `ress_entry_id`, `ress_category_id`, `ress_type`, `ress_val`, `ress_trend`, `ress_create_date`, `ress_alert`, `ress_titre`) VALUES
+(1, 2, NULL, 950, 'nouvelle ressource', 0, '2013-09-27 18:55:54', 0, NULL),
+(2, 2, NULL, 990, 'Pourquoi ça ne marche pas...', 0, '2013-09-27 18:58:41', 0, NULL),
+(3, 2, NULL, 103, '<iframe frameborder="0" width="480" height="270" src="http://www.dailymotion.com/embed/video/x14vmrg"></iframe><br /><a href="http://www.dailymotion.com/video/x14vmrg_the-magician-when-the-night-is-over-feat-newtimers_music" target="_blank">The Magician - When The Night Is Over (feat...</a> <i>par <a href="http://www.dailymotion.com/TheMagician-Official" target="_blank">TheMagician-Official</a></i>', 0, '2013-09-27 20:54:56', 0, 'Super titre'),
+(4, 2, NULL, 990, 'Ceci est un trés trés long texte sans titre.', 0, '2013-09-27 20:58:06', 0, NULL),
+(5, 2, NULL, 990, 'Ceci est un texte très long mais', 0, '2013-09-27 20:58:28', 0, 'Avec une titre'),
+(6, 2, NULL, 950, 'normal', 0, '2013-09-27 21:03:15', 0, NULL),
+(7, 2, NULL, 950, 'normal', 1, '2013-09-27 21:03:55', 0, 'narmol');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Structure de la table `lexique_admin_user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE IF NOT EXISTS `lexique_admin_user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(20) NOT NULL,
   `user_pass` varchar(255) NOT NULL,
   `user_type` int(10) unsigned NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `lexique_admin_user`
+--
+
+INSERT INTO `lexique_admin_user` (`user_id`, `user_name`, `user_pass`, `user_type`) VALUES
+(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 42),
+(2, 'modo', 'b828c7599e286a4407084dcec654512489e29bda', 21);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
