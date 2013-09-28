@@ -1,5 +1,7 @@
 <?php
 	
+	session_start();
+	
 	include_once('../../config.php');
 	include_once('../config.php');
 	include_once('../class/tools.php');
@@ -11,12 +13,14 @@
 	include_once('../class/category.class.php');
 	include_once('../class/manager.class.php');
 	
-	// header('Content-type: application/json');
+	header('Content-type: application/json');
 	
-	$manager = new Manager(getConnection());
+	// $manager = new Manager(getConnection());
 	// $_POST['entry_val'] = "ma";
 	
-	if((!$manager->isHS() && !empty($_POST['entry_val']) && is_string($_POST['entry_val']))){
+	if((!empty($_POST['entry_val']) && is_string($_POST['entry_val'])) && isset($_SESSION['lexique_attr']) ){
+		
+		$manager = new Manager(getConnection(), $_SESSION['lexique_attr']);
 		
 		foreach($_POST as $key => $val){
 			$_POST[$key] = htmlspecialchars(trim($val));

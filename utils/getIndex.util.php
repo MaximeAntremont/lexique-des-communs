@@ -1,5 +1,7 @@
 <?php
 	
+	session_start();
+	
 	include_once('../../config.php');
 	include_once('../config.php');
 	include_once('../class/tools.php');
@@ -13,9 +15,11 @@
 	
 	header('Content-type: application/json');
 	
-	$manager = new Manager(getConnection());
+	// $manager = new Manager(getConnection());
 	
-	if( !$manager->isHS()){
+	if(isset($_SESSION['lexique_attr']) ){
+		
+		$manager = new Manager(getConnection(), $_SESSION['lexique_attr']);
 		
 		$entries = $manager -> getEntryAll('entry_id, entry_val');
 		$index = array();
@@ -40,5 +44,9 @@
 		}
 		
 		echo json_encode($index);
+		
+	}else{
+		
+		echo "erreur";
 		
 	}

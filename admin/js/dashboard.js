@@ -18,10 +18,10 @@ $(function(){
 	*****************************************************************************/
 	
 	
-	$('body').on('click', '#middle_panel #content .listSelector', function(){
+		$('body').on('click', '#right_panel #content .listSelector', function(){
 		
 		var lex = $(this);
-		$('#middle_panel #content .listSelector').css('background-color', 'rgb(240,240,240)');
+		$('#right_panel #content .listSelector').css('background-color', 'rgb(240,240,240)');
 		lex.css('background-color', 'rgb(230,230,230)');
 		
 		if(lex.attr("todo") == null) return true; //Si rien n'est spécifié.
@@ -34,10 +34,6 @@ $(function(){
 		if(MODE == 0){ 
 			
 			if(false){
-				
-				
-				
-			}else if(false){
 				
 				
 				
@@ -54,10 +50,6 @@ $(function(){
 				
 				
 				
-			}else if(false){
-				
-				
-				
 			}
 			
 			
@@ -67,13 +59,9 @@ $(function(){
 		//****************************************Lexiques
 		}else if(MODE == 1){ 
 			
-			if(false){
+			if(todo == "toggleActivity"){
 				
-				
-				
-			}else if(false){
-				
-				
+				$('#right_panel #content').load('parts/lexique.toggleActivity.php', {attr: LEXIQUE_SELECTED});
 				
 			}
 			
@@ -84,13 +72,7 @@ $(function(){
 		//****************************************Logs
 		}else if(MODE == 4){ 
 			
-			if(todo == "printLog"){
-				
-				if(lex.attr("log_id") != null && LEXIQUE_SELECTED != null){
-					$('#right_panel #content').load('parts/logs.right.printLog.php', {attr: LEXIQUE_SELECTED, log_id:lex.attr("log_id")});
-				}
-				
-			}else if(false){
+			if(false){
 				
 				
 				
@@ -99,7 +81,6 @@ $(function(){
 		}
 		
 	});
-	
 	
 	
 	
@@ -193,13 +174,11 @@ $(function(){
 		//****************************************Lexiques
 		}else if(MODE == 1){ 
 			
-			if(todo == "sectionLexique"){
+			if(todo == "createLexique"){
 				
-				
-				
-			}else if(todo == "sectionUsers"){
-				
-				
+				LEXIQUE_SELECTED = null;
+				$('#middle_panel #content').html('<div class="list"><h3>Création d\'un lexique</h3></div>');
+				$('#right_panel #content').load('parts/lexique.right.createOne.php');
 				
 			}
 			
@@ -215,7 +194,7 @@ $(function(){
 				if(lex.attr("attr_lexique") != null){
 					LEXIQUE_SELECTED = lex.attr("attr_lexique");
 					$('#middle_panel #content').load('parts/logs.middle.list.php', {attr: LEXIQUE_SELECTED});
-					$('#tight_panel #content').html('');
+					$('#right_panel #content').html('');
 				}
 				
 			}
@@ -240,6 +219,88 @@ $(function(){
 	
 	
 	
+	$('body').on('click', '#middle_panel #content .listSelector', function(){
+		
+		var lex = $(this);
+		$('#middle_panel #content .listSelector').css('background-color', 'rgb(240,240,240)');
+		lex.css('background-color', 'rgb(230,230,230)');
+		
+		if(lex.attr("todo") == null) return true; //Si rien n'est spécifié.
+		else var todo = lex.attr("todo");
+		
+		
+		
+		//******************************Accueil (Dashboard)
+		//******************************Accueil (Dashboard)
+		if(MODE == 0){ 
+			
+			if(false){
+				
+				
+				
+			}else if(false){
+				
+				
+				
+			}
+			
+			
+			
+			
+		//****************************************Users
+		//****************************************Users
+		}else if(MODE == 2){ 
+			
+			if(false){
+				
+				
+				
+			}else if(false){
+				
+				
+				
+			}
+			
+			
+			
+			
+		//****************************************Lexiques
+		//****************************************Lexiques
+		}else if(MODE == 1){ 
+			
+			if(todo == "printLexique" && $(this).attr("lexique")){
+				
+				LEXIQUE_SELECTED = $(this).attr("lexique");
+				$('#right_panel #content').load('parts/lexiques.printOne.php', {attr: LEXIQUE_SELECTED});
+				
+			}else if(false){
+				
+				
+				
+			}
+			
+			
+			
+			
+		//****************************************Logs
+		//****************************************Logs
+		}else if(MODE == 4){ 
+			
+			if(todo == "printLog"){
+				
+				if(lex.attr("log_id") != null && LEXIQUE_SELECTED != null){
+					$('#right_panel #content').load('parts/logs.right.printLog.php', {attr: LEXIQUE_SELECTED, log_id:lex.attr("log_id")});
+				}
+				
+			}else if(false){
+				
+				
+				
+			}
+			
+		}
+		
+	});
 	
 	
 	

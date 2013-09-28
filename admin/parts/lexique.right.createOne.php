@@ -10,21 +10,13 @@
 	include_once('../../class/user.class.php');
 	include_once('../../class/manager.class.php');
 	
-if(isConnected() && isSUDO()){
-
-	$lines = file('../bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
-
-	foreach($lines as $line){
-		
-		preg_match('#([^"]+)"([^"]+)"#i', $line, $out);
-		
-		if($out[1][0] == ";") $out[1][0] = '';
-		
-		$lexique  = '<div todo="printLexique" lexique="'. $out[2] .'" class="listSelector">';
-		$lexique .= '<h3>'. $out[1] .'</h3>';
-		$lexique .= '</div>';
-		
-		echo $lexique;
-	}
-
+if(isConnected() && isSUDO()){ ?>
+	
+	<form action="util/createNewLexique.php" method="POST" style="margin-top: 20px;" >
+		<input type="text" name="lex_name" placeholder="nom du lexique" maxlength="30" required />
+		<input type="text" name="lex_attr" placeholder="attribut de table" maxlength="10" required />
+		<input type="submit" value="Créer" />
+	</form>
+	
+<?php
 }

@@ -31,3 +31,27 @@
 		return (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 21) ? true : false;
 		
 	}
+	
+	function isLexiqueActive ($attr){
+		
+		$lines = file('admin/bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
+		
+		foreach($lines as $line){
+		
+			if(preg_match('#"'. $attr .'"#', $line)) return ($line[0] != "") ? true : false;
+			
+		}
+		
+	}
+	
+	function isLexiqueExist ($attr){
+		
+		$lines = file('admin/bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
+		
+		foreach($lines as $line){
+		
+			if(preg_match('#"'. $attr .'"#', $line)) return true;
+			
+		}
+		
+	}

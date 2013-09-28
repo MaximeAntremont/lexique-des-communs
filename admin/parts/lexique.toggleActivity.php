@@ -19,18 +19,37 @@
 		$manager = new Manager(getConnection(), $attr);
 		$lines = file('../bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
 		$lex = array();
+		$newLines = array();
 		
-		foreach($lines as $line){
+		foreach($lines as $key => $line){
 			
 			if(preg_match('#"'. preg_quote($attr) .'"#', $line, $out)){
 				
-				$lex['name'] = preg_replace('#"'. preg_quote($attr) .'"#', "", $line);
-				$lex['active'] = ($lex['name'][0] == ";") ? false : true ;
-				break;
+				if($line[0] == ";" && !empty($line)){
+				
+					$line[0] = '';
+					$newLines[] = $line;
+					$lex['active'] = true;
+					
+				}elseif(!empty($line)){
+				
+					$newLines[] = ';'.$line;
+					$lex['active'] = false;
+					
+				}
+				
+			}else{
+				$newLines[] = $line;
 			}
 			
 		}
 		
+		$fp = fopen("../bdd_lexiques.txt","w");
+		foreach($newLines as $line){
+			// fputs($fp, "\n")
+			fputs($fp, $line);
+		}
+		fclose($fp);
 		
 		$listSelector = '<div class="list">';
 		$listSelector .= '<h3>'. $manager->getEntrysLength() .' entrée(s)</h3>';

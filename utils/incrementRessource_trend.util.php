@@ -1,4 +1,6 @@
 <?php
+
+	session_start();
 	
 	include_once('../../config.php');
 	include_once('../config.php');
@@ -11,12 +13,12 @@
 	include_once('../class/category.class.php');
 	include_once('../class/manager.class.php');
 	
-	// header('Content-type: application/json');
+	header('Content-type: application/json');
 	
-	$manager = new Manager(getConnection());
 	
-	if(!$manager->isHS() && !empty($_POST['ress_id']) && is_string($_POST['ress_id'])){
+	if(!empty($_POST['ress_id']) && is_string($_POST['ress_id']) && isset($_SESSION['lexique_attr']) ){
 		
+		$manager = new Manager(getConnection(), $_SESSION['lexique_attr']);
 		
 		$ress_id = htmlspecialchars($_POST['ress_id']);
 		
