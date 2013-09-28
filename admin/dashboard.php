@@ -36,13 +36,17 @@ include 'admin.header.php'; ?>
 	
 	
 	<div id="middle_panel" >		
+		<div id="content">
+		</div>
 	</div>
 	
 	
 	
 	
 	
-	<div id="right_panel" >		
+	<div id="right_panel" >	
+		<div id="content">
+		</div>
 	</div>
 		
 <?php include 'admin.footer.php'; }
