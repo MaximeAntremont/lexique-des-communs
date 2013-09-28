@@ -18,7 +18,7 @@
 		$users = $manager->getUserAll();
 		
 		foreach($users as $user){
-			$listSelector = '<div user_id="'. $user->id() .'" class="listSelector">';
+			$listSelector = '<div todo="printUser" user_id="'. $user->id() .'" class="listSelector">';
 			$listSelector .= '<h3>'. $user->name() .'</h3>';
 			$listSelector .= '</div>';
 			echo $listSelector;

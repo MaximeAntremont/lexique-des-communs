@@ -46,11 +46,7 @@ $(function(){
 		//****************************************Users
 		}else if(MODE == 2){ 
 			
-			if(false){
-				
-				
-				
-			}
+			
 			
 			
 			
@@ -256,13 +252,9 @@ $(function(){
 		//****************************************Users
 		}else if(MODE == 2){ 
 			
-			if(false){
+			if(todo == "printUser"){
 				
-				
-				
-			}else if(false){
-				
-				
+				$('#right_panel #content').load('parts/comptes.right.printOne.php', {user_id: $(this).attr("user_id")});
 				
 			}
 			

@@ -24,13 +24,17 @@
 			<input type="submit" value="Changer le nom" />
 		</form>
 		<form style="margin-top:20px;">
-			<input value="à venir" />
+			<select name="user_type">
+				<option value="42" <?php echo ($user->type() == 42) ? "selected" : ""; ?> >Super Utilisateur</option>
+				<option value="21" <?php echo ($user->type() == 21) ? "selected" : ""; ?> >Modérateur</option>
+				<option value="10" <?php echo ($user->type() == 10) ? "selected" : ""; ?> >Rédacteur</option>
+			</select>
 			<input type="submit" value="Changer le type" />
 		</form>
 		<form style="margin-top:20px;border-bottom:1px solid rgb(200,200,200);padding-bottom:25px;">
-			<input type="text" name="user_old_pass" placeholder="ancien mot de passe" />
-			<input type="text" name="user_new_pass" placeholder="nouveau mot de passe" />
-			<input type="text" name="user_new_pass2" placeholder="confirmation nouveau mot de passe" />
+			<input type="password" name="user_old_pass" placeholder="ancien mot de passe" />
+			<input type="password" name="user_new_pass" placeholder="nouveau mot de passe" />
+			<input type="password" name="user_new_pass2" placeholder="confirmation nouveau mot de passe" />
 			<input type="submit" value="Changer de mot de passe" />
 		</form>
 		
@@ -44,4 +48,8 @@
 			
 		}
 		
+	}else{
+		echo '<div class="list">';
+		echo '<h3>Erreur</h3>';
+		echo '<div>';
 	}
