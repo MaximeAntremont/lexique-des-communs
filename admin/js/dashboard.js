@@ -1,13 +1,15 @@
 $(function(){
 	
 	
-	var MODE = 0;
 	/*
 		0 - dashboard = 
 		1 - lexiques
 		2 - users
 		3 - own
+		4 - rapports de bugs
 	*/
+	
+	var MODE = 0;
 	var LEXIQUE_SELECTED = null;
 	
 	
@@ -17,34 +19,114 @@ $(function(){
 	
 	
 	$('body').on('click', '#middle_panel #content .listSelector', function(){
-	
+		
 		var lex = $(this);
-		$('#middle_panel #content .listSelector').css('background-color', 'none');
+		$('#middle_panel #content .listSelector').css('background-color', 'rgb(240,240,240)');
 		lex.css('background-color', 'rgb(230,230,230)');
 		
+		if(lex.attr("todo") == null) return true; //Si rien n'est spécifié.
+		else var todo = lex.attr("todo");
 		
 		
-		if(lex.attr("lexique") != null && MODE == 1){
-			$('#right_panel #content').load('parts/lexiques.printOne.php', {attr: lex.attr('lexique')});
+		
+		//******************************Accueil (Dashboard)
+		//******************************Accueil (Dashboard)
+		if(MODE == 0){ 
 			
-		}else if(lex.attr("user_id") != null && MODE == 2){
-			$('#right_panel #content').load('parts/comptes.right.printOne.php', {user_id: lex.attr('user_id')});
+			if(false){
+				
+				
+				
+			}else if(false){
+				
+				
+				
+			}
+			
+			
+			
+			
+		//****************************************Users
+		//****************************************Users
+		}else if(MODE == 2){ 
+			
+			if(false){
+				
+				
+				
+			}else if(false){
+				
+				
+				
+			}
+			
+			
+			
+			
+		//****************************************Lexiques
+		//****************************************Lexiques
+		}else if(MODE == 1){ 
+			
+			if(false){
+				
+				
+				
+			}else if(false){
+				
+				
+				
+			}
+			
+			
+			
+			
+		//****************************************Logs
+		//****************************************Logs
+		}else if(MODE == 4){ 
+			
+			if(todo == "printLog"){
+				
+				if(lex.attr("log_id") != null && LEXIQUE_SELECTED != null){
+					$('#right_panel #content').load('parts/logs.right.printLog.php', {attr: LEXIQUE_SELECTED, log_id:lex.attr("log_id")});
+				}
+				
+			}else if(false){
+				
+				
+				
+			}
 			
 		}
 		
 	});
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	$('body').on('click', '#left_panel #content .listSelector', function(){
 	
 		var lex = $(this);
-		// $('#left_panel #content .listSelector').css('background-color', 'rgb(240,240,240)');
 		$('#left_panel #content .listSelector').css('background-color', 'none');
 		lex.css('background-color', 'rgb(230,230,230)');
 		
 		if(lex.attr("todo") == null) return true; //Si rien n'est spécifié.
 		else var todo = lex.attr("todo");
 		
-		if(MODE == 0){ //Accueil (Dashboard)
+		
+		
+		
+		//******************************Accueil (Dashboard)
+		//******************************Accueil (Dashboard)
+		if(MODE == 0){ 
 			
 			if(todo == "sectionLexique"){
 			
@@ -64,17 +146,23 @@ $(function(){
 					});
 				});
 
-			}else{
+			}else if(todo == "sectionLogs"){
 			
-				$('#left_panel #header').load('parts/dashboard.header.php');
-				$('#left_panel #content').load('parts/dashboard.content.php');
-				$('#middle_panel #content').html('');
-				$('#right_panel #content').html('');
-				MODE = 0;
-				
+				$('#left_panel #header').html('<h1>GESTION</h1><h3>Rapports de Bug</h3>');
+				$('#left_panel #content').load('parts/logs.left.list.lexiques.php', function(){
+					$('#middle_panel #content').html('');
+					$('#right_panel #content').html('');
+					MODE = 4;
+				});
+
 			}
 			
-		}else if(MODE == 2){
+			
+			
+			
+		//****************************************Users
+		//****************************************Users
+		}else if(MODE == 2){ 
 			
 			if(todo == "newUser"){
 				
@@ -96,17 +184,14 @@ $(function(){
 				
 				
 				
-			}else{
-			
-				$('#left_panel #header').load('parts/dashboard.header.php');
-				$('#left_panel #content').load('parts/dashboard.content.php');
-				$('#middle_panel #content').html('');
-				$('#right_panel #content').html('');
-				MODE = 0;
-				
 			}
 			
-		}else if(MODE == 1){
+			
+			
+			
+		//****************************************Lexiques
+		//****************************************Lexiques
+		}else if(MODE == 1){ 
 			
 			if(todo == "sectionLexique"){
 				
@@ -116,23 +201,36 @@ $(function(){
 				
 				
 				
-			}else{
+			}
 			
-				$('#left_panel #header').load('parts/dashboard.header.php');
-				$('#left_panel #content').load('parts/dashboard.content.php');
-				$('#middle_panel #content').html('');
-				$('#right_panel #content').html('');
-				MODE = 0;
+			
+			
+			
+		//****************************************Logs
+		//****************************************Logs
+		}else if(MODE == 4){ 
+			
+			if(todo == "printLogs"){
+				
+				if(lex.attr("attr_lexique") != null){
+					LEXIQUE_SELECTED = lex.attr("attr_lexique");
+					$('#middle_panel #content').load('parts/logs.middle.list.php', {attr: LEXIQUE_SELECTED});
+					$('#tight_panel #content').html('');
+				}
 				
 			}
 			
 		}
+		
+		
+		
 		
 		if(todo == "dashboard"){
 			$('#left_panel #header').load('parts/dashboard.header.php');
 			$('#left_panel #content').load('parts/dashboard.content.php');
 			$('#middle_panel #content').html('');
 			$('#right_panel #content').html('');
+			LEXIQUE_SELECTED = null;
 			MODE = 0;
 		}
 		

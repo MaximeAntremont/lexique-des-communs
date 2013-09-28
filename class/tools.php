@@ -24,3 +24,10 @@
 		return (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 42) ? true : false;
 		
 	}
+	
+	function isMODO (){
+		
+		$timestamp = time();
+		return (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 21) ? true : false;
+		
+	}

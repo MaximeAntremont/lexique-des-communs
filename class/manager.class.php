@@ -432,13 +432,31 @@ class Manager
 		if(is_numeric($type)){
 			$logs = array();
 			
-			$req = $this->_db->query('SELECT '. $culumns .' FROM '. $this->_attr .'log WHERE log_type = "'. $type .'"');
+			$req = $this->_db->query('SELECT '. $culumns .' FROM '. $this->_attr .'log WHERE log_type = "'. $type .'" ORDER BY log_id DESC');
 			
 			while($don = $req->fetch()){
 				$logs[] = new Log($don);
 			}
 			
 			return $logs;
+		}else{
+			return false;
+		}
+		
+	}
+	
+	public function getLogBy_id ($id, $culumns = '*'){
+		
+		if(is_numeric($id)){
+			$log = null;
+			
+			$req = $this->_db->query('SELECT '. $culumns .' FROM '. $this->_attr .'log WHERE log_id = "'. $id .'" ORDER BY log_id DESC');
+			
+			if($don = $req->fetch()){
+				$log = new Log($don);
+			}
+			
+			return $log;
 		}else{
 			return false;
 		}

@@ -109,7 +109,7 @@ body{
 	#right_panel #content .listSelector,
 	#right_panel #content .list{
 	
-		height: 30px;
+		min-height: 30px;
 		padding-top: 10px;
 		font-size: 12px;
 		border-bottom: 1px solid rgb(200,200,200);
