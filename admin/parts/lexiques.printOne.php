@@ -59,7 +59,7 @@
 		$listSelector .= '</div>';
 		echo $listSelector;
 		
-		$listSelector = '<div class="listSelector">';
+		$listSelector = '<div todo="deleteLexique" class="listSelector">';
 		$listSelector .= '<h3>Supprimer ce lexique</h3>';
 		$listSelector .= '</div>';
 		echo $listSelector;

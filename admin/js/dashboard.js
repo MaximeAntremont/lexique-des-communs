@@ -63,6 +63,11 @@ $(function(){
 				
 				$('#right_panel #content').load('parts/lexique.toggleActivity.php', {attr: LEXIQUE_SELECTED});
 				
+			}else if(todo == "deleteLexique"){
+				
+				$('#right_panel #content').load('parts/lexique.delete.php', {attr: LEXIQUE_SELECTED});
+				LEXIQUE_SELECTED = null;
+				
 			}
 			
 			
