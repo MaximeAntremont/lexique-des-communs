@@ -11,13 +11,15 @@ class User
 	 * CONSTRUCTOR
 	 ***************/
 	 
-	public function __construct (array $donnees)
+	public function __construct (array $donnees = null)
 	{
 		$this->hydrate($donnees);
 	}
 	
-	public function hydrate(array $donnees)
+	public function hydrate(array $donnees = null)
 	{
+		if(!isset($donnees))
+			return;
 		foreach ($donnees as $key => $value)
 		{
 			$method = 'set_'.$key;

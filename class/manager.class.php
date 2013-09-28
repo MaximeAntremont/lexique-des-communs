@@ -645,7 +645,31 @@ class Manager
 		
 	}
 	
-	public function getUser (){
+	public function loginUser (User $obj){
+		$name = $obj->name();
+		$pass = $obj->pass();
+		
+		if( !empty($name) && !empty($pass) ){
+			$req = $this->_db->query('SELECT * FROM '. DB_PREFIX .'user WHERE user_name="'. $name .'" AND user_pass="'. $pass .'"');
+			
+			if($don = $req->fetch()){
+				
+				$tab = array(
+					'name' => $don['user_name'],
+					'type' => $don['user_type'],
+					'id' => $don['user_id'],
+					'token' => time()
+				);
+				
+				return $tab;
+				
+			}else{
+				return false;
+			}
+			
+		}else{
+			return false;
+		}
 		
 	}
 	
