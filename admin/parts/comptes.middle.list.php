@@ -1,6 +1,4 @@
 <?php session_start();
-
-	$timestamp = time();
 	
 	include_once('../../../config.php');
 	include_once('../../config.php');
@@ -13,7 +11,7 @@
 	include_once('../../class/manager.class.php');
 
 	
-	if(isset($_SESSION['user_token']) && $_SESSION['user_token'] < $timestamp){
+	if(isConnected() && isSUDO()){
 		
 		$manager = new Manager(getConnection(), "lexique_admin_");
 		

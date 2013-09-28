@@ -106,7 +106,8 @@ body{
  *************************************************/	
 	
 	
-	#right_panel #content .listSelector, #right_panel #content .list{
+	#right_panel #content .listSelector,
+	#right_panel #content .list{
 	
 		height: 30px;
 		padding-top: 10px;
@@ -115,7 +116,8 @@ body{
 		
 	}
 	
-	#right_panel #content .listSelector h3, #right_panel #content .list{
+	#right_panel #content .listSelector h3,
+	#right_panel #content .list h3{
 	
 		text-align: center;
 		color: rgb(140,140,140);
@@ -129,7 +131,8 @@ body{
 		
 	}
 	
-	#right_panel input{
+	#right_panel input,
+	#right_panel select{
 		
 		width: 80%;
 		margin-left: 10%;
@@ -158,7 +161,8 @@ body{
  *************************************************/	
 	
 	
-	#middle_panel #content .listSelector{
+	#middle_panel #content .listSelector,
+	#middle_panel #content .list{
 	
 		height: 30px;
 		padding-top: 10px;
@@ -167,7 +171,8 @@ body{
 		
 	}
 	
-	#middle_panel #content .listSelector h3{
+	#middle_panel #content .listSelector h3,
+	#middle_panel #content .list h3{
 	
 		text-align: center;
 		color: rgb(140,140,140);

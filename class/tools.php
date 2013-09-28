@@ -10,3 +10,17 @@
 			return false;
 		}
 	}
+	
+	function isConnected (){
+		
+		$timestamp = time();
+		return (isset($_SESSION['user_token']) && $_SESSION['user_token'] < $timestamp) ? true : false;
+		
+	}
+	
+	function isSUDO (){
+		
+		$timestamp = time();
+		return (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 42) ? true : false;
+		
+	}

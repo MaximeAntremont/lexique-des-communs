@@ -635,6 +635,7 @@ class Manager
 	public function sendNewUser (User $obj){
 		
 		if( $this->isReadyToSend($obj) ){
+		
 			$req = $this->_db->prepare('INSERT INTO lexique_admin_user SET 
 				user_name = :name,
 				user_pass = :pass,

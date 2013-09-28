@@ -13,14 +13,14 @@
 	include_once('../../class/manager.class.php');
 
 	
-	if(isset($_SESSION['user_token']) && $_SESSION['user_token'] < $timestamp){
+	if(isConnected() && isSUDO()){
 		
 		?>
 		
-		<div id="dashboard" class="listSelector">
+		<div todo="dashboard" class="listSelector">
 			<h3>Retour</h3>
 		</div>
-		<div id="" class="listSelector">
+		<div todo="newUser" class="listSelector">
 			<h3>Créer un nouveau compte</h3>
 		</div>
 		

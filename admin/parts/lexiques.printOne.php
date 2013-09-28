@@ -13,7 +13,7 @@
 	include_once('../../class/manager.class.php');
 
 	
-	if(!empty($_POST['attr']) && isset($_SESSION['user_token']) && $_SESSION['user_token'] < $timestamp){
+	if(!empty($_POST['attr']) && isConnected() && isSUDO()){
 		
 		$manager = new Manager(getConnection(), htmlspecialchars($_POST['attr']));
 		
