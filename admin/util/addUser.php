@@ -26,7 +26,7 @@
 			$user->type( $_POST['user_type'] );
 			
 			if($manager->sendNewUser($user)){
-				echo 'Réussite';
+				header('Location:../dashboard.php');
 			}else{
 				echo 'Impossible 3';
 				echo $user;
