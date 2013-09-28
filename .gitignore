@@ -219,3 +219,5 @@ pip-log.txt
 #############
 
 test.php
+admin\bdd_lexiques.txt
+admin/bdd_lexiques.txt
