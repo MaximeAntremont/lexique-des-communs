@@ -18,24 +18,20 @@
 		$manager = new Manager(getConnection());
 		$user = $manager->getUserBy_id(htmlspecialchars($_POST['user_id']));
 		
+		if(isSUDO()){
 		?>
-		<form style="margin-top:20px;">
-			<input type="text" name="user_name" value="<?php echo $user->name(); ?>" />
-			<input type="submit" value="Changer le nom" />
-		</form>
-		<form style="margin-top:20px;">
-			<select name="user_type">
+			<select id="input_user_type" style="margin-top:40px;" name="user_type">
 				<option value="42" <?php echo ($user->type() == 42) ? "selected" : ""; ?> >Super Utilisateur</option>
 				<option value="21" <?php echo ($user->type() == 21) ? "selected" : ""; ?> >Modérateur</option>
 				<option value="10" <?php echo ($user->type() == 10) ? "selected" : ""; ?> >Rédacteur</option>
 			</select>
-			<input type="submit" value="Changer le type" />
-		</form>
-		<form style="margin-top:20px;border-bottom:1px solid rgb(200,200,200);padding-bottom:25px;">
-			<input type="password" name="user_old_pass" placeholder="ancien mot de passe" />
-			<input type="password" name="user_new_pass" placeholder="nouveau mot de passe" />
-			<input type="password" name="user_new_pass2" placeholder="confirmation nouveau mot de passe" />
-			<input type="submit" value="Changer de mot de passe" />
+			<div todo="changeType" user_id="<?php echo $user->id(); ?>" class="listSelector"><h3>Changer le type</h3></div>
+		<?php } ?>
+		
+			<input id="input_user_pass1" style="margin-top:20px;" type="password" name="user_old_pass" placeholder="ancien mot de passe" />
+			<input id="input_user_pass2" type="password" name="user_new_pass" placeholder="nouveau mot de passe" />
+			<input id="input_user_pass3" type="password" name="user_new_pass2" placeholder="confirmation nouveau mot de passe" />
+			<div todo="changePass" user_id="<?php echo $user->id(); ?>" class="listSelector"><h3>Changer le mot de passe</h3></div>
 		</form>
 		
 		<?php

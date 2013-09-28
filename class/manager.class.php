@@ -687,7 +687,7 @@ class Manager
 		$req->bindValue(':type', $obj->type());
 		$req->bindValue(':id', $obj->id());
 		
-		$req->execute();
+		return ($req->execute()) ? true : false ;
 		
 	}
 	

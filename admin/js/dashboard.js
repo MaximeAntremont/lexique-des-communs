@@ -40,12 +40,31 @@ $(function(){
 			}
 			
 			
-			
-			
 		//****************************************Users
 		//****************************************Users
 		}else if(MODE == 2){ 
 			
+			if(todo == "changeType"){
+			
+				$('#right_panel #content').load('parts/user.changeType.php', 
+					{
+						user_id: $(this).attr('user_id'),
+						user_type: $('#right_panel #content #input_user_type').val()
+					}
+				);
+				
+			}else if(todo == "changePass"){
+			
+				$('#right_panel #content').load('parts/user.changePass.php', 
+					{
+						user_id: $(this).attr('user_id'),
+						user_old_pass: $('#right_panel #content #input_user_pass1').val(),
+						user_new_pass: $('#right_panel #content #input_user_pass2').val(),
+						user_new_pass2: $('#right_panel #content #input_user_pass3').val()
+					}
+				);
+				
+			}
 			
 			
 			

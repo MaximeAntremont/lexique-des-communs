@@ -34,7 +34,7 @@
 			echo '<a href="../dashboard.php">Aller dans le dashboard</a>';
 			
 		}else{
-			echo 'Mauvaise authentification !';
+			header('Location:../login.php');
 		}
 		
 	}else{

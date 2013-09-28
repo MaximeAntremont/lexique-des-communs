@@ -18,7 +18,7 @@ include 'admin.header.php'; ?>
 		
 		<form action="util/user.login.php" method="POST" style="margin-top: 40px;">
 			<input type="text" name="user_name" id="user" placeholder="username" autofocus/>
-			<input type="text" name="user_pass" id="pass" placeholder="pass"/>
+			<input type="password" name="user_pass" id="pass" placeholder="pass"/>
 			<input type="submit" value="Login !"/>
 		</form>
 		
