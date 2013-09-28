@@ -750,6 +750,14 @@ class Manager
 		
 	}
 	
+	public function removeUserBy_id ($id){
+	
+		if(is_numeric($id)){
+			return ($this->_db->query('DELETE FROM lexique_admin_user WHERE user_id="'. $id .'"')) ? true : false;
+		}
+		
+	}
+	
 	
 	
 	/**************************************************************************

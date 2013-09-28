@@ -64,6 +64,26 @@ $(function(){
 					}
 				);
 				
+			}else if(todo == "deleteUser"){
+			
+				$('#right_panel #content').load('parts/user.delete.php', 
+					{
+						user_id: $(this).attr('user_id')
+					}
+				);
+				
+			}else if(todo == "confirmDeleteUser"){
+			
+				$('#right_panel #content').load('parts/user.confirm.delete.php', 
+					{
+						user_id: $(this).attr('user_id')
+					}
+				);
+				
+			}else if(todo == "abordDeleteUser"){
+			
+				$('#right_panel #content').html('<div class="list"><h3>Annulé !</h3></div>');
+				
 			}
 			
 			

@@ -38,7 +38,7 @@
 		
 		if($user->type() != 0){
 			
-			echo '<div class="listSelector">';
+			echo '<div todo="deleteUser" user_id="'. $user->id() .'" class="listSelector">';
 			echo '<h3>Supprimer ce compte</h3>';
 			echo '<div>';
 			
