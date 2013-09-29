@@ -16,15 +16,17 @@ if(isConnected() && isSUDO()){
 
 	foreach($lines as $line){
 		
-		preg_match('#([^"]+)"([^"]+)"#i', $line, $out);
+		if(preg_match('#([^"]+)"([^"]+)"#i', $line, $out)){
 		
-		if($out[1][0] == ";") $out[1][0] = '';
+			if($out[1][0] == ";") $out[1][0] = '';
+			
+			$lexique  = '<div todo="printLexique" lexique="'. $out[2] .'" class="listSelector">';
+			$lexique .= '<h3>'. $out[1] .'</h3>';
+			$lexique .= '</div>';
+			
+			echo $lexique;
 		
-		$lexique  = '<div todo="printLexique" lexique="'. $out[2] .'" class="listSelector">';
-		$lexique .= '<h3>'. $out[1] .'</h3>';
-		$lexique .= '</div>';
-		
-		echo $lexique;
+		}
 	}
 
 }
