@@ -120,13 +120,13 @@
 		'get' => function ($val){
 			
 			return preg_filter(
-				'#.*src="//www\.youtube\.com/embed/([-a-zA-Z-0-9]+){1}(\?[a-zA-Z0-9=]*)*".*#',
+				'#.*src="//www\.youtube\.com/embed/([^?"]+)(\?[^"]*)*".*#',
 				"$1",
 				$val
 				);
 		
 		}
-	);
+	);	
 	
 	
 	$ress_video_dailymotion = array(
