@@ -20,11 +20,13 @@
 			if($lexique['statut'] == 0 && isConnected() && isSUDO()){
 				
 				$_SESSION['lexique_attr'] = $lexique['attr'];
+				$_SESSION['lexique_name'] = $lexique['name'];
 				header('Location:visualisation.php');
 				
 			}else if($lexique['statut'] == 1){
 				
 				$_SESSION['lexique_attr'] = $lexique['attr'];
+				$_SESSION['lexique_name'] = $lexique['name'];
 				header('Location:visualisation.php');
 				
 			}else{

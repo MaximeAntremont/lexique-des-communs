@@ -198,6 +198,16 @@ body{
 		float: left;
 	}
 	
+	#bottom_panel div{
+		float: left;
+		height: 35px;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 5px;
+		font-weight: bold;
+		border-right: 1px solid rgb(200,200,200);
+	}
+	
 	#bottom_panel .panel_button{
 		float: left;
 		height: 35px;
