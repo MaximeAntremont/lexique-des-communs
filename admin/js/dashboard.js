@@ -56,6 +56,7 @@ $(function(){
 			}else if(todo == "sectionLogs"){
 			
 				$('#left_panel #header').html('<h1>GESTION</h1><h3>Rapports de Bug</h3>');
+				$('#left_panel #content').html('');
 				$('#left_panel #content').load('parts/logs.left.list.lexiques.php', function(){
 					$('#middle_panel #content').html('');
 					$('#right_panel #content').html('');
@@ -130,9 +131,10 @@ $(function(){
 			
 			if(todo == "printLogs"){
 				
-				if(lex.attr("attr_lexique") != null){
-					LEXIQUE_SELECTED = lex.attr("attr_lexique");
-					$('#middle_panel #content').load('parts/logs.middle.list.php', {attr: LEXIQUE_SELECTED});
+				if(lex.attr("lexique_id") != null){
+					LEXIQUE_SELECTED = lex.attr("lexique_id");
+					$('#middle_panel #content').html('');
+					$('#middle_panel #content').load('parts/logs.middle.list.php', {lexique_id: LEXIQUE_SELECTED});
 					$('#right_panel #content').html('');
 				}
 				
@@ -228,7 +230,7 @@ $(function(){
 			if(todo == "printLog"){
 				
 				if(lex.attr("log_id") != null && LEXIQUE_SELECTED != null){
-					$('#right_panel #content').load('parts/logs.right.printLog.php', {attr: LEXIQUE_SELECTED, log_id:lex.attr("log_id")});
+					$('#right_panel #content').load('parts/logs.right.printLog.php', {lexique_id: LEXIQUE_SELECTED, log_id:lex.attr("log_id")});
 				}
 				
 			}else if(false){

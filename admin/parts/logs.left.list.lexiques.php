@@ -11,24 +11,25 @@
 	include_once('../../class/manager.class.php');
 	
 	if(isConnected() && (isSUDO() || isMODO())){
+		
+		$manager = new Manager( getConnection() );
+		
+		$lexiques = $manager->getLexiquesAll();
+		
+		echo '<div todo="dashboard" class="listSelector">';
+		echo '<h3>Retour</h3>';
+		echo '</div>';
+		
+		if( is_array($lexiques) ){
+			
+			foreach($lexiques as $lexique){
+				
+				echo '<div todo="printLogs" lexique_id="'. $lexique['id'] .'" class="listSelector">';
+				echo '<h3>'. $lexique['name'] .'</h3>';
+				echo '</div>';
+				
+			}
+			
+		}else echo '<div class="list"><h3>Aucun lexique</h3></div>';
 
-		$lines = file('../bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
-		
-		$lexique  = '<div todo="dashboard" class="listSelector">';
-		$lexique .= '<h3>Retour</h3>';
-		$lexique .= '</div>';
-		
-		echo $lexique;
-		
-		foreach($lines as $line){
-			
-			preg_match('#^([^"]+)"([^"]+)"#i', $line, $out);
-			
-			$lexique  = '<div todo="printLogs" attr_lexique="'. $out[2] .'" class="listSelector">';
-			$lexique .= '<h3>'. $out[1] .'</h3>';
-			$lexique .= '</div>';
-			
-			echo $lexique;
-		}
-
-	}
+	}else echo '<div class="list"><h3>Une erreur sauvage vous attaque !</h3></div>';

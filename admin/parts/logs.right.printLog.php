@@ -11,38 +11,46 @@
 	include_once('../../class/manager.class.php');
 
 	
-	if( isset($_POST['log_id']) && isset($_POST['attr']) && isConnected() && (isMODO() || isSUDO()) ){
+	if( isset($_POST['log_id']) && isset($_POST['lexique_id']) && isConnected() && (isMODO() || isSUDO()) ){
 		
-		$manager = new Manager(getConnection(), htmlspecialchars($_POST['attr']));
+		$id = htmlspecialchars($_POST['lexique_id']);
+		$manager = new Manager(getConnection());
+		$lexique = $manager->getLexiquesBy_id( $id );
 		
-		$log = $manager->getLogBy_id(htmlspecialchars($_POST['log_id']));
+		if(is_array($lexique)){
+			
+			$managerLexique = new Manager(getConnection(), $lexique['attr']);
+			$log = $managerLexique->getLogBy_id(htmlspecialchars($_POST['log_id']));
 		
-		if($log instanceof Log){
-			
-			$listSelector = '<div class="list">';
-			$listSelector .= '<h3>'. $log->val() .'</h3>';
-			$listSelector .= '</div>';
-			
-			$listSelector .= '<div class="list">';
-			$listSelector .= '<h3>ID de l\'entrée: '. $log->entry_id() .'</h3>';
-			$listSelector .= '</div>';
-			
-			echo $listSelector;
-			
-		}else{
-			
-			$listSelector = '<div class="list">';
-			$listSelector .= '<h3>Vide</h3>';
-			$listSelector .= '</div>';
-			
-			echo $listSelector;
-			
+			if($log instanceof Log){
+				
+				$listSelector = '<div class="list">';
+				$listSelector .= '<h3>'. $log->val() .'</h3>';
+				$listSelector .= '</div>';
+				
+				$listSelector .= '<div class="list">';
+				$listSelector .= '<h3>ID de l\'entrée: '. $log->entry_id() .'</h3>';
+				$listSelector .= '</div>';
+				
+				echo $listSelector;
+				
+			}else{
+				
+				$listSelector = '<div class="list">';
+				$listSelector .= '<h3>Vide</h3>';
+				$listSelector .= '</div>';
+				
+				echo $listSelector;
+				
+			}
 		}
+		
+		
 		
 	}else{
 		
 		$listSelector = '<div class="list">';
-		$listSelector .= '<h3>Erreur</h3>';
+		$listSelector .= '<h3>Rhaaaa... Et voilà, une erreur !!!</h3>';
 		$listSelector .= '</div>';
 		
 		echo $listSelector;

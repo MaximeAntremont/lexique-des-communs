@@ -11,40 +11,43 @@
 	include_once('../../class/manager.class.php');
 
 	
-	if( isset($_POST['attr']) && isConnected() && (isMODO() || isSUDO()) ){
+	if( isset($_POST['lexique_id']) && isConnected() && (isMODO() || isSUDO()) ){
 		
-		$manager = new Manager(getConnection(), htmlspecialchars($_POST['attr']));
+		$id = htmlspecialchars($_POST['lexique_id']);
+		$manager = new Manager(getConnection());
+		$lexique = $manager->getLexiquesBy_id( $id );
 		
-		$logs = $manager->getLogBy_type(101);
-		
-		$logL = count($logs);
-		
-		if($logL == 0){
+		if(is_array($lexique)){
 			
-			$listSelector = '<div class="list">';
-			$listSelector .= '<h3>Vide</h3>';
-			$listSelector .= '</div>';
+			$managerLexique = new Manager(getConnection(), $lexique['attr']);
+			$logs = $managerLexique->getLogBy_type(101);
+			$logL = count($logs);
+		
+			if($logL == 0){
+				
+				$listSelector = '<div class="list">';
+				$listSelector .= '<h3>Aucun rapport de bug, youhou !</h3>';
+				$listSelector .= '</div>';
+				
+				echo $listSelector;
+				
+			}
 			
-			echo $listSelector;
+			foreach($logs as $log){
 			
-		}
-		
-		foreach($logs as $log){
-		
-			$listSelector = '<div todo="printLog" log_id="'. $log->id() .'" class="listSelector">';
-			$listSelector .= '<h3>Rapport n° '. $logL .'</h3>';
-			$listSelector .= '</div>';
+				$listSelector = '<div todo="printLog" log_id="'. $log->id() .'" class="listSelector">';
+				$listSelector .= '<h3>Rapport n° '. $logL .'</h3>';
+				$listSelector .= '</div>';
+				
+				echo $listSelector;
+				$logL--;
+			}
 			
-			echo $listSelector;
-			$logL--;
-		}
+		}else echo '<div class="list"><h3>Hein ? Ce lexique n\'existe pas ?</h3></div>';
 		
-	}else{
 		
-		$listSelector = '<div class="list">';
-		$listSelector .= '<h3>Erreur</h3>';
-		$listSelector .= '</div>';
 		
-		echo $listSelector;
 		
-	}
+		
+		
+	}else echo '<div class="list"><h3>Ciel ! Une erreur !</h3></div>';
