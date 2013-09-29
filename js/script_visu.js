@@ -389,8 +389,7 @@ $(function(){
 					cache_panel.close();
 				}
 				if($(this).html() == "Ajouter" && !isAddRequest){
-					// isAddRequest = true;
-					// alert($('#input_ress_val').val());
+					isAddRequest = true;
 					sendNewRessource ($('#input_ress_val').val(), $('#input_ress_titre').val(), function(){
 						setTimeout(function(){
 							fetchEntryData( entry_selected_id, function(){

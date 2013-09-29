@@ -10,39 +10,27 @@
 	include_once('../../class/user.class.php');
 	include_once('../../class/manager.class.php');
 	
-if(!empty($_POST['attr']) && isConnected() && isSUDO()){
+if(!empty($_POST['lexique_id']) && isConnected() && isSUDO()){
 	
-	$attr = htmlspecialchars($_POST['attr']);
+	$id = htmlspecialchars($_POST['lexique_id']);
 	$db = getConnection();
-	$newFile = array();
-	$lines = file('../bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
+	$manager = new Manager( $db );
+	$lexique = $manager->getLexiquesBy_id( $id )
 	
-	if($db->query('DROP TABLE '. $attr .'category')
-	&& $db->query('DROP TABLE '. $attr .'entry')
-	&& $db->query('DROP TABLE '. $attr .'ressource')
-	&& $db->query('DROP TABLE '. $attr .'link')
-	&& $db->query('DROP TABLE '. $attr .'log')){
+	if(is_array($lexique)){
 		
-		foreach($lines as $line){
-			if(preg_match('#"'. preg_quote($attr) .'"#', $line)){
-				
-			}else{
-				$newFile[] = $line;
-			}
-		}
+		if($db->query('DROP TABLE '. $lexique['attr'] .'category')
+		&& $db->query('DROP TABLE '. $lexique['attr'] .'entry')
+		&& $db->query('DROP TABLE '. $lexique['attr'] .'ressource')
+		&& $db->query('DROP TABLE '. $lexique['attr'] .'link')
+		&& $db->query('DROP TABLE '. $lexique['attr'] .'log')
+		&& $manager->deleteLexique( $lexique['id'] )){
+			
+			echo '<div class="list"><h3>Et voilà, c\'est fait !</h3></div>';
+			
+		}else echo '<div class="list"><h3>Une erreur quelque part ! Il va y avoir des erreurs... :S</h3></div>';
 		
-		$fp = fopen("../bdd_lexiques.txt","w");
-		foreach($newFile as $line){
-			fputs($fp, $line);
-		}
-		fclose($fp);
-		
-		echo '<div class="list">Lexique supprimé<h3></h3></div>';
-		
-	}
+	}echo '<div class="list"><h3>Ah, le lexique n\'a pas été trouvé...</h3></div>';
+	
 
-}else{
-	
-	echo "Erreur 1";
-	
-}
+}else echo '<div class="list"><h3>Il semble qu\'il y ait un petit problème. Le lexique n\'a donc pas pu être supprimé !</h3><div>';

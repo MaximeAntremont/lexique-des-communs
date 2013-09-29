@@ -760,6 +760,135 @@ class Manager
 	
 	
 	
+	
+	/**************************************************************************
+	***************************************************************************
+	**	LEXIQUE PART
+	***********
+	*********/
+	
+	public function createLexique ($name, $attr){
+		
+		if( is_string($name) && is_string($attr) && strlen($name) <= 30 && strlen($attr) <= 10 ){
+		
+			$req = $this->_db->prepare('INSERT INTO lexique_admin_references SET 
+				lexique_name = :name,
+				lexique_attr = :attr');
+			
+			$req->bindValue(':name', $name);
+			$req->bindValue(':attr', $attr);
+			
+			return ($req->execute()) ? true : false;
+		
+		}else{
+			
+			return false;
+			
+		}
+	}
+	
+	public function lexiqueToggleActivity ($id){
+		
+		if( is_numeric($id) && $id > 0 ){
+		
+			$req = $this->_db->query('SELECT lexique_statut FROM lexique_admin_references WHERE 
+				lexique_id = "'. $id .'"');
+				
+				if($don = $req->fetch()){
+					
+					$req2 = $this->_db->prepare('UPDATE lexique_admin_references SET lexique_statut = :statut WHERE lexique_id = :id');
+					$req2->bindValue(':statut', ($don['lexique_statut'] == 1) ? 0 : 1);
+					$req2->bindValue(':id', $id);
+					
+					return ($req2->execute()) ? true : false;
+					
+				}else return false;
+			
+		
+		}else return false;
+	}
+	
+	public function getLexiquesAll (){
+		
+		$req = $this->_db->query('SELECT * FROM lexique_admin_references');
+		
+		$tab = array();
+		
+		while($don = $req->fetch()){
+		
+			$temp = array();
+			$temp['id'] = $don['lexique_id'];
+			$temp['name'] = $don['lexique_name'];
+			$temp['attr'] = $don['lexique_attr'];
+			$temp['statut'] = $don['lexique_statut'];
+			
+			$tab[] = $temp;
+			
+		}
+		
+		return $tab;
+		
+	}
+	
+	public function getLexiquesBy_id ($id){
+		
+		if( is_numeric($id) && $id > 0){
+			
+			$req = $this->_db->query('SELECT * FROM lexique_admin_references WHERE lexique_id = "'. $id .'"');
+			
+			$tab = array();
+			
+			if($don = $req->fetch()){
+			
+				$tab['id'] = $don['lexique_id'];
+				$tab['name'] = $don['lexique_name'];
+				$tab['attr'] = $don['lexique_attr'];
+				$tab['statut'] = $don['lexique_statut'];
+				
+				return $tab;
+				
+			}else return false;
+			
+		}else return false;
+	}
+	
+	public function isLexiqueExist ($name, $attr){
+		
+		if( is_string($name) && is_string($attr) && strlen($name) <= 30 && strlen($attr) <= 10 ){
+		
+			$req = $this->_db->query('SELECT lexique_id FROM lexique_admin_references WHERE 
+				lexique_name = "'. $name .'" OR
+				lexique_attr = "'. $attr .'"');
+			
+			$req->bindValue(':name', $name);
+			$req->bindValue(':attr', $attr);
+			
+			return ($don = $req->fetch()) ? true : false;
+		
+		}else{
+			
+			return false;
+			
+		}
+		
+	}
+	
+	public function deleteLexique ($id){
+		
+		if( is_numeric($id) && $id > 0 ){
+		
+			$req = $this->_db->prepare('DELETE FROM lexique_admin_references WHERE 
+				lexique_id = :id');
+			
+			$req->bindValue(':id', $id);
+			
+			return ($req->execute()) ? true : false;
+		
+		}else return false;
+		
+	}
+	
+	
 	/**************************************************************************
 	***************************************************************************
 	**	CHECK FUNCTIONS

@@ -14,11 +14,14 @@
 	include_once('../../class/user.class.php');
 	include_once('../../class/manager.class.php');
 	
-	 if(isConnected() && isSUDO()){ ?>
-	
+	 if(isConnected()){ ?>
 		<div todo="sectionLexique" id="gestionLexiques" class="listSelector">
-			<h3>Gérer mes lexiques</h3>
+			<h3>Gérer les lexiques</h3>
 		</div>
+		
+	<?php } ?>
+	<?php if(isConnected() && isSUDO()){ ?>
+	
 		<div todo="sectionUsers" id="gestionUsers" class="listSelector">
 			<h3>Gérer les utilisateurs</h3>
 		</div>
@@ -28,7 +31,7 @@
 	<div todo="sectionLogs" id="gestionLogs" class="listSelector">
 		<h3>Voir les rapports de bug</h3>
 	</div>
-	<div todo="sectionOwn" id="gestionOwn" class="listSelector">
+	<div todo="sectionOwn" user_id="<?php echo $_SESSION['user_id']; ?>" id="gestionOwn" class="listSelector">
 		<h3>Gérer mon compte</h3>
 	</div>
 	<a href="logout.php">

@@ -12,22 +12,90 @@
 	include_once('class/user.class.php');
 	include_once('class/manager.class.php');
 		
-	$lines = file('admin/bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
-
-	foreach($lines as $line){
-		if(preg_match('#([^"]*)"([^"]*)"#', $line, $out)){
-			
-			if($line[0] != ";"){
-			
-				echo '<a href="lexique.php?l='. $out[2] .'">'. $out[1] .'<a/><br/><br/>';
-				
-			}elseif(isConnected() && isSUDO()){
-				
-				$out[1][0] = '';
-				
-				echo '<a href="lexique.php?l='. $out[2] .'">'. $out[1] .' [inactive]<a/><br/><br/>';
-				
+	$manager = new Manager( getConnection() );
+	
+	$lexiques = $manager->getLexiquesAll();
+	
+	?>
+	
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Sélection d'un lexique</title>
+		<link rel="stylesheet" href="admin/css/admin.css" type="text/css">
+	</head>
+	<body>
+	
+	<div id="left_panel" >
+		<div id="header" class="on">
+			<h1>SELECTION</h1>
+			<h3>d'un Lexique</h3>
+		</div>
+		
+		<div id="content">
+			<?php 
+			if(!isConnected()){
+				echo '<a href="admin/login.php">';
+				echo '<div class="listSelector">';
+				echo '<h3>Se connecter</h3>';
+				echo '</div>';
+				echo '</a>';
+			}else{
+				echo '<a href="admin/dashboard.php">';
+				echo '<div class="listSelector">';
+				echo '<h3>Accéder au Dashboard</h3>';
+				echo '</div>';
+				echo '</a>';
+				echo '<a href="admin/logout.php">';
+				echo '<div class="listSelector">';
+				echo '<h3>Se déconnecter</h3>';
+				echo '</div>';
+				echo '</a>';
 			}
+			?>
+		</div>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div id="middle_panel" >		
+		<div id="content">
+	<?php
+	if(count($lexiques) == 0){
+		
+		$lexique  = '<div class="list">';
+		$lexique .= '<h3>Aucun lexique</h3>';
+		$lexique .= '</div>';
+		
+		echo $lexique;
+		
+	}else
+		foreach($lexiques as $lexique){
 			
+			if($lexique['statut'] == 0 && isConnected() && isSUDO()){
+				echo '<a href="lexique.php?id='. $lexique['id'] .'">';
+				echo '<div class="listSelector" >';
+				echo '<h3>'. $lexique['name'] .'</h3>';
+				echo '</div></a>';
+				
+			}elseif($lexique['statut'] == 1){
+				echo '<a href="lexique.php?id='. $lexique['id'] .'">';
+				echo '<div class="listSelector" >';
+				echo '<h3>'. $lexique['name'] .'</h3>';
+				echo '</div></a>';
+			}
+		
 		}
-	}
+	?>
+		</div>
+	</div>
+	<div id="right_panel" >	
+		<div id="content">
+		</div>
+	</div>
+	</body>
+</html>

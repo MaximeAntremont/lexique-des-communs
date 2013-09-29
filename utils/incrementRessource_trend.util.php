@@ -27,11 +27,11 @@
 		
 		$latestChanges = $manager->getLastTrendChange($ress);
 		
-		if($ress instanceof Ressource &&( 
+		if($ress instanceof Ressource && (( 
 			   ( !isset($latestChanges[0]) && !isset($latestChanges[1]) )
 			|| ( $latestChanges[0] == 302 )
 			|| ( $latestChanges[0] == 301 && isset($latestChanges[1]) && $latestChanges[1] == 302 )
-		) && ($manager->updateRessource( $ress )) ){
+		) || (isConnected() && isSUDO()) ) && ($manager->updateRessource( $ress )) ){
 			
 			$log = new Log();
 			$log->type(301);

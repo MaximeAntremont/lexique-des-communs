@@ -10,33 +10,27 @@
 	include_once('class/user.class.php');
 	include_once('class/manager.class.php');
 	
-	if(isset($_GET['l'])){
+	if(isset($_GET['id'])){
 		
-		$l = htmlspecialchars($_GET['l']);
-		$lines = file('admin/bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
-
-		foreach($lines as $line){
-			if(preg_match('#"'. preg_quote($l) .'"#', $line)){
+		$id = htmlspecialchars($_GET['id']);
+		$manager = new Manager( getConnection() );
+		
+		if( $lexique = $manager->getLexiquesBy_id($id) ){
+			
+			if($lexique['statut'] == 0 && isConnected() && isSUDO()){
 				
-				if($line[0] != ";"){
+				$_SESSION['lexique_attr'] = $lexique['attr'];
+				header('Location:visualisation.php');
 				
-					$_SESSION['lexique_attr'] = $l;
-					break;
-					
-				}elseif(isConnected() && isSUDO()){
-					
-					$_SESSION['lexique_attr'] = $l;
-					break;
-					
-				}
+			}else if($lexique['statut'] == 1){
 				
+				$_SESSION['lexique_attr'] = $lexique['attr'];
+				header('Location:visualisation.php');
+				
+			}else{
+				echo 'Une erreur est survenue';
 			}
-		}
+			
+		}else echo 'Ce lexique n \'est pas enregistré';
 		
-		if(isset($_SESSION['lexique_attr'])) header('Location:visualisation.php');
-		
-	}else{
-		
-		echo "rien d'indiqué";
-		
-	}
+	}else echo "rien d'indiqué";

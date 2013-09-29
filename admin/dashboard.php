@@ -29,11 +29,14 @@ include 'admin.header.php'; ?>
 		<div id="content">
 		
 		
-		<?php if(isConnected() && isSUDO()){ ?>
-	
+		<?php if(isConnected()){ ?>
 			<div todo="sectionLexique" id="gestionLexiques" class="listSelector">
-				<h3>Gérer mes lexiques</h3>
+				<h3>Gérer les lexiques</h3>
 			</div>
+			
+		<?php } ?>
+		<?php if(isConnected() && isSUDO()){ ?>
+		
 			<div todo="sectionUsers" id="gestionUsers" class="listSelector">
 				<h3>Gérer les utilisateurs</h3>
 			</div>

@@ -12,11 +12,11 @@
 	
 if(isConnected() && isSUDO()){ ?>
 	
-	<form action="util/createNewLexique.php" method="POST" style="margin-top: 20px;" >
-		<input type="text" name="lex_name" placeholder="nom du lexique" maxlength="30" required />
-		<input type="text" name="lex_attr" placeholder="attribut de table" maxlength="10" required />
-		<input type="submit" value="Créer" />
-	</form>
+	<input style="margin-top: 20px;" type="text" id="lex_name" placeholder="nom du lexique" maxlength="30" required />
+	<input type="text" id="lex_attr" placeholder="attribut de table" maxlength="10" required />
+	<div todo="submitNewLexique" class="listSelector">
+		<h3>Créer le Lexique</h3>
+	</div>
 	
 <?php
 }

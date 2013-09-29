@@ -10,23 +10,20 @@
 	include_once('../../class/user.class.php');
 	include_once('../../class/manager.class.php');
 	
-if(isConnected() && isSUDO()){
+	if(isConnected()){
+?>
 
-	$lines = file('../bdd_lexiques.txt', FILE_SKIP_EMPTY_LINES);
+	<div todo="dashboard" class="listSelector">
+		<h3>Retour</h3>
+	</div>
+	<div todo="refresh" class="listSelector">
+		<h3>Rafraichir la liste</h3>
+	</div>
 
-	foreach($lines as $line){
-		
-		if(preg_match('#([^"]+)"([^"]+)"#i', $line, $out)){
-		
-			if($out[1][0] == ";") $out[1][0] = '';
-			
-			$lexique  = '<div todo="printLexique" lexique="'. $out[2] .'" class="listSelector">';
-			$lexique .= '<h3>'. $out[1] .'</h3>';
-			$lexique .= '</div>';
-			
-			echo $lexique;
-		
-		}
-	}
-
-}
+	<?php if(isSUDO()){ ?>
+		<div todo="createLexique" class="listSelector">
+			<h3>Créer un Lexique</h3>
+		</div>
+	<?php } ?>
+	
+<?php } ?>

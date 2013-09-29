@@ -10,20 +10,20 @@
 	include_once('../../class/user.class.php');
 	include_once('../../class/manager.class.php');
 	
-	if(isset($_POST['lex_attr']) && isset($_POST['lex_name']) && isConnected() && isSUDO()){
+	if(isset($_POST['lexique_attr']) && isset($_POST['lexique_name']) && isConnected() && isSUDO()){
 		
 		foreach($_POST as $k => $v){$_POST[$k] = htmlspecialchars($v);}
-		
 		$db = getConnection();
-		$attr = $_POST['lex_attr'].'_';
-		$name = $_POST['lex_name'];
+		$manager = new Manager($db);
+		$attr = $_POST['lexique_attr'].'_';
+		$name = $_POST['lexique_name'];
 		$OK = false;
 		
-		$correctValues = (preg_match("#([_a-zA-Z0-9]|\s){1,30}#", $name) && preg_match("#[_a-zA-Z0-9]{1,10}#", $attr)) ? true : false;		
+		if( (preg_match("#([_a-zA-Z0-9]|\s){1,30}#", $name)
+		&& preg_match("#[_a-zA-Z0-9]{1,10}#", $attr))
+		&& !$manager->isLexiqueExist($name, $attr)){
 		
-		if($correctValues){
-			$fp = fopen("../bdd_lexiques.txt","a");
-			if(fputs($fp, "\n") && fputs($fp, $name.'"'. $attr .'"')){
+			if( $manager->createLexique($name, $attr) ){
 				
 				$category = $db->query('
 					CREATE TABLE '. $attr .'category (
@@ -84,19 +84,17 @@
 					)
 				');
 				
-				if($category && $entry && $link & $log && $ressource) $OK = true;
+				if($category && $entry && $link && $log && $ressource) echo '<div class="list"><h3>Création du Lexique réussie !</h3></div>';
+				else echo '<div class="list">Erreur: Impossible de créer le Lexique<h3></h3></div>';
 				
-			}else echo "erreur 3";
+			}else echo '<div class="list">Erreur: impossible de lister le Lexique<h3></h3></div>';
 			
-			fclose($fp);
-			if($OK) header('Location:../dashboard.php');
-			
-		}else echo "erreur 2";
+		}else echo '<div class="list">Erreur: Entrées invalides ou Lexique déjà créé<h3></h3></div>';
 		
 		
 		
 		
-	}else echo "erreur 1";
+	}else echo '<div class="list">Erreur (étape 1)<h3></h3></div>';
 	
 	
 	

@@ -17,126 +17,12 @@ $(function(){
 										EVENTS
 	*****************************************************************************/
 	
-	
-		$('body').on('click', '#right_panel #content .listSelector', function(){
-		
-		var lex = $(this);
-		$('#right_panel #content .listSelector').css('background-color', 'rgb(240,240,240)');
-		lex.css('background-color', 'rgb(230,230,230)');
-		
-		if(lex.attr("todo") == null) return true; //Si rien n'est spécifié.
-		else var todo = lex.attr("todo");
-		
-		
-		
-		//******************************Accueil (Dashboard)
-		//******************************Accueil (Dashboard)
-		if(MODE == 0){ 
-			
-			if(false){
-				
-				
-				
-			}
-			
-			
-		//****************************************Users
-		//****************************************Users
-		}else if(MODE == 2){ 
-			
-			if(todo == "changeType"){
-			
-				$('#right_panel #content').load('parts/user.changeType.php', 
-					{
-						user_id: $(this).attr('user_id'),
-						user_type: $('#right_panel #content #input_user_type').val()
-					}
-				);
-				
-			}else if(todo == "changePass"){
-			
-				$('#right_panel #content').load('parts/user.changePass.php', 
-					{
-						user_id: $(this).attr('user_id'),
-						user_old_pass: $('#right_panel #content #input_user_pass1').val(),
-						user_new_pass: $('#right_panel #content #input_user_pass2').val(),
-						user_new_pass2: $('#right_panel #content #input_user_pass3').val()
-					}
-				);
-				
-			}else if(todo == "deleteUser"){
-			
-				$('#right_panel #content').load('parts/user.delete.php', 
-					{
-						user_id: $(this).attr('user_id')
-					}
-				);
-				
-			}else if(todo == "confirmDeleteUser"){
-			
-				$('#right_panel #content').load('parts/user.confirm.delete.php', 
-					{
-						user_id: $(this).attr('user_id')
-					}
-				);
-				
-			}else if(todo == "abordDeleteUser"){
-			
-				$('#right_panel #content').html('<div class="list"><h3>Annulé !</h3></div>');
-				
-			}
-			
-			
-			
-			
-			
-		//****************************************Lexiques
-		//****************************************Lexiques
-		}else if(MODE == 1){ 
-			
-			if(todo == "toggleActivity"){
-				
-				$('#right_panel #content').load('parts/lexique.toggleActivity.php', {attr: LEXIQUE_SELECTED});
-				
-			}else if(todo == "deleteLexique"){
-				
-				$('#right_panel #content').load('parts/lexique.delete.php', {attr: LEXIQUE_SELECTED});
-				LEXIQUE_SELECTED = null;
-				
-			}
-			
-			
-			
-			
-		//****************************************Logs
-		//****************************************Logs
-		}else if(MODE == 4){ 
-			
-			if(false){
-				
-				
-				
-			}
-			
-		}
-		
-	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	$('body').on('click', '#left_panel #content .listSelector', function(){
 	
 		var lex = $(this);
-		$('#left_panel #content .listSelector').css('background-color', 'none');
+		$('#left_panel #content .listSelector').css('background-color', 'rgb(245,245,245)');
 		lex.css('background-color', 'rgb(230,230,230)');
 		
 		if(lex.attr("todo") == null) return true; //Si rien n'est spécifié.
@@ -152,16 +38,16 @@ $(function(){
 			if(todo == "sectionLexique"){
 			
 				$('#left_panel #header').html('<h1>GESTION</h1><h3>Lexiques</h3>');
-				$('#left_panel #content').load('parts/gestion.lexiques.left.content.php');
-				$('#middle_panel #content').load('parts/gestion.lexiques.list.php');
+				$('#left_panel #content').load('parts/lexiques.left.content.php');
+				$('#middle_panel #content').load('parts/lexiques.list.php');
 				$('#right_panel #content').html('');
 				MODE = 1;
 				
 			}else if(todo == "sectionUsers"){
 			
 				$('#left_panel #header').html('<h1>GESTION</h1><h3>Comptes</h3>');
-				$('#left_panel #content').load('parts/comptes.left.content.php', function(){
-					$('#middle_panel #content').load('parts/comptes.middle.list.php', function (){
+				$('#left_panel #content').load('parts/user.left.content.php', function(){
+					$('#middle_panel #content').load('parts/user.middle.list.php', function (){
 						$('#right_panel #content').html('');
 						MODE = 2;
 					});
@@ -179,7 +65,7 @@ $(function(){
 			}else if(todo == "sectionOwn"){
 			
 				$('#middle_panel #content').html('');
-				$('#right_panel #content').load('parts/comptes.right.printOne.php', {user_id: $(this).attr("user_id")});
+				$('#right_panel #content').load('parts/user.right.printOne.php', {user_id: $(this).attr("user_id")});
 
 			}
 			
@@ -225,6 +111,14 @@ $(function(){
 				$('#middle_panel #content').html('<div class="list"><h3>Création d\'un lexique</h3></div>');
 				$('#right_panel #content').load('parts/lexique.right.createOne.php');
 				
+			}else if(todo == "refresh"){
+				
+				$('#right_panel #content').html('');
+				$('#middle_panel #content').html('');
+				$('#middle_panel #content').load('parts/lexiques.list.php');
+				LEXIQUE_SELECTED = null;
+				MODE = 1;
+				
 			}
 			
 			
@@ -245,10 +139,9 @@ $(function(){
 			}
 			
 		}
-		
-		
-		
-		
+	
+	
+	
 		if(todo == "dashboard"){
 			$('#left_panel #header').load('parts/dashboard.header.php');
 			$('#left_panel #content').load('parts/dashboard.content.php');
@@ -260,10 +153,17 @@ $(function(){
 		
 		
 	});
+	
+	
+	
+	
+	
+	
 
 	
 	
-	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	$('body').on('click', '#middle_panel #content .listSelector', function(){
 		
 		var lex = $(this);
@@ -298,7 +198,8 @@ $(function(){
 			
 			if(todo == "printUser"){
 				
-				$('#right_panel #content').load('parts/comptes.right.printOne.php', {user_id: $(this).attr("user_id")});
+				$('#right_panel #content').html(''); 
+				$('#right_panel #content').load('parts/user.right.printOne.php', {user_id: $(this).attr("user_id")});
 				
 			}
 			
@@ -309,14 +210,11 @@ $(function(){
 		//****************************************Lexiques
 		}else if(MODE == 1){ 
 			
-			if(todo == "printLexique" && $(this).attr("lexique")){
+			if(todo == "printLexique" && $(this).attr("lexique_id")){
 				
-				LEXIQUE_SELECTED = $(this).attr("lexique");
-				$('#right_panel #content').load('parts/lexiques.printOne.php', {attr: LEXIQUE_SELECTED});
-				
-			}else if(false){
-				
-				
+				$('#right_panel #content').html('');
+				LEXIQUE_SELECTED = $(this).attr("lexique_id");
+				$('#right_panel #content').load('parts/lexiques.printOne.php', {lexique_id: LEXIQUE_SELECTED});
 				
 			}
 			
@@ -334,6 +232,138 @@ $(function(){
 				}
 				
 			}else if(false){
+				
+				
+				
+			}
+			
+		}
+		
+	});
+	
+	
+	
+		
+		
+		
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * ** * * * * * * * * * * * * * * * * * * * * *
+	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * */
+	$('body').on('click', '#right_panel #content .listSelector', function(){
+		
+		var lex = $(this);
+		$('#right_panel #content .listSelector').css('background-color', 'rgb(240,240,240)');
+		lex.css('background-color', 'rgb(230,230,230)');
+		
+		if(lex.attr("todo") == null) return true; //Si rien n'est spécifié.
+		else var todo = lex.attr("todo");
+		
+		
+		
+		//******************************Accueil (Dashboard)
+		//******************************Accueil (Dashboard)
+		if(MODE == 0){ 
+			
+			if(false){
+				
+				
+				
+			}
+			
+			
+		//****************************************Users
+		//****************************************Users
+		}else if(MODE == 2){ 
+			
+			if(todo == "changeType"){
+			
+				$('#right_panel #content').load('parts/user.changeType.php', 
+					{
+						user_id: $(this).attr('user_id'),
+						user_type: $('#right_panel #content #input_user_type').val()
+					}
+				);
+				
+			}else if(todo == "changePass"){
+				
+				$('#right_panel #content').load('parts/user.changePass.php', 
+					{
+						user_id: $(this).attr('user_id'),
+						user_old_pass: $('#right_panel #content #input_user_pass1').val(),
+						user_new_pass: $('#right_panel #content #input_user_pass2').val(),
+						user_new_pass2: $('#right_panel #content #input_user_pass3').val()
+					}
+				);
+				
+			}else if(todo == "deleteUser"){
+			
+				$('#right_panel #content').load('parts/user.delete.php', 
+					{
+						user_id: $(this).attr('user_id')
+					}
+				);
+				
+			}else if(todo == "confirmDeleteUser"){
+			
+				$('#right_panel #content').load('parts/user.confirm.delete.php', 
+					{
+						user_id: $(this).attr('user_id')
+					}
+				);
+				
+			}else if(todo == "abordDeleteUser"){
+			
+				$('#right_panel #content').html('<div class="list"><h3>Annulé !</h3></div>');
+				
+			}
+			
+			
+			
+			
+			
+		//****************************************Lexiques
+		//****************************************Lexiques
+		}else if(MODE == 1){ 
+			
+			if(todo == "toggleActivity"){
+				
+				$('#right_panel #content').load('parts/lexique.toggleActivity.php', {lexique_id: LEXIQUE_SELECTED});
+				
+			}else if(todo == "deleteLexique"){
+				
+				$('#right_panel #content').html(
+				'<div class="list"><h3>Êtes-vous sûr de vouloir supprimer ce Lexique ?</h3></div>'+
+				'<div todo="confirmDeleteLexique" class="listSelector"><h3>Oui !</h3></div>'+
+				'<div todo="abordDeleteLexique" class="listSelector"><h3>Heu... Non.</h3></div>'
+				);
+				
+			}else if(todo == "confirmDeleteLexique"){
+				
+				$('#right_panel #content').load('parts/lexique.delete.php', {lexique_id: LEXIQUE_SELECTED});
+				LEXIQUE_SELECTED = null;
+				
+			}else if(todo == "abordDeleteLexique"){
+				
+				$('#right_panel #content').html('<div class="list"><h3>Ouf, on a encore eu de la chance !</h3></div>');
+				LEXIQUE_SELECTED = null;
+				
+			}else if(todo == "submitNewLexique"){
+				
+				$('#right_panel #content').load('util/createNewLexique.php', 
+					{lexique_name: $('#lex_name').val(),
+					lexique_attr: $('#lex_attr').val()}
+				);
+				LEXIQUE_SELECTED = null;
+				
+			}
+			
+			
+			
+			
+		//****************************************Logs
+		//****************************************Logs
+		}else if(MODE == 4){ 
+			
+			if(false){
 				
 				
 				
