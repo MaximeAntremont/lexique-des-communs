@@ -176,6 +176,11 @@ $(function(){
 					MODE = 4;
 				});
 
+			}else if(todo == "sectionOwn"){
+			
+				$('#middle_panel #content').html('');
+				$('#right_panel #content').load('parts/comptes.right.printOne.php', {user_id: $(this).attr("user_id")});
+
 			}
 			
 			

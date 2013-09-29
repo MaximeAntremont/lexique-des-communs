@@ -43,7 +43,7 @@ include 'admin.header.php'; ?>
 		<div todo="sectionLogs" id="gestionLogs" class="listSelector">
 			<h3>Voir les rapports de bug</h3>
 		</div>
-		<div todo="sectionOwn" id="gestionOwn" class="listSelector">
+		<div todo="sectionOwn" user_id="<?php echo $_SESSION['user_id']; ?>" id="gestionOwn" class="listSelector">
 			<h3>Gérer mon compte</h3>
 		</div>
 		<a href="logout.php">
