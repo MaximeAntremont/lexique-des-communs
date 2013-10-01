@@ -261,7 +261,8 @@ function Ressource (tab, context){
 		else if(type >= 200 && type < 300) var metrics = ctx.measureText((titre != null) ? titre : "Audio");
 		else if(type >= 300 && type < 400) var metrics = ctx.measureText((titre != null) ? titre : "Image");
 		else if(type >= 400 && type < 500) var metrics = ctx.measureText((titre != null) ? titre : "Lien");
-		else var metrics = ctx.measureText( (type == 990) ? val.substring(0, 16)+"..." : val );
+		else if(type == 950) var metrics = ctx.measureText( val );
+		else if(type == 990) var metrics = ctx.measureText( (titre == null) ? ( val.substring(0, 16)+"..." ) : titre );
 		size.x = metrics.width;
 	};
 	this.width = function (val){
@@ -388,6 +389,7 @@ function Ressource (tab, context){
 				ctx.fillText( titre , center.x, center.y);
 				ctx.drawImage(img.text, center.x-(size.x/2)-25, center.y-10, 20, 20);
 			}
+			
 		}
 		
 	}
