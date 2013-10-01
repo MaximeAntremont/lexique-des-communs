@@ -198,8 +198,8 @@ function Link (tab){
 			}
 			
 			ctx.beginPath();
-			ctx.moveTo(ressFrom.top_left_center.x, ressFrom.top_left_center.y);
-			ctx.lineTo(ressTo.top_left_center.x, ressTo.top_left_center.y);
+			ctx.moveTo(ressFrom.top_left_center.x+(ressFrom.width()/2), ressFrom.top_left_center.y+(ressFrom.height()/2));
+			ctx.lineTo(ressTo.top_left_center.x+(ressTo.width()/2), ressTo.top_left_center.y+(ressTo.height()/2));
 			ctx.closePath();
 			ctx.stroke();
 		}

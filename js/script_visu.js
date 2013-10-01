@@ -582,9 +582,9 @@ $(function(){
 	function printRessourceInfos (){
 		
 		if(ressource_selected instanceof Ressource){
-			$("#top_right_corner #type").html( returnType(ressource_selected.type()) );
-			$("#top_right_corner #category").html( "catégorie: "+ressource_selected.category_id() );
-			$("#top_right_corner #val").html( ressource_selected.val() );
+			// $("#top_right_corner #type").html( returnType(ressource_selected.type()) );
+			// $("#top_right_corner #category").html( "catégorie: "+ressource_selected.category_id() );
+			$("#top_right_corner #val").html( '<div style="width:100%;text-align: left;">'+ressource_selected.val()+'</div>' );
 			$("#top_right_corner").show();
 			$("#right_panel #addTrend").show();
 			$("#right_panel #subTrend").show();
@@ -623,7 +623,7 @@ $(function(){
 					});
 					
 					if(linked) ress.alpha(0.7);
-					else ress.alpha(0.3);
+					else ress.alpha(0.1);
 					
 				}else{ress.alpha(1);}
 			
