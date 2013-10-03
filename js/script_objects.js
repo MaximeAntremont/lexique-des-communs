@@ -416,7 +416,7 @@ function Ressource (tab, context){
 			var v = new Vector(center.x,center.y, obj.x(), obj.y());
 			var space = {x:0,y:0};
 		
-			space.x = Math.abs( v.x() ) - ( (obj.width() + size.x)/2 );
+			space.x = (Math.abs( v.x() ) - ( (obj.width() + size.x)/2 )) - 20;
 			space.y = Math.abs( v.y() ) - ( (obj.height() + size.y)/2 );
 			
 			return space;
