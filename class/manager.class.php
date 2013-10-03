@@ -583,11 +583,11 @@ class Manager
 		
 	}
 	
-	public function getRessourceAll (){
+	public function getRessourceAll ($column = '*'){
 		
 		$ressources = array();
 		
-		$req = $this->_db->query('SELECT * FROM '. $this->_attr .'ressource');
+		$req = $this->_db->query('SELECT '. $column .' FROM '. $this->_attr .'ressource');
 		
 		while($don = $req->fetch()){
 			$ressources[] = new Ressource($don);

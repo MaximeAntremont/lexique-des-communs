@@ -45,8 +45,13 @@
 			echo $listSelector;
 			
 			if(isSUDO()){
-				$listSelector = '<div class="listSelector">';
-				$listSelector .= '<h3>Modifier l\'attribut</h3>';
+				// $listSelector = '<div class="listSelector">';
+				// $listSelector .= '<h3>Modifier l\'attribut</h3>';
+				// $listSelector .= '</div>';
+				// echo $listSelector;
+				
+				$listSelector = '<div todo="printRessources" class="listSelector">';
+				$listSelector .= '<h3>Gérer les ressources</h3>';
 				$listSelector .= '</div>';
 				echo $listSelector;
 				

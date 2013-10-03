@@ -218,6 +218,12 @@ $(function(){
 				LEXIQUE_SELECTED = $(this).attr("lexique_id");
 				$('#right_panel #content').load('parts/lexiques.printOne.php', {lexique_id: LEXIQUE_SELECTED});
 				
+			}else if(todo == "printRessource"){
+				
+				$('#right_panel #content').html('');
+				// LEXIQUE_SELECTED = $(this).attr("lexique_id");
+				$('#right_panel #content').load('parts/ress.right.printOne.php', {lexique_id: LEXIQUE_SELECTED, ress_id: $(this).attr("ress_id")});
+				
 			}
 			
 			
@@ -356,6 +362,11 @@ $(function(){
 				);
 				LEXIQUE_SELECTED = null;
 				
+			}else if(todo == "printRessources"){
+				
+				$('#middle_panel #content').load('parts/ress.middle.list.php', 
+					{lexique_id: LEXIQUE_SELECTED}
+				);
 			}
 			
 			
