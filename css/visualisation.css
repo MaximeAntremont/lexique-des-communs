@@ -138,6 +138,7 @@ body{
 		margin-left: 40px;
 		padding-top: 5px;
 		border-left: 1px solid rgb(200,200,200);
+		border-right: 1px solid rgb(200,200,200);
 		background: rgb(220,220,220) url('../img/entrys-01.png') no-repeat 50% 50%;
 	}
 	
@@ -155,19 +156,7 @@ body{
 		color: rgb(220,220,220);
 	}
 	
-	#top_panel #add_entry{
-		float: left;
-		height: 35px;
-		width: 35px;
-		padding-top: 5px;
-		border-left: 1px solid rgb(200,200,200);
-		border-right: 1px solid rgb(200,200,200);
-		background: rgb(220,220,220) url('../img/+ent-01.png') no-repeat 50% 50%;
-	}
 	
-	#top_panel #add_entry:hover{
-		background: rgb(110,110,110) url('../img/+ent-02.png') no-repeat 50% 50%;
-	}
 	
 	#top_panel #add_ressource{
 		float: left;
@@ -464,35 +453,37 @@ body{
 	}
 	
  /*************************************************
-					CACHE_PANEL
+					ENTRYS
  *************************************************/	
 
- 
+	#entrys{
+		position: fixed;
+		top: 0px; left: 0px;
+		z-index: 80;
+		background: rgba(0,0,0, 0.5);
+	}
 	#entrys .content{
 		position: absolute;
-		top: 0;
-		left: 40px;
-		height: 100%;
-		width: 80%;
+		top: 40px; left: 40px;
 		padding-top: 40px;
 		z-index: 100;
 		text-align: left;
 		overflow: auto;
+		background: rgb(230,230,230);
 	}
 	
 	#entrys .content h3{
 		float: left;
 		clear: both;
 		padding-left: 15px;
-		color: rgba(255,255,255,0.8);
-		border-left: 1px solid rgba(255,255,255,0.8);
+		color: rgb(160,160,160);
 		display: inline;
 	}
 	
 	#entrys .content h3:hover{
-		color: rgba(255,255,255,1);
+		color: rgb(110,110,110);
 		cursor: pointer;
-		border-left: 2px solid rgba(255,255,255,1);
+		border-left: 4px solid rgb(110,110,110);
 	}
 	
 	#entrys .close{
@@ -506,4 +497,21 @@ body{
 	#entrys .close:hover{
 		color: rgba(255,255,255,1);
 		cursor: pointer;
+	}
+	
+	#entrys #add_entry{
+		position: absolute;
+		left: 0px;
+		top: 40px;
+		height: 35px;
+		width: 40px;
+		padding-top: 5px;
+		background: rgb(220,220,220) url('../img/+ent-01.png') no-repeat 50% 50%;
+	}
+	
+	#entrys #add_entry:hover{
+		cursor: pointer;
+		background: rgb(110,110,110) url('../img/+ent-02.png') no-repeat 50% 50%;
+		border-top: 1px solid rgb(220,220,220);
+		border-bottom: 1px solid rgb(220,220,220);
 	}

@@ -77,6 +77,8 @@ $(function(){
 		$('#canvas').css('top', '40px');
 		$('#canvas').css('left', '40px');
 		$('#canvas').css('z-index', '5');
+		$('#entrys .content').css('width', winW-40);
+		$('#entrys .content').css('height', winH-40);
 		
 		if(ressources.length > 0)
 			ressources.forEach(function(obj){
@@ -428,9 +430,10 @@ $(function(){
 	
 	
 	
-	$("body").on("click", "#add_entry, .letter-off", function(){
+	$("body").on("click", "#add_entry", function(){
 		cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" id="input_entry_val" placeholder="Nom de l\'entrée"/>', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 		cache_panel.open();
+		$("#entrys").hide();
 		
 		$("#input_entry_val").focus();
 		
@@ -440,9 +443,9 @@ $(function(){
 			}
 			if($(this).html() == "Ajouter"){
 				sendNewEntry ($('#input_entry_val').val(), function(){
-					setTimeout(function(){cache_panel.close();}, 1000);
-					refreshIndex();
-					$("#top_left_corner #part_one, #top_left_corner #part_two").html("");
+					getEntrys(true, function(){cache_panel.close();});
+					// refreshIndex();
+					// $("#top_left_corner #part_one, #top_left_corner #part_two").html("");
 				});
 			}
 		});
@@ -450,14 +453,14 @@ $(function(){
 	
 	
 	
-	$("body").on("click", ".letter-on", function(){
-		ressources = [];
-		cursorRefs = [];
-		linksToDraw = [];
-		$("#add_ressource").hide();
-		screen.draw(gpu.getFrame(), true);
-		printEntrysFromLetter(LETTERS, this.id);
-	});
+	// $("body").on("click", ".letter-on", function(){
+		// ressources = [];
+		// cursorRefs = [];
+		// linksToDraw = [];
+		// $("#add_ressource").hide();
+		// screen.draw(gpu.getFrame(), true);
+		// printEntrysFromLetter(LETTERS, this.id);
+	// });
 	
 	
 	
@@ -911,6 +914,8 @@ $(function(){
 		canvas.css('top', '40px');
 		canvas.css('left', '40px');
 		canvas.css('z-index', '5');
+		$('#entrys .content').css('width', winW-40);
+		$('#entrys .content').css('height', winH-40);
 		
 		screen.setFrame(anim);
 		gpu.addCanvas(screen);

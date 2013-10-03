@@ -3,7 +3,7 @@
 
 	<div id="top_panel">
 		<div id="index" class="panel_button" ></div>
-		<div id="add_entry" class="panel_button" ></div>
+		
 		<div id="add_ressource" class="panel_button" ></div>
 	</div>
 	<div id="left_panel">
@@ -43,6 +43,7 @@
 	
 	<div id="entrys" >
 		<div class="close">X</div>
+		<div id="add_entry" class="panel_button" ></div>
 		<div class="content"></div>
 	</div>
 	
