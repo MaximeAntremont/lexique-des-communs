@@ -2,9 +2,9 @@
 	<canvas id="canvas" ></canvas>
 
 	<div id="top_panel">
-		<div id="index" >
-		</div><div id="add_entry">Nouvelle entrée</div>
-		<div id="add_ressource">Nouvelle ressource</div>
+		<div id="index" class="panel_button" >Entrées</div>
+		<div id="add_entry" class="panel_button" >Nouvelle entrée</div>
+		<div id="add_ressource" class="panel_button" >Nouvelle ressource</div>
 	</div>
 	<div id="left_panel">
 		<div id="addZoom" class="panel_button" ></div>
@@ -38,6 +38,11 @@
 			<div id="header"></div>
 			<div id="content"></div>
 			<div id="footer"></div>
+		</div>
+	</div>
+	
+	<div id="entrys" >
+		<div class="content">
 		</div>
 	</div>
 	

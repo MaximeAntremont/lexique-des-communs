@@ -487,11 +487,19 @@ $(function(){
 	
 	
 	
-	$("body").on("click", "#top_left_corner #part_two h3", function(){
+	$("body").on("click", "#entrys .content h3", function(){
+		$('#entrys').hide();
 		cache_panel.startWaiting(true);
 		fetchEntryData( this.id.replace("id", ""), cache_panel.stopWaiting(true) );
 		window.location.hash = this.id.replace("id", "");
 		$("#add_ressource").hide();
+	});
+	
+	
+	
+	$("body").on("click", "#index", function(){
+		cache_panel.startWaiting(true);
+		getEntrys(function(){ cache_panel.stopWaiting(true); $('#entrys').show(); });
 	});
 	
 	
@@ -687,6 +695,31 @@ $(function(){
 						REFRESH INDEX
 *************************************************************/
 	
+	function getEntrys (callback){
+		$.ajax({
+			type: "POST",
+			url: "utils/getEntrys.util.php",
+			dataType: "json"
+		}).done(function(data) {
+			
+			var txt = "";
+			ENTRYS = [];
+			
+			$("#entrys .content").html("");
+			
+			if(data.length > 0)
+				data.forEach(function (entry){
+					ENTRYS.push(entry);
+					$("#entrys .content").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
+				});
+			
+			if(callback) callback();
+			
+		}).fail(function (a,b,c){
+			console.debug(a+" | "+b+" | "+c);
+		});
+	}
+	
 	function refreshIndex(callback){
 		$.ajax({
 			type: "POST",
@@ -866,7 +899,7 @@ $(function(){
 		
 		loadImages(sources, function(){
 			
-			refreshIndex(function(){
+			getEntrys(function(){
 			
 				var hash = window.location.hash.substring(1);
 
@@ -875,13 +908,12 @@ $(function(){
 						ENTRYS.forEach(function(obj){
 							if(obj.id == hash){
 								recall = false;
-								printEntrysFromLetter(LETTERS, "char-"+obj['val'].charAt(0).toUpperCase());
+								// printEntrysFromLetter(LETTERS, "char-"+obj['val'].charAt(0).toUpperCase());
 								fetchEntryData(obj.id, cache_panel.stopWaiting(true));
 							}
 						});
 					
 				}
-				
 				
 			});
 			

@@ -69,7 +69,6 @@ class Manager
 			$req->execute();
 		}else{
 			return false;
-		
 		}
 		
 	}

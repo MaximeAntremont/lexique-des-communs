@@ -100,6 +100,17 @@ body{
 		text-align: center;
 		background: rgba(0,0,0, 0.5);
 	}
+	#entrys{
+		position: fixed;
+		top: 0; left:0;
+		height: 100%;
+		width: 100%;
+		z-index: 50;
+		color: rgb(110,110,110);
+		text-align: center;
+		background: rgba(0,0,0, 0.8);
+		display: none;
+	}
 	#top_left_corner{
 		position: fixed;
 		top: 40px; left: 40px;
@@ -112,7 +123,8 @@ body{
 		top: 40px; right: 50px;
 		width: 300px;
 		z-index: 10;
-		text-align: right;
+		text-align: left;
+		word-wrap: break-word;
 	}
 
  /*************************************************
@@ -127,10 +139,6 @@ body{
 		padding-right: 5px;
 		padding-top: 5px;
 		border-left: 1px solid rgb(200,200,200);
-	}
-	
-	#top_panel #index:hover{
-		cursor: default;
 	}
 	
 	#top_panel #index .letter-on{
@@ -153,14 +161,22 @@ body{
 		cursor: pointer;
 	}
 	
+	#top_panel .panel_button{
+		font-weight: bold;
+	}
+	
+	#top_panel .panel_button:hover{
+		cursor: pointer;
+		background: rgb(110,110,110);
+		color: rgb(220,220,220);
+	}
+	
 	#top_panel #add_entry{
 		float: left;
 		height: 35px;
-		margin-left: 5px;
 		padding-left: 10px;
 		padding-right: 10px;
 		padding-top: 5px;
-		font-weight: bold;
 		border-left: 1px solid rgb(200,200,200);
 		border-right: 1px solid rgb(200,200,200);
 	}
@@ -352,7 +368,6 @@ body{
 	#left_panel #subZoom:hover{
 		background: rgb(110,110,110) url('../img/zoom_out-hover.png') no-repeat 50% 50%;
 	}
-	
  /*************************************************
 					CACHE_PANEL
  *************************************************/
@@ -456,4 +471,32 @@ body{
 		cursor: pointer;
 		color: rgb(200,200,200);
 		background: rgb(110,110,110);
+	}
+	
+ /*************************************************
+					CACHE_PANEL
+ *************************************************/	
+
+ 
+	#entrys .content{
+		position: absolute;
+		top: 0;
+		left: 40px;
+		height: 100%;
+		width: 80%;
+		padding-top: 40px;
+		z-index: 100;
+		text-align: left;
+		overflow: auto;
+	}
+	
+	#entrys .content h3{
+		float: left;
+		margin-right: 15px;
+		color: rgba(255,255,255,0.8);
+		display: inline;
+	}
+	
+	#entrys .content h3:hover{
+		cursor: pointer;
 	}
