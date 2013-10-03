@@ -724,7 +724,7 @@ $(function(){
 					ENTRYS = [];
 					$("#entrys .content").html("");
 					
-					if(data.length > 0)
+					if(data != null && data.length > 0)
 						data.forEach(function (entry){
 							ENTRYS.push(entry);
 							$("#entrys .content").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
