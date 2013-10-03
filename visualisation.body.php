@@ -3,8 +3,8 @@
 
 	<div id="top_panel">
 		<div id="index" class="panel_button" ></div>
-		<div id="add_entry" class="panel_button" >Nouvelle entrée</div>
-		<div id="add_ressource" class="panel_button" >Nouvelle ressource</div>
+		<div id="add_entry" class="panel_button" ></div>
+		<div id="add_ressource" class="panel_button" ></div>
 	</div>
 	<div id="left_panel">
 		<div id="addZoom" class="panel_button" ></div>
@@ -17,7 +17,7 @@
 		<div id="showLinks" class="panel_button" ><div></div></div>
 	</div>
 	<div id="bottom_panel">
-		<div id="alertBug" class="panel_button" style="margin-left: 40px;border-left: 1px solid rgb(200,200,200);">Rapporter un Bug</div>
+		<div id="alertBug" class="panel_button" style="margin-left: 40px;border-left: 1px solid rgb(200,200,200);"></div>
 		<div id="infos" class="panel_button">v. a2r00</div>
 		<div>Lexique: <?php echo $_SESSION['lexique_name']; ?></div>
 	</div>

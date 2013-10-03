@@ -158,34 +158,29 @@ body{
 	#top_panel #add_entry{
 		float: left;
 		height: 35px;
-		padding-left: 10px;
-		padding-right: 10px;
+		width: 35px;
 		padding-top: 5px;
 		border-left: 1px solid rgb(200,200,200);
 		border-right: 1px solid rgb(200,200,200);
+		background: rgb(220,220,220) url('../img/+ent-01.png') no-repeat 50% 50%;
 	}
 	
 	#top_panel #add_entry:hover{
-		cursor: pointer;
-		background: rgb(110,110,110);
-		color: rgb(220,220,220);
+		background: rgb(110,110,110) url('../img/+ent-02.png') no-repeat 50% 50%;
 	}
 	
 	#top_panel #add_ressource{
 		float: left;
 		height: 35px;
-		padding-left: 10px;
-		padding-right: 10px;
+		width: 35px;
 		padding-top: 5px;
-		font-weight: bold;
 		border-right: 1px solid rgb(200,200,200);
+		background: rgb(220,220,220) url('../img/+ress-01.png') no-repeat 50% 50%;
 		display: none;
 	}
 	
 	#top_panel #add_ressource:hover{
-		cursor: pointer;
-		background: rgb(110,110,110);
-		color: rgb(220,220,220);
+		background: rgb(110,110,110) url('../img/+ress-02.png') no-repeat 50% 50%;
 	}
 
  /*************************************************
@@ -206,6 +201,17 @@ body{
 		padding-top: 5px;
 		font-weight: bold;
 		border-right: 1px solid rgb(200,200,200);
+	}
+	
+	#bottom_panel #alertBug{
+		width: 35px;
+		padding-left: 0px;
+		padding-right: 0px;
+		background: rgb(220,220,220) url('../img/+bug-01.png') no-repeat 50% 50%;
+	}
+	
+	#bottom_panel #alertBug:hover{
+		background: rgb(110,110,110) url('../img/+bug-02.png') no-repeat 50% 50%;
 	}
 	
 	#bottom_panel .panel_button{
