@@ -497,10 +497,21 @@ $(function(){
 	
 	
 	
+	
+	
+	$("body").on("click", "#entrys .close", function(){
+		$('#entrys').hide();
+	});
+	
+	
+	
+	
 	$("body").on("click", "#index", function(){
 		cache_panel.startWaiting(true);
-		getEntrys(function(){ cache_panel.stopWaiting(true); $('#entrys').show(); });
+		getEntrys(false, function(){ cache_panel.stopWaiting(true); $('#entrys').show(); });
 	});
+	
+	
 	
 	
 	
@@ -695,29 +706,44 @@ $(function(){
 						REFRESH INDEX
 *************************************************************/
 	
-	function getEntrys (callback){
-		$.ajax({
-			type: "POST",
-			url: "utils/getEntrys.util.php",
-			dataType: "json"
-		}).done(function(data) {
-			
-			var txt = "";
-			ENTRYS = [];
-			
-			$("#entrys .content").html("");
-			
-			if(data.length > 0)
-				data.forEach(function (entry){
-					ENTRYS.push(entry);
-					$("#entrys .content").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
+	function getEntrys (force, callback){
+		
+		
+			if(ENTRYS.length == 0 || ENTRYS == null || force == true){
+				
+				$.ajax({
+					type: "POST",
+					url: "utils/getEntrys.util.php",
+					dataType: "json"
+				}).done(function(data) {
+				
+					var txt = "";
+					ENTRYS = [];
+					$("#entrys .content").html("");
+					
+					if(data.length > 0)
+						data.forEach(function (entry){
+							ENTRYS.push(entry);
+							$("#entrys .content").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
+						});
+						
+					if(callback) callback();
+					
+				}).fail(function (a,b,c){
+					console.debug(a+" | "+b+" | "+c);
 				});
+				
+			}else{
+				
+				$("#entrys .content").html('');
+				if(ENTRYS.length > 0)
+					ENTRYS.forEach(function (entry){
+						$("#entrys .content").append("<h3 id='id"+ entry.id +"' >"+ entry.val +"</h3>");
+					});
+				
+				if(callback) callback();
+			}
 			
-			if(callback) callback();
-			
-		}).fail(function (a,b,c){
-			console.debug(a+" | "+b+" | "+c);
-		});
 	}
 	
 	function refreshIndex(callback){
@@ -899,11 +925,13 @@ $(function(){
 		
 		loadImages(sources, function(){
 			
-			getEntrys(function(){
+			getEntrys(true, function(){
 			
 				var hash = window.location.hash.substring(1);
 
+				
 				if(hash != "" && hash > 0) {
+				
 					if(ENTRYS != null)
 						ENTRYS.forEach(function(obj){
 							if(obj.id == hash){
@@ -912,7 +940,6 @@ $(function(){
 								fetchEntryData(obj.id, cache_panel.stopWaiting(true));
 							}
 						});
-					
 				}
 				
 			});

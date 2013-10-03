@@ -42,8 +42,8 @@
 	</div>
 	
 	<div id="entrys" >
-		<div class="content">
-		</div>
+		<div class="close">X</div>
+		<div class="content"></div>
 	</div>
 	
 	<?php }else header('Location: index.php'); ?>

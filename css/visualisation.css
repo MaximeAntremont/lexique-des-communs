@@ -108,7 +108,7 @@ body{
 		z-index: 50;
 		color: rgb(110,110,110);
 		text-align: center;
-		background: rgba(0,0,0, 0.8);
+		background: rgba(0,0,0,1);
 		display: none;
 	}
 	#top_left_corner{
@@ -116,7 +116,7 @@ body{
 		top: 40px; left: 40px;
 		height: 100px;
 		width: 600px;	
-		z-index: 10;
+		z-index: -10;
 	}
 	#top_right_corner{
 		position: fixed;
@@ -248,14 +248,14 @@ body{
 		float: left;
 		height: 100%;
 		width: 299px;
-		border-right: 1px solid rgb(180,180,180);
+		border-right: 0px solid rgb(180,180,180);
 	}
 	
 	#top_left_corner #part_one h1{
 		margin-right: 15px;
 		margin-left: 15px;
-		font-size: 40px;
-		color: rgb(50,50,50);
+		font-size: 80px;
+		color: rgba(50,50,50,0.1);
 	}
 	
 	#top_left_corner #part_two{
@@ -263,6 +263,7 @@ body{
 		height: 100%;
 		width: 300px;
 		color: rgb(150,150,150);
+		display: none;
 	}
 	
 	#top_left_corner #part_two h3{
@@ -283,7 +284,6 @@ body{
 	
 	#top_left_corner .iframe{
 		width: 100%;
-		
 	}
 	
  /*************************************************
@@ -492,11 +492,28 @@ body{
 	
 	#entrys .content h3{
 		float: left;
-		margin-right: 15px;
+		clear: both;
+		padding-left: 15px;
 		color: rgba(255,255,255,0.8);
+		border-left: 1px solid rgba(255,255,255,0.8);
 		display: inline;
 	}
 	
 	#entrys .content h3:hover{
+		color: rgba(255,255,255,1);
+		cursor: pointer;
+		border-left: 2px solid rgba(255,255,255,1);
+	}
+	
+	#entrys .close{
+		position: absolute;
+		top: 7px; left: 15px;
+		color: rgba(255,255,255,0.8);
+		font-weight: bold;
+		display: inline;
+	}
+	
+	#entrys .close:hover{
+		color: rgba(255,255,255,1);
 		cursor: pointer;
 	}
