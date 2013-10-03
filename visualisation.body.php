@@ -2,7 +2,7 @@
 	<canvas id="canvas" ></canvas>
 
 	<div id="top_panel">
-		<div id="index" class="panel_button" >Entrées</div>
+		<div id="index" class="panel_button" ></div>
 		<div id="add_entry" class="panel_button" >Nouvelle entrée</div>
 		<div id="add_ressource" class="panel_button" >Nouvelle ressource</div>
 	</div>

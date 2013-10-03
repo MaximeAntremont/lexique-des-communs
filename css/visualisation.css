@@ -134,31 +134,15 @@ body{
 	#top_panel #index{
 		float: left;
 		height: 35px;
+		width: 35px;
 		margin-left: 40px;
-		padding-left: 10px;
-		padding-right: 5px;
 		padding-top: 5px;
 		border-left: 1px solid rgb(200,200,200);
+		background: rgb(220,220,220) url('../img/entrys-01.png') no-repeat 50% 50%;
 	}
 	
-	#top_panel #index .letter-on{
-		display: inline-block;
-		margin-right: 5px;
-		font-weight: bold;
-	}
-	
-	#top_panel #index .letter-on:hover{
-		cursor: pointer;
-		color: rgb(140,100,200);
-	}
-	
-	#top_panel #index .letter-off{
-		display: inline-block;
-		margin-right: 5px;
-	}
-	
-	#top_panel #index .letter-off:hover{
-		cursor: pointer;
+	#top_panel #index:hover{
+		background: rgb(110,110,110) url('../img/entrys-02.png') no-repeat 50% 50%;
 	}
 	
 	#top_panel .panel_button{
