@@ -27,9 +27,9 @@ if(isConnected()){
 	}else
 		foreach($lexiques as $lexique){
 			
-			if($lexique['statut'] == 0 && isSUDO()){
+			if($lexique['statut'] == 0 && (isSUDO() || isMODO() )){
 				echo '<div todo="printLexique" lexique_id="'. $lexique['id'] .'" class="listSelector" >';
-				echo '<h3>'. $lexique['name'] .'</h3>';
+				echo '<h3>'. $lexique['name'] .' [hide]</h3>';
 				echo '</div>';
 				
 			}elseif($lexique['statut'] == 1){

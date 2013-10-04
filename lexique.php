@@ -17,7 +17,7 @@
 		
 		if( $lexique = $manager->getLexiquesBy_id($id) ){
 			
-			if($lexique['statut'] == 0 && isConnected() && isSUDO()){
+			if($lexique['statut'] == 0 && isConnected() && (isSUDO() || isMODO() )){
 				
 				$_SESSION['lexique_attr'] = $lexique['attr'];
 				$_SESSION['lexique_name'] = $lexique['name'];

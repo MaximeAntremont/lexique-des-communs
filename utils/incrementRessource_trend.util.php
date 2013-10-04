@@ -25,21 +25,32 @@
 		$ress = $manager->getRessourceBy_id($ress_id);
 		$ress->trend( $ress->trend()+1 );
 		
-		$latestChanges = $manager->getLastTrendChange($ress);
+		$latestChanges = ((isConnected() && (isSUDO() || isMODO())) ) ? $manager->getLastTrendChange($ress) : null;
 		
-		if($ress instanceof Ressource && (( 
-			   ( !isset($latestChanges[0]) && !isset($latestChanges[1]) )
-			|| ( $latestChanges[0] == 302 )
-			|| ( $latestChanges[0] == 301 && isset($latestChanges[1]) && $latestChanges[1] == 302 )
-		) || (isConnected() && isSUDO()) ) && ($manager->updateRessource( $ress )) ){
+		if(
+			$ress instanceof Ressource 
+			&& (
+				(isConnected() && (isSUDO() || isMODO()) )
+				|| ( 
+					   ( !isset($latestChanges[0]) && !isset($latestChanges[1]) )
+					|| ( $latestChanges[0] == 302 )
+					|| ( $latestChanges[0] == 301 && isset($latestChanges[1]) && $latestChanges[1] == 302 )
+				) 
+			) 
+		){
+		
+			if(($manager->updateRessource( $ress ))){
 			
-			$log = new Log();
-			$log->type(301);
-			$log->ip($_SERVER['REMOTE_ADDR']);
-			$log->val("id$".$ress->id());
-			$log->entry_id( $ress->entry_id() );
-			if($manager->sendNewLog($log)) echo json_encode(array('return' => true));
-			else echo json_encode(array('return' => false));
+				$log = new Log();
+				$log->type(301);
+				$log->ip($_SERVER['REMOTE_ADDR']);
+				$log->val("id$".$ress->id());
+				$log->entry_id( $ress->entry_id() );
+				if( !isSUDO() && !isMODO() ) $manager->sendNewLog($log);
+				
+				echo json_encode(array('return' => true));
+				
+			}else json_encode( array('return' => false) );
 			
 		}else{
 			

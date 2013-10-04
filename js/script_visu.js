@@ -379,7 +379,7 @@ $(function(){
 			cache_panel.modify(
 				'<span>Nouvelle ressource</span>',
 				
-				'<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" autofocus /><input type="text" id="input_ress_titre" placeholder="Titre" maxlength=20 />',
+				'<input type="text" style="display: none;" id="input_ress_titre" placeholder="Titre" maxlength=20 /><input type="text" id="input_ress_val" placeholder="Contenu de la ressource" autofocus />',
 				
 				'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 			cache_panel.open();
@@ -412,14 +412,18 @@ $(function(){
 				var val = temp.val();
 				var l = val.length;
 				
-				if(l > 20 && temp.prop("tagName") == "INPUT"){
+				if(l > 19 && temp.prop("tagName") == "INPUT"){
 					
 					$("#input_ress_val").replaceWith( '<textarea id="input_ress_val">'+ val +'</textarea>' );
+					$("#input_ress_val").css('height', '165px');
+					$("#input_ress_titre").show();
 					$("#input_ress_val").selectRange(21);
 					
-				}else if(l <= 20 && temp.prop("tagName") == "TEXTAREA"){
+				}else if(l <= 19 && temp.prop("tagName") == "TEXTAREA"){
 				
 					$("#input_ress_val").replaceWith( '<input type="text" id="input_ress_val" placeholder="Contenu de la ressource" value="'+ val +'" />' );
+					$("#input_ress_val").css('height', '22px');
+					$("#input_ress_titre").hide();
 					$("#input_ress_val").selectRange(20);
 					
 				}
