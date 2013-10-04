@@ -145,7 +145,8 @@ function Link (tab){
 		create_date = tab.create_date,
 		from = tab.from,
 		to = tab.to,
-		type = tab.type;
+		type = tab.type,
+		factor = tab.factor || 1.5;
 	
 	var toDraw = false;
 	
@@ -173,6 +174,10 @@ function Link (tab){
 		if(val != null) type = val;
 		return type;
 	};
+	this.factor = function (val){
+		if(val != null) factor = val;
+		return factor;
+	};
 	this.isToDraw = function (val){
 		if(val != true || val == false) toDraw = val;
 		return toDraw;
@@ -186,7 +191,7 @@ function Link (tab){
 			var ressTo = ressources[to];
 			
 			ctx.lineCap = 'round';
-			ctx.lineWidth = 1.5;
+			ctx.lineWidth = 2;
 			ctx.globalAlpha = 0.6;
 			
 			switch(type){
@@ -197,10 +202,23 @@ function Link (tab){
 				default:    ctx.strokeStyle = 'rgb(0,0,0)';
 			}
 			
+			var v = new Vector( ressFrom.x(), ressFrom.y(), ressTo.x(), ressTo.y() );
+			var av = new Vector( -v.y(), v.y() );
+			av.resize( -av.getNorme()/factor );
 			ctx.beginPath();
-			ctx.moveTo(ressFrom.top_left_center.x+(ressFrom.width()/2), ressFrom.top_left_center.y+(ressFrom.height()/2));
-			ctx.lineTo(ressTo.top_left_center.x+(ressTo.width()/2), ressTo.top_left_center.y+(ressTo.height()/2));
-			ctx.closePath();
+			ctx.moveTo(ressFrom.x(), ressFrom.y());
+			// ctx.moveTo(ressFrom.top_left_center.x+(ressFrom.width()/2), ressFrom.top_left_center.y+(ressFrom.height()/2));
+			ctx.bezierCurveTo(
+				ressFrom.x() + av.x(),
+				ressFrom.y() + av.y(),
+				ressTo.x() + av.x(),
+				ressTo.y() + av.y(),
+				ressTo.x(),
+				ressTo.y()
+			);
+			
+			// ctx.lineTo(ressTo.x(), ressTo.y());
+			// ctx.closePath();
 			ctx.stroke();
 		}
 				

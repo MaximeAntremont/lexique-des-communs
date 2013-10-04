@@ -665,7 +665,18 @@ $(function(){
 			});
 			
 			// if(refresh)screen.draw(gpu.getFrame(), true);
+			// var linksLength = linksToDraw.length;
+			// var linksFactor = 1.5;
+			// var isPositive = true;
 			
+			// if(linksLength > 0)
+				// linksToDraw.forEach(function (link){
+					// link.factor( (isPositive) ? linksFactor : -linksFactor );
+					// linksFactor -= 1.5/linksLength;
+					// isPositive = (isPositive) ? false : true;
+				// });
+			
+				
 			linksToDraw.forEach(function (link){
 				link.draw(context, ressources);
 			});
