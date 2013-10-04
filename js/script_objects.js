@@ -146,7 +146,7 @@ function Link (tab){
 		from = tab.from,
 		to = tab.to,
 		type = tab.type,
-		factor = tab.factor || 1.5;
+		factor = tab.factor || 0.5;
 	
 	var toDraw = false;
 	
@@ -203,8 +203,8 @@ function Link (tab){
 			}
 			
 			var v = new Vector( ressFrom.x(), ressFrom.y(), ressTo.x(), ressTo.y() );
-			var av = new Vector( -v.y(), v.y() );
-			av.resize( -av.getNorme()/factor );
+			var av = new Vector( -v.y()*factor, v.x()*factor );
+			// av.resize( -av.getNorme()/factor );
 			ctx.beginPath();
 			ctx.moveTo(ressFrom.x(), ressFrom.y());
 			// ctx.moveTo(ressFrom.top_left_center.x+(ressFrom.width()/2), ressFrom.top_left_center.y+(ressFrom.height()/2));

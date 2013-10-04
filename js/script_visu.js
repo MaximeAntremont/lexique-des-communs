@@ -631,6 +631,8 @@ $(function(){
 		if(ressource_selected != null && ressources.length > 0){
 			
 			linksToDraw = [];
+			var linksToFactorize = [];
+			console.debug("-------------");
 			
 			//recherche de liens arrivants + opacitée (s'il faut)
 			ressources.forEach(function(ress){
@@ -642,7 +644,10 @@ $(function(){
 					ress.getLinks().forEach(function (link){
 					
 						if(link.to() == ressource_selected.id()){
-							linksToDraw.push(link);
+							// linksToDraw.push(link);
+							// console.debug("ress "+ress.id());
+							if(linksToFactorize[ress.id()] == null) linksToFactorize[ress.id()] = [];
+							linksToFactorize[ress.id()].push(link);
 							linked = true;
 						}
 						
@@ -659,22 +664,33 @@ $(function(){
 			
 				if(ressources[link.to()] != undefined){ 
 					ressources[link.to()].alpha(0.7);
-					linksToDraw.push(link);
+					// console.debug("to "+link.to());
+					if(linksToFactorize[link.to()] == null) linksToFactorize[link.to()] = [];
+					linksToFactorize[link.to()].push(link);
 				}
 			
 			});
 			
 			// if(refresh)screen.draw(gpu.getFrame(), true);
-			// var linksLength = linksToDraw.length;
-			// var linksFactor = 1.5;
-			// var isPositive = true;
 			
-			// if(linksLength > 0)
-				// linksToDraw.forEach(function (link){
-					// link.factor( (isPositive) ? linksFactor : -linksFactor );
-					// linksFactor -= 1.5/linksLength;
-					// isPositive = (isPositive) ? false : true;
-				// });
+			console.debug("lenght total: " + linksToFactorize.length);
+			if(linksToFactorize.length > 0)
+				linksToFactorize.forEach(function (array){
+					
+					var linksLength = linksToDraw.length;
+					var linksFactor = 0.5;
+					var isPositive = true;
+					
+					if(array.length > 0)
+						array.forEach(function (link){
+							console.debug(link.from()+" -> "+link.to());
+							link.factor( (isPositive) ? linksFactor : -linksFactor );
+							linksFactor -= (isPositive) ? 0 : 0.5/linksLength;
+							isPositive = (isPositive) ? false : true;
+							linksToDraw.push(link);
+						});
+					
+				});
 			
 				
 			linksToDraw.forEach(function (link){
