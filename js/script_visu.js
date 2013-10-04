@@ -673,7 +673,7 @@ $(function(){
 			
 			// if(refresh)screen.draw(gpu.getFrame(), true);
 			
-			console.debug("lenght total: " + linksToFactorize.length);
+			// console.debug("lenght total: " + linksToFactorize.length);
 			if(linksToFactorize.length > 0)
 				linksToFactorize.forEach(function (array){
 					
@@ -683,7 +683,7 @@ $(function(){
 					
 					if(array.length > 0)
 						array.forEach(function (link){
-							console.debug(link.from()+" -> "+link.to());
+							// console.debug(link.from()+" -> "+link.to());
 							link.factor( (isPositive) ? linksFactor : -linksFactor );
 							linksFactor -= (isPositive) ? 0 : 0.5/linksLength;
 							isPositive = (isPositive) ? false : true;

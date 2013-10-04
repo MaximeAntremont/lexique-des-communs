@@ -208,11 +208,17 @@ function Link (tab){
 			ctx.beginPath();
 			ctx.moveTo(ressFrom.x(), ressFrom.y());
 			// ctx.moveTo(ressFrom.top_left_center.x+(ressFrom.width()/2), ressFrom.top_left_center.y+(ressFrom.height()/2));
-			ctx.bezierCurveTo(
-				ressFrom.x() + av.x(),
-				ressFrom.y() + av.y(),
-				ressTo.x() + av.x(),
-				ressTo.y() + av.y(),
+			// ctx.bezierCurveTo(
+				// ressFrom.x() + av.x(),
+				// ressFrom.y() + av.y(),
+				// ressTo.x() + av.x(),
+				// ressTo.y() + av.y(),
+				// ressTo.x(),
+				// ressTo.y()
+			// );
+			ctx.quadraticCurveTo(
+				ressFrom.x() + av.x() + (v.x()/2),
+				ressFrom.y() + av.y() + (v.y()/2),
 				ressTo.x(),
 				ressTo.y()
 			);
