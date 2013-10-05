@@ -21,12 +21,14 @@
 				
 				$_SESSION['lexique_attr'] = $lexique['attr'];
 				$_SESSION['lexique_name'] = $lexique['name'];
+				$_SESSION['lexique_id'] = $lexique['id'];
 				header('Location:visualisation.php'.( (isset($_GET['en']))? '#'.htmlspecialchars($_GET['en']) : ''));
 				
 			}else if($lexique['statut'] == 1){
 				
 				$_SESSION['lexique_attr'] = $lexique['attr'];
 				$_SESSION['lexique_name'] = $lexique['name'];
+				$_SESSION['lexique_id'] = $lexique['id'];
 				header('Location:visualisation.php'.( (isset($_GET['en']))? '#'.htmlspecialchars($_GET['en']) : ''));
 				
 			}else{

@@ -457,6 +457,21 @@ $(function(){
 	
 	
 	
+	$("body").on("click", "#share", function(){
+		$.ajax({
+			type: "POST",
+			url: "utils/getURL.util.php",
+			data: {entry_id: entry_selected_id},
+			dataType: "json"
+		}).done(function(data) {
+			if(data['url']){
+				alert(data['url']);
+			}
+		}).fail(function(a,b,c){console.debug(a+", "+b+", "+c);});
+	});
+	
+	
+	
 	// $("body").on("click", ".letter-on", function(){
 		// ressources = [];
 		// cursorRefs = [];
