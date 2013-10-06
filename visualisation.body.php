@@ -18,7 +18,7 @@
 	</div>
 	<div id="bottom_panel">
 		<div id="alertBug" class="panel_button" style="margin-left: 40px;border-left: 1px solid rgb(200,200,200);"></div>
-		<div id="infos" class="panel_button">v. a2r01</div>
+		<div id="infos" class="panel_button">v. a2r02</div>
 		<div id="share" class="panel_button">Partager</div>
 		<div>Lexique: <?php echo $_SESSION['lexique_name']; ?></div>
 	</div>
