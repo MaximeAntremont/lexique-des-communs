@@ -9,7 +9,7 @@ lexique-des-communs
 
 <h3>Prochaine release/version:</h3>
 
-	X - Affichage des liens
+	V - Affichage des liens
 	V - Outil basique de partage du lexique
 	V - Les modérateurs peuvent utiliser les lexiques cachés
 	V - Les modérateurs peuvent voter à volonter pour une ressource
