@@ -223,6 +223,22 @@ body{
 				  TOP_LEFT_CORNER
  *************************************************/
 	
+	#top_right_corner #val .linkPrinted{
+		height: 100%;
+		color: rgb(110,110,110);
+		background: none;
+		font-size: 12px;
+	}
+	
+	#top_right_corner #val .linkPrinted:hover{
+		cursor: pointer;
+		background: rgb(220,220,220);
+	}
+	
+ /*************************************************
+				  TOP_LEFT_CORNER
+ *************************************************/
+	
 	#top_left_corner #part_one{
 		float: left;
 		height: 100%;

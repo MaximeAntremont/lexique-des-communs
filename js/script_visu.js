@@ -13,6 +13,7 @@ $(function(){
 	var mouseClicked = false;
 	var lastRessource_selected;
 	var linksToDraw = [];
+	var linkSelected = null;
 	var selecting = false;
 	var IMAGES = {};
 	
@@ -475,10 +476,45 @@ $(function(){
 	$("body").on("click", "#showLinks", function(){
 		$('#top_right_corner #val').html("");
 		linksToDraw.forEach(function(link){
-			
-			$('#top_right_corner #val').append('<div from="'+ link.from() +'" to="'+ link.to() +'" >'+ressources[ (link.to() != ressource_selected.id()) ? link.to() : link.from() ].shortName()+ '</div>');
-			
+			link.alpha(0);
+			$('#top_right_corner #val').append('<div class="linkPrinted" idLink="'+ link.id() +'" from="'+ link.from() +'" to="'+ link.to() +'" >'+ ( (link.id() == link.from())? "o -> " : "o <- ") + ressources[ (link.to() != ressource_selected.id()) ? link.to() : link.from() ].shortName()+ '</div>');
 		});
+		
+		screen.draw(gpu.getFrame(), true);
+	});
+	
+	
+	
+	$("body").on("mouseenter", ".linkPrinted", function(){
+		var id = $(this).attr('idLink');
+		linksToDraw.forEach(function(link){
+			if(id == link.id() || (linkSelected != null && link.id() == linkSelected.id()) ){ link.alpha(0.6);
+			}else link.alpha(0);
+		});
+		
+		screen.draw(gpu.getFrame(), true);
+	});
+	
+	
+	
+	$("body").on("click", ".linkPrinted", function(){
+		var id = $(this).attr('idLink');
+		
+		linksToDraw.forEach(function(link){
+			if(id == link.id()){ link.alpha(0.6); linkSelected = link;
+			}else link.alpha(0);
+		});
+		screen.draw(gpu.getFrame(), true);
+	});
+	
+	
+	
+	$("body").on("mouseleave", "#top_right_corner", function(){
+		linksToDraw.forEach(function(link){
+			if(linkSelected != null && linkSelected.id() == link.id()) link.alpha(0.6);
+			else link.alpha(0);
+		});
+		screen.draw(gpu.getFrame(), true);
 	});
 	
 	
@@ -720,6 +756,7 @@ $(function(){
 			
 				
 			linksToDraw.forEach(function (link){
+				link.alpha(0.6);
 				link.draw(context, ressources);
 			});
 			

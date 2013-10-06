@@ -146,6 +146,7 @@ function Link (tab){
 		from = tab.from,
 		to = tab.to,
 		type = tab.type,
+		alpha = tab.alpha || 0.6,
 		factor = tab.factor || 0.5;
 	
 	var toDraw = false;
@@ -174,6 +175,10 @@ function Link (tab){
 		if(val != null) type = val;
 		return type;
 	};
+	this.alpha = function (val){
+		if(val != null) alpha = val;
+		return alpha;
+	};
 	this.factor = function (val){
 		if(val != null) factor = val;
 		return factor;
@@ -185,14 +190,14 @@ function Link (tab){
 	
 	this.draw = function (ctx, ressources){
 		
-		if(ressources != null){
+		if(ressources != null && alpha > 0){
 		
 			var ressFrom = ressources[from];
 			var ressTo = ressources[to];
 			
 			ctx.lineCap = 'round';
 			ctx.lineWidth = 2;
-			ctx.globalAlpha = 0.6;
+			ctx.globalAlpha = alpha;
 			
 			switch(type){
 				case   '0': ctx.strokeStyle = 'rgb(255,0,0)'; break;
