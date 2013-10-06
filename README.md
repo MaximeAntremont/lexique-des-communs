@@ -7,17 +7,22 @@ lexique-des-communs
 	Gestion des ressources
 	Gestion des entrées
 
+
 <h3>Prochaine release/version:</h3>
 
-	V - Affichage des liens
-	V - Outil basique de partage du lexique
-	V - Les modérateurs peuvent utiliser les lexiques cachés
-	V - Les modérateurs peuvent voter à volonter pour une ressource
-	V - Amélioration de la visualisation d'ajout d'une ressource
-	V - Nouvel affichage des liens (courbes non superposées)
+	I - non renseigné.
 
 
 <h3>Notes de versions:</h3>
+
+<h5>a2r02 - 06 oct 2013</h5>
+
+	Affichage des liens
+	Outil basique de partage du lexique
+	Les modérateurs peuvent utiliser les lexiques cachés
+	Les modérateurs peuvent voter à volonter pour une ressource
+	Amélioration de la visualisation d'ajout d'une ressource
+	Nouvel affichage des liens (courbes non superposées)
 
 <h5>a2r01 - 03 oct 2013</h5>
 
