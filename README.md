@@ -4,11 +4,13 @@ lexique-des-communs
 <h3>A venir:</h3>
 
 	Gestion des liens
-
+	Gestion des ressources
+	Gestion des entrées
 
 <h3>Prochaine release/version:</h3>
 
-	X - Gestion des liens
+	X - Affichage des liens
+	V - Outil basique de partage du lexique
 	V - Les modérateurs peuvent utiliser les lexiques cachés
 	V - Les modérateurs peuvent voter à volonter pour une ressource
 	V - Amélioration de la visualisation d'ajout d'une ressource
