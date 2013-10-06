@@ -472,6 +472,17 @@ $(function(){
 	
 	
 	
+	$("body").on("click", "#showLinks", function(){
+		$('#top_right_corner #val').html("");
+		linksToDraw.forEach(function(link){
+			
+			$('#top_right_corner #val').append('<div from="'+ link.from() +'" to="'+ link.to() +'" >'+ressources[ (link.to() != ressource_selected.id()) ? link.to() : link.from() ].shortName()+ '</div>');
+			
+		});
+	});
+	
+	
+	
 	// $("body").on("click", ".letter-on", function(){
 		// ressources = [];
 		// cursorRefs = [];
@@ -647,7 +658,7 @@ $(function(){
 			
 			linksToDraw = [];
 			var linksToFactorize = [];
-			console.debug("-------------");
+			// console.debug("-------------");
 			
 			//recherche de liens arrivants + opacitée (s'il faut)
 			ressources.forEach(function(ress){

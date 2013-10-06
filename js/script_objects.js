@@ -358,7 +358,15 @@ function Ressource (tab, context){
 		if(value != null) backgroundColor = value;
 		return backgroundColor;
 	};
-
+	
+	this.shortName = function (){
+		
+		if(titre != null) return titre;
+		if(val.length > 19) return val.substring(0, 16)+"...";
+		else return val;
+		
+	};
+	
 	this.draw = function (ctx, img){
 
 		ctx.globalAlpha = alpha;
