@@ -21,6 +21,7 @@
 		<div id="infos" class="panel_button">v. a2r02</div>
 		<div id="share" class="panel_button">Partager</div>
 		<div>Lexique: <?php echo $_SESSION['lexique_name']; ?></div>
+		<div id="test" style="width: 150px;"></div>
 	</div>
 	
 	<div id="top_left_corner">

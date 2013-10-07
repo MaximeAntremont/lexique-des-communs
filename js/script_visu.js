@@ -215,8 +215,13 @@ $(function(){
 				printRessourceInfos();
 				
 				if(selecting){
-					cache_panel.modify('<span>Nouveau Lien</span>', '<select id="link_type" name="link_type" ><option value="0" selected>conflitctuel</option><option value="100">implicite</option><option value="200">explicite</option><option value="300">direct</option></select>',
+					cache_panel.modify('<span>Nouveau Lien</span>', '<div id="typology" style="width: 350px;margin-left:15px;margin-top:20px;" ></div>',
 										'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+					$( "#typology" ).slider({
+						step: 1,
+						min: -255, 
+						max: 255
+					});
 					cache_panel.open();
 					
 					var isAddRequest = false;
@@ -226,7 +231,7 @@ $(function(){
 						}
 						if($(this).html() == "Ajouter" && !isAddRequest){
 							isAddRequest = true;
-							sendNewLink ($('#link_type').val(), function(){
+							sendNewLink ($('#typology').slider( "value" ), function(){
 								setTimeout(function(){
 									fetchEntryData( entry_selected_id, function(){
 										cache_panel.stopWaiting(true);
@@ -248,6 +253,21 @@ $(function(){
 	
 	
 	
+	
+	//Changement de couleur du fond du slider de création des liens
+	$( "#cache_panel" ).on( "slide", "#typology", function( event, ui ) {
+		
+		if(ui.value > 0 && ui.value <= 255)
+			$(this).css("background-color", "rgb(255,"+ (255-ui.value) +","+ (255-ui.value) +")");
+		else if(ui.value < 0 && ui.value >= -255)
+			$(this).css("background-color", "rgb("+ (255+ui.value) +",255,"+ (255+ui.value) +")");
+		else
+			$(this).css("background-color", "rgb(220,220,220)");
+	});
+	
+	
+	
+	//gère les mouvements de la souris sur le canvas
 	$('#canvas').mousemove(function(e){
 		if(ressources.length > 0){
 			var isNoOver = true;
@@ -281,6 +301,7 @@ $(function(){
 	
 	
 	
+	//ajout de réputation d'une ressource
 	$('#right_panel #addTrend').click(function (){
 		if(ressource_selected instanceof Ressource){
 			$.ajax({
@@ -299,6 +320,7 @@ $(function(){
 	
 	
 	
+	//retrait de réputation d'une ressource
 	$('#right_panel #subTrend').click(function (){
 		if(ressource_selected instanceof Ressource){
 			$.ajax({
@@ -317,6 +339,7 @@ $(function(){
 	
 	
 	
+	//Gestion de l'alerte de bugs
 	$('#bottom_panel #alertBug').click(function (){
 		var isAddRequest = false;
 			
@@ -372,6 +395,8 @@ $(function(){
 	});
 	
 	
+	
+	//Ajout d'une ressource
 	$("body").on("click", "#add_ressource", function(){
 		var isAddRequest = false;
 		
@@ -619,6 +644,7 @@ $(function(){
 		}
 		
 	});
+	
 	
 	
 	
@@ -927,6 +953,8 @@ $(function(){
 	
 	function sendNewLink (link_type, callback){
 		
+		if(link_type < -255 || link_type > 255) return false;
+		
 		$.ajax({
 			type: "POST",
 			url: "utils/addLink.util.php",
@@ -942,10 +970,12 @@ $(function(){
 			if(data['return']){
 				cache_panel.content("Lien sauvegardé !");
 				if(callback) callback();
-			}
+				return true;
+			}else return false;
 			
 		}).fail(function (a, b, c){
 			alert(a+", "+b+", "+c);
+			return false;
 		});
 		
 	}

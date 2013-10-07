@@ -18,10 +18,15 @@
 <!doctype html>
 <html>
 	<head>
-		<link rel="stylesheet" href="css/visualisation.css" type="text/css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Encyclopétrie</title>
+		
+		<link rel="stylesheet" href="css/visualisation.css" type="text/css">
+		<link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+		
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery.mobile.custom.min.js"></script>
+		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="js/html5slider.js"></script>
 	</head>
 	<body>

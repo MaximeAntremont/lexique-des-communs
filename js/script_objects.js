@@ -148,6 +148,7 @@ function Link (tab){
 		type = tab.type,
 		alpha = tab.alpha || 0.6,
 		factor = tab.factor || 0.5;
+	var color = typeToColor(type);
 	
 	var toDraw = false;
 	
@@ -173,6 +174,7 @@ function Link (tab){
 	};
 	this.type = function (val){
 		if(val != null) type = val;
+		color = typeToColor(type);
 		return type;
 	};
 	this.alpha = function (val){
@@ -188,6 +190,19 @@ function Link (tab){
 		return toDraw;
 	};
 	
+	function typeToColor (val){
+		if(val > 0 && val <= 255){
+			// alert("rgb(255,"+ (255-val) +","+ (255-val) +")");
+			return "rgb(255,"+ (255-val) +","+ (255-val) +")";
+		}else if(val < 0 && val >= -255){
+			// alert( "rgb("+ (255 - (val*-1)) +",255,"+ (255 - (val*-1)) +")" );
+			return "rgb("+ (255 - (val*-1)) +",255,"+ (255 - (val*-1)) +")";
+		}else{
+			// alert( "rgb(250,250,250)" );
+			return "rgb(250,250,250)";
+		}
+	};
+	
 	this.draw = function (ctx, ressources){
 		
 		if(ressources != null && alpha > 0){
@@ -199,13 +214,7 @@ function Link (tab){
 			ctx.lineWidth = 2;
 			ctx.globalAlpha = alpha;
 			
-			switch(type){
-				case   '0': ctx.strokeStyle = 'rgb(255,0,0)'; break;
-				case '100': ctx.strokeStyle = 'rgb(0,255,0)'; break;
-				case '200': ctx.strokeStyle = 'rgb(0,0,255)'; break;
-				case '300': ctx.strokeStyle = 'rgb(0,0,0)'; break;
-				default:    ctx.strokeStyle = 'rgb(0,0,0)';
-			}
+			ctx.strokeStyle = color;
 			
 			var v = new Vector( ressFrom.x(), ressFrom.y(), ressTo.x(), ressTo.y() );
 			var av = new Vector( -v.y()*factor, v.x()*factor );
