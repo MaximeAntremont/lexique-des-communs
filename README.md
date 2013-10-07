@@ -15,6 +15,10 @@ lexique-des-communs
 
 <h3>Notes de versions:</h3>
 
+<h5>a2r03 - 08 oct 2013</h5>
+
+	Nouvelle typologie de liens
+
 <h5>a2r02 - 06 oct 2013</h5>
 
 	Affichage des liens
