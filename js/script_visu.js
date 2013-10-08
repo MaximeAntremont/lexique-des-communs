@@ -221,7 +221,7 @@ $(function(){
 						step: 1,
 						min: -255, 
 						max: 255
-					});
+					}).css("background-color", "rgb(255,130,255)");;
 					cache_panel.open();
 					
 					var isAddRequest = false;
@@ -257,12 +257,19 @@ $(function(){
 	//Changement de couleur du fond du slider de création des liens
 	$( "#cache_panel" ).on( "slide", "#typology", function( event, ui ) {
 		
+		// if(ui.value > 0 && ui.value <= 255)
+			// $(this).css("background-color", "rgb(255,"+ (255-ui.value) +","+ (255-ui.value) +")");
+		// else if(ui.value < 0 && ui.value >= -255)
+			// $(this).css("background-color", "rgb("+ (255+ui.value) +",255,"+ (255+ui.value) +")");
+		// else
+			// $(this).css("background-color", "rgb(220,220,220)");
+		
 		if(ui.value > 0 && ui.value <= 255)
-			$(this).css("background-color", "rgb(255,"+ (255-ui.value) +","+ (255-ui.value) +")");
+			$(this).css("background-color", "rgb("+ 255 +", "+ Math.ceil(130-(ui.value/2)) +","+ (255-ui.value) +")");
 		else if(ui.value < 0 && ui.value >= -255)
-			$(this).css("background-color", "rgb("+ (255+ui.value) +",255,"+ (255+ui.value) +")");
+			$(this).css("background-color", "rgb("+ (255+ui.value) +", "+ Math.ceil(130+(ui.value/2)) +","+ 255 +")");
 		else
-			$(this).css("background-color", "rgb(220,220,220)");
+			$(this).css("background-color", "rgb(255,130,255)");
 	});
 	
 	

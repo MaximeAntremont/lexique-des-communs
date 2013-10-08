@@ -149,7 +149,7 @@ function Link (tab){
 		alpha = tab.alpha || 0.6,
 		factor = tab.factor || 0.5;
 	var color = typeToColor(type);
-	
+	console.debug(typeToColor(type));
 	var toDraw = false;
 	
 	this.id = function (val){
@@ -191,16 +191,30 @@ function Link (tab){
 	};
 	
 	function typeToColor (val){
-		if(val > 0 && val <= 255){
-			// alert("rgb(255,"+ (255-val) +","+ (255-val) +")");
-			return "rgb(255,"+ (255-val) +","+ (255-val) +")";
-		}else if(val < 0 && val >= -255){
-			// alert( "rgb("+ (255 - (val*-1)) +",255,"+ (255 - (val*-1)) +")" );
-			return "rgb("+ (255 - (val*-1)) +",255,"+ (255 - (val*-1)) +")";
-		}else{
-			// alert( "rgb(250,250,250)" );
-			return "rgb(250,250,250)";
-		}
+		// if(val > 0 && val <= 255){
+		
+			// return "rgb(0,"+ (255-val) +","+ (255-val) +")";
+			
+		// }else if(val < 0 && val >= -255){
+		
+			// return "rgb("+ (255 - (val*-1)) +",0,"+ (255 - (val*-1)) +")";
+			
+		// }else{
+		
+			// return "rgb(250,250,250)";
+			
+		// }
+		
+		val = val*1;
+		console.debug(val);
+		
+		if(val > 0 && val <= 255)
+			return "rgb("+ 255 +", "+ Math.ceil(130-(val/2)) +","+ (255-val) +")";
+		else if(val < 0 && val >= -255)
+			return "rgb("+ (255+val) +", "+ Math.ceil(130+(val/2)) +","+ 255 +")";
+		else
+			return "rgb(255,130,255)";
+		
 	};
 	
 	this.draw = function (ctx, ressources){
