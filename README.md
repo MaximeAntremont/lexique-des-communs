@@ -16,13 +16,14 @@ lexique-des-communs
 <h3>Prochaine release/version:</h3>
 
 	X - Gestion des Entrées.
-	X - Nouvelles couleurs pour les liens
+	V - Nouvelles couleurs pour les liens
 	X - Ajout de l'id du créateur pour divers logs (dont création/suppression lexique)
 	? - Gestion (suppression) de liens.
 	X - Bug: Il est possible d'ajouter plusieurs fois la même entrée.
 	X - Début de prise en charge du niveau de compte "Rédacteur".
 	X - Ajout d'un bouton de retour à l'accueil.
 	X - Modification mineure pour la base de données.
+	V - Meilleur affichage de la liste des ressources.
 
 
 <h3>Notes de versions:</h3>
