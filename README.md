@@ -3,14 +3,26 @@ lexique-des-communs
 
 <h3>A venir:</h3>
 
-	Gestion des liens
-	Gestion des ressources
-	Gestion des entrées
+	Gestion des liens.
+	Gestion des ressources.
+	Gestion des entrées.
+	Gestion des catégories.
+	Navigation x et y dans le nuage.
+	Adaptation surfaces tactiles.
+	Liens conflictuels.
+	Liens qui se superpposent.
 
 
 <h3>Prochaine release/version:</h3>
 
-	I - non renseigné.
+	X - Gestion des Entrées.
+	X - Nouvelles couleurs pour les liens
+	X - Ajout de l'id du créateur pour divers logs (dont création/suppression lexique)
+	? - Gestion (suppression) de liens.
+	X - Bug: Il est possible d'ajouter plusieurs fois la même entrée.
+	X - Début de prise en charge du niveau de compte "Rédacteur".
+	X - Ajout d'un bouton de retour à l'accueil.
+	X - Modification mineure pour la base de données.
 
 
 <h3>Notes de versions:</h3>
