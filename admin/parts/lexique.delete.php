@@ -15,7 +15,7 @@ if(!empty($_POST['lexique_id']) && isConnected() && isSUDO()){
 	$id = htmlspecialchars($_POST['lexique_id']);
 	$db = getConnection();
 	$manager = new Manager( $db );
-	$lexique = $manager->getLexiquesBy_id( $id )
+	$lexique = $manager->getLexiquesBy_id( $id );
 	
 	if(is_array($lexique)){
 		
