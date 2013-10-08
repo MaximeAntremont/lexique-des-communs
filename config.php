@@ -36,6 +36,7 @@
 */
 
 	$ress_mot = array(
+		'name' => 'Mot',
 		'regex' => function ($val){
 			
 			return preg_match("#^.{2,20}$#", $val);
@@ -43,6 +44,7 @@
 		},
 	);
 	$ress_texte = array(
+		'name' => 'Texte',
 		'regex' => function ($val){
 			
 			return preg_match("#.{21,}#", $val);
@@ -53,6 +55,7 @@
 		}
 	);
 	$ress_lien = array(
+		'name' => 'Lien',
 		'regex' => function ($val){
 			
 			return preg_match("#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#", $val);
@@ -65,6 +68,7 @@
 	
 	
 	$ress_lien_pearlTree = array(
+		'name' => 'PearlTree',
 		'regex' => function ($val){
 			
 			return preg_match('#https?://(pear\.ly|www\.pearltrees\.com)/.+#', $val);
@@ -84,6 +88,7 @@
 	
 	
 	$ress_video_vimeo = array(
+		'name' => 'Vimeo',
 		'regex' => function ($val){
 			
 			return preg_match('#.*src="//player\.vimeo\.com/video/([0-9]+){1}".*#', $val);
@@ -107,6 +112,7 @@
 	
 	
 	$ress_video_youtube = array(
+		'name' => 'Youtube',
 		'regex' => function ($val){
 			
 			return preg_match('#src="//www\.youtube\.com/embed/#', $val);
@@ -130,6 +136,7 @@
 	
 	
 	$ress_video_dailymotion = array(
+		'name' => 'Dailymotion',
 		'regex' => function ($val){
 			
 			return preg_match('#http://www\.dailymotion\.com/embed/video/([[:alnum:]]+)#', $val);
@@ -152,6 +159,7 @@
 	
 	
 	$ress_audio_soundCloud = array(
+		'name' => 'SoundCloud',
 		'regex' => function ($val){
 			
 			return preg_match('#"https?://w\.soundcloud\.com/player/\?url=.*"#', $val);
@@ -175,6 +183,7 @@
 	
 	
 	$ress_img_flickr = array(
+		'name' => 'flickr',
 		'regex' => function ($val){
 			
 			return preg_match(
