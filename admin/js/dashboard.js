@@ -226,12 +226,6 @@ $(function(){
 				ENTRY_SELECTED = $(this).attr("entry_id");
 				$('#right_panel #content').load('parts/entry.right.printOne.php', {lexique_id: LEXIQUE_SELECTED, entry_id: $(this).attr("entry_id")});
 				
-			}else if(todo == "printRessource"){
-				
-				$('#right_panel #content').html('');
-				RESSOURCE_SELECTED = $(this).attr("ress_id");
-				$('#right_panel #content').load('parts/ress.right.printOne.php', {lexique_id: LEXIQUE_SELECTED, ress_id: $(this).attr("ress_id")});
-				
 			}
 			
 			
@@ -376,12 +370,12 @@ $(function(){
 				$('#middle_panel #content').load('parts/entry.middle.list.php', 
 					{lexique_id: LEXIQUE_SELECTED}
 				);
-			}else if(todo == "printRessources"){
+			}else if(todo == "printRessource"){
 				
-				$('#middle_panel #content').load('parts/ress.middle.list.php', 
-					{lexique_id: LEXIQUE_SELECTED}
-				);
-			
+				$('#right_panel #content').html('');
+				RESSOURCE_SELECTED = $(this).attr("ress_id");
+				$('#right_panel #content').load('parts/ress.right.printOne.php', {lexique_id: LEXIQUE_SELECTED, ress_id: $(this).attr("ress_id")});
+				
 			}else if(todo == "deleteEntry"){
 				
 				$('#right_panel #content').html(
@@ -392,12 +386,35 @@ $(function(){
 			}else if(todo == "confirmDeleteEntry"){
 				
 				$('#right_panel #content').load('parts/entry.delete.php', {lexique_id: ENTRY_SELECTED, entry_id: ENTRY_SELECTED});
+				$('#middle_panel #content').html("");
+				$('#middle_panel #content').load('parts/entry.middle.list.php', 
+					{lexique_id: LEXIQUE_SELECTED}
+				);
 				ENTRY_SELECTED = null;
 				
 			}else if(todo == "abordDeleteEntry"){
 				
 				$('#right_panel #content').html('<div class="list"><h3>Pas de soucis, prennez votre temps.</h3></div>');
 				ENTRY_SELECTED = null;
+				
+			}else if(todo == "deleteRessource"){
+				
+				RESSOURCE_SELECTED = $(this).attr("ress_id");
+				$('#right_panel #content').html(
+					'<div class="list"><h3>Cette ressource ne vous plait vraiment pas ? :o</h3></div>'+
+					'<div todo="confirmDeleteRessource" class="listSelector"><h3>Oui, je veux l\'enlever.</h3></div>'+
+					'<div todo="abordDeleteRessource" class="listSelector"><h3>Tout compte fait, elle est pas si mauvaise.</h3></div>'
+				);
+				
+			}else if(todo == "confirmDeleteRessource"){
+				
+				$('#right_panel #content').load('parts/ress.delete.php', {lexique_id: ENTRY_SELECTED, entry_id: ENTRY_SELECTED, ress_id: RESSOURCE_SELECTED});
+				RESSOURCE_SELECTED = null;
+				
+			}else if(todo == "abordDeleteRessource"){
+				
+				$('#right_panel #content').html('<div class="list"><h3>Ben alors, vous voyez !</h3></div>');
+				RESSOURCE_SELECTED = null;
 				
 			}
 			

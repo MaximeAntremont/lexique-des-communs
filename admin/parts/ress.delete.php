@@ -10,14 +10,15 @@
 	include_once('../../class/user.class.php');
 	include_once('../../class/manager.class.php');
 	
-if(!empty($_POST['lexique_id']) && !empty($_POST['entry_id']) && isConnected() && (isSUDO() || isMODO()) ){
+if(!empty($_POST['lexique_id']) && !empty($_POST['entry_id']) && !empty($_POST['ress_id']) && isConnected() && (isSUDO() || isMODO()) ){
 	
 	$manager = new Manager(getConnection());
 	$lexique = $manager->getLexiquesBy_id( htmlspecialchars( $_POST['lexique_id'] ) );
 	$manager = new Manager(getConnection(), $lexique['attr']);
 	$entry_id = htmlspecialchars($_POST['entry_id']);
+	$ress_id = htmlspecialchars($_POST['ress_id']);
 	
-	if($manager->deleteEntryBy_id($entry_id) && $manager->deleteRessourceBy_entry_id( $entry_id ) && $manager->deleteLinkBy_entry_id( $entry_id )) echo '<div class="list"><h3>Succès total !</h3><div>';
-	else echo '<div class="list"><h3>Échec total !</h3><div>';
+	if($manager->deleteRessourceBy_id( $ress_id ) && $manager->deleteLinkBy_ress_id( $ress_id )) echo '<div class="list"><h3>Soit, elle vient d\'être supprimée.</h3><div>';
+	else echo '<div class="list"><h3>Lamentable... Ca n\'a pas bien fonctionné...</h3><div>';
 
-}else echo '<div class="list"><h3>Il semble qu\'il y ait un petit problème. L\'entrée n\'a donc pas pu être supprimé !</h3><div>';
+}else echo '<div class="list"><h3>Il semble qu\'il y ait un petit problème. La ressource n\'a donc pas pu être supprimé !</h3><div>';

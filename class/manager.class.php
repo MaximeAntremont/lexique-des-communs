@@ -357,6 +357,33 @@ class Manager
 		
 	}
 	
+	
+	public function deleteLinkBy_entry_id ($id){
+		
+		if(is_numeric($id)){
+			
+			return ($this->_db->query('DELETE FROM '. $this->_attr .'link WHERE link_entry_id = '.$id)) ? true : false;
+			
+		}else{
+			return false;
+		}
+		
+	}
+	
+	
+	public function deleteLinkBy_ress_id ($id){
+		
+		if(is_numeric($id)){
+			
+			return ($this->_db->query('DELETE FROM '. $this->_attr .'link WHERE link_from = "'.$id.'" OR link_to = "'.$id.'"')) ? true : false;
+			
+		}else{
+			return false;
+		}
+		
+	}
+	
+	
 	//isEntry...
 	public function isLinkSet (Link $link){
 		
