@@ -150,6 +150,16 @@ class Manager
 		
 	}
 	
+	public function deleteEntryBy_id ($id){
+		
+		if(is_numeric($id)){
+			
+			return ($this->_db->query('DELETE FROM '. $this->_attr .'entry WHERE entry_id = '.$id)) ? true : false;
+			
+		}else return false;
+		
+	}
+	
 	//isEntry...
 	public function isEntrySet (Entry $entry){
 		
@@ -638,6 +648,32 @@ class Manager
 		}
 		
 		// return $entrys;
+		
+	}
+	
+	
+	public function deleteRessourceBy_id ($id){
+		
+		if(is_numeric($id)){
+			
+			return ($this->_db->query('DELETE FROM '. $this->_attr .'ressource WHERE ress_id = '.$id)) ? true : false;
+			
+		}else{
+			return false;
+		}
+		
+	}
+	
+	
+	public function deleteRessourceBy_entry_id ($id){
+		
+		if(is_numeric($id)){
+			
+			return ($this->_db->query('DELETE FROM '. $this->_attr .'ressource WHERE ress_entry_id = '.$id)) ? true : false;
+			
+		}else{
+			return false;
+		}
 		
 	}
 	

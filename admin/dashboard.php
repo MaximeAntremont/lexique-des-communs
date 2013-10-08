@@ -63,7 +63,9 @@ include 'admin.header.php'; ?>
 	
 	
 	
-	<div id="middle_panel" >		
+	<div id="middle_panel" >
+		<div id="header" class="off">
+		</div>
 		<div id="content">
 		</div>
 	</div>
@@ -72,7 +74,9 @@ include 'admin.header.php'; ?>
 	
 	
 	
-	<div id="right_panel" >	
+	<div id="right_panel" >
+		<div id="header" class="off">
+		</div>
 		<div id="content">
 		</div>
 	</div>

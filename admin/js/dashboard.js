@@ -2,7 +2,7 @@ $(function(){
 	
 	
 	/*
-		0 - dashboard = 
+		0 - dashboard
 		1 - lexiques
 		2 - users
 		3 - own
@@ -11,6 +11,8 @@ $(function(){
 	
 	var MODE = 0;
 	var LEXIQUE_SELECTED = null;
+	var ENTRY_SELECTED = null;
+	var RESSOURCE_SELECTED = null;
 	
 	
 	/****************************************************************************
@@ -218,10 +220,16 @@ $(function(){
 				LEXIQUE_SELECTED = $(this).attr("lexique_id");
 				$('#right_panel #content').load('parts/lexiques.printOne.php', {lexique_id: LEXIQUE_SELECTED});
 				
+			}else if(todo == "printEntry"){
+				
+				$('#right_panel #content').html('');
+				ENTRY_SELECTED = $(this).attr("entry_id");
+				$('#right_panel #content').load('parts/entry.right.printOne.php', {lexique_id: LEXIQUE_SELECTED, entry_id: $(this).attr("entry_id")});
+				
 			}else if(todo == "printRessource"){
 				
 				$('#right_panel #content').html('');
-				// LEXIQUE_SELECTED = $(this).attr("lexique_id");
+				RESSOURCE_SELECTED = $(this).attr("ress_id");
 				$('#right_panel #content').load('parts/ress.right.printOne.php', {lexique_id: LEXIQUE_SELECTED, ress_id: $(this).attr("ress_id")});
 				
 			}
@@ -280,7 +288,7 @@ $(function(){
 			
 		//****************************************Users
 		//****************************************Users
-		}else if(MODE == 2){ 
+		}else if(MODE == 2){
 			
 			if(todo == "changeType"){
 			
@@ -339,9 +347,9 @@ $(function(){
 			}else if(todo == "deleteLexique"){
 				
 				$('#right_panel #content').html(
-				'<div class="list"><h3>Êtes-vous sûr de vouloir supprimer ce Lexique ?</h3></div>'+
-				'<div todo="confirmDeleteLexique" class="listSelector"><h3>Oui !</h3></div>'+
-				'<div todo="abordDeleteLexique" class="listSelector"><h3>Heu... Non.</h3></div>'
+					'<div class="list"><h3>Êtes-vous sûr de vouloir supprimer ce Lexique ?</h3></div>'+
+					'<div todo="confirmDeleteLexique" class="listSelector"><h3>Oui !</h3></div>'+
+					'<div todo="abordDeleteLexique" class="listSelector"><h3>Heu... Non.</h3></div>'
 				);
 				
 			}else if(todo == "confirmDeleteLexique"){
@@ -362,11 +370,35 @@ $(function(){
 				);
 				LEXIQUE_SELECTED = null;
 				
+			}else if(todo == "printEntrys"){
+				
+				$('#right_panel #content').html("");
+				$('#middle_panel #content').load('parts/entry.middle.list.php', 
+					{lexique_id: LEXIQUE_SELECTED}
+				);
 			}else if(todo == "printRessources"){
 				
 				$('#middle_panel #content').load('parts/ress.middle.list.php', 
 					{lexique_id: LEXIQUE_SELECTED}
 				);
+			
+			}else if(todo == "deleteEntry"){
+				
+				$('#right_panel #content').html(
+					'<div class="list"><h3>Houla... Vous voulez supprimer cette entrée ?</h3></div>'+
+					'<div todo="confirmDeleteEntry" class="listSelector"><h3>Pour sûr !</h3></div>'+
+					'<div todo="abordDeleteEntry" class="listSelector"><h3>Je vais encore réfléchir...</h3></div>'
+				);
+			}else if(todo == "confirmDeleteEntry"){
+				
+				$('#right_panel #content').load('parts/entry.delete.php', {lexique_id: ENTRY_SELECTED, entry_id: ENTRY_SELECTED});
+				ENTRY_SELECTED = null;
+				
+			}else if(todo == "abordDeleteEntry"){
+				
+				$('#right_panel #content').html('<div class="list"><h3>Pas de soucis, prennez votre temps.</h3></div>');
+				ENTRY_SELECTED = null;
+				
 			}
 			
 			
