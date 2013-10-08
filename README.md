@@ -10,22 +10,18 @@ lexique-des-communs
 	Navigation x et y dans le nuage.
 	Adaptation surfaces tactiles.
 	Liens conflictuels.
-	Liens qui se superpposent.
-
-
-<h3>Prochaine release/version:</h3>
-
-	X - Gestion des Entrées.
-	V - Nouvelles couleurs pour les liens
-	X - Ajout de l'id du créateur pour divers logs (dont création/suppression lexique)
+	Liens qui se superposent.
+	Gestion des Entrées.
+	Nouvelles couleurs pour les liens
+	Ajout de l'id du créateur pour divers logs (dont création/suppression lexique)
 	? - Gestion (suppression) de liens.
-	X - Bug: Il est possible d'ajouter plusieurs fois la même entrée.
-	X - Début de prise en charge du niveau de compte "Rédacteur".
-	X - Ajout d'un bouton de retour à l'accueil.
-	X - Modification mineure pour la base de données.
-	V - Meilleur affichage de la liste des ressources.
+	Debug: Il est possible d'ajouter plusieurs fois la même entrée.
+	Début de prise en charge du niveau de compte "Rédacteur".
+	Ajout d'un bouton de retour à l'accueil.
+	Modification mineure pour la base de données.
+	Meilleur affichage de la liste des ressources.
 
-
+	
 <h3>Notes de versions:</h3>
 
 <h5>a2r03 - 08 oct 2013</h5>

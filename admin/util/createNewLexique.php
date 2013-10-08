@@ -50,7 +50,7 @@
 						`link_from` int(10) unsigned NOT NULL,
 						`link_to` int(10) unsigned NOT NULL,
 						`link_val` varchar(20) DEFAULT NULL,
-						`link_type` int(10) unsigned NOT NULL,
+						`link_type` int(11) NOT NULL,
 						`link_create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 						`link_alert` int(10) unsigned DEFAULT \'0\',
 						PRIMARY KEY (`link_id`)
