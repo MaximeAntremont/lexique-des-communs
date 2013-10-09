@@ -385,7 +385,7 @@ $(function(){
 				);
 			}else if(todo == "confirmDeleteEntry"){
 				
-				$('#right_panel #content').load('parts/entry.delete.php', {lexique_id: ENTRY_SELECTED, entry_id: ENTRY_SELECTED});
+				$('#right_panel #content').load('parts/entry.delete.php', {lexique_id: LEXIQUE_SELECTED, entry_id: ENTRY_SELECTED});
 				$('#middle_panel #content').html("");
 				$('#middle_panel #content').load('parts/entry.middle.list.php', 
 					{lexique_id: LEXIQUE_SELECTED}
@@ -408,7 +408,7 @@ $(function(){
 				
 			}else if(todo == "confirmDeleteRessource"){
 				
-				$('#right_panel #content').load('parts/ress.delete.php', {lexique_id: ENTRY_SELECTED, entry_id: ENTRY_SELECTED, ress_id: RESSOURCE_SELECTED});
+				$('#right_panel #content').load('parts/ress.delete.php', {lexique_id: LEXIQUE_SELECTED, entry_id: ENTRY_SELECTED, ress_id: RESSOURCE_SELECTED});
 				RESSOURCE_SELECTED = null;
 				
 			}else if(todo == "abordDeleteRessource"){
