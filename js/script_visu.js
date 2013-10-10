@@ -227,7 +227,7 @@ $(function(){
 				drawLinks();
 				printRessourceInfos();
 				
-				if(ressource_selected != lastRessource_selected){
+				if(ressource_selected != lastRessource_selected && !selecting){
 					var isAddRequest = false;
 					cache_panel.modify(
 						'<span>Nouveau Lien</span>',
@@ -273,8 +273,8 @@ $(function(){
 		
 	});
 	
-	$('#canvas').on('mouseup vmouseup', function(e){
-		// console.debug('mouseClicked: '+mouseClicked);
+	$('#canvas').on('vmouseup', function(e){
+		console.debug(e.pageX+', '+e.pageY);
 		mouseClicked = false;
 		lastRessource_selected = ressource_selected;
 		ressource_selected = null;
