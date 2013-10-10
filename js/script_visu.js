@@ -64,7 +64,12 @@ $(function(){
 	});
 	var anim = new GPUFrame (false);
 	
-	init($('#canvas'), function (){cache_panel.stopWaiting(true);});
+	init($('#canvas'), function (){
+		cache_panel.stopWaiting(function(){
+			$('#cache_panel').hide();
+			$("#entrys").show();
+		})
+	;});
 	
 	
 	$(window).resize(function (){
@@ -1076,6 +1081,8 @@ $(function(){
 								fetchEntryData(obj.id, cache_panel.stopWaiting(true));
 							}
 						});
+				}else{
+					getEntrys(false);
 				}
 				
 			});
