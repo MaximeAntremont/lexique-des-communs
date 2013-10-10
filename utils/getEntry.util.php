@@ -41,6 +41,12 @@
 						
 						$ress->val( $answer );
 						
+					}else{
+						
+						$answer = $dico['embed']( $ress->val() );
+						
+						$ress->val( $answer );
+						
 					}
 					
 					// $ress->val( 

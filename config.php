@@ -62,7 +62,7 @@
 			
 		},
 		'embed' => function($id){
-			return '<a href="'. $id .'" target="_BLANK">'. preg_replace('#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$#', "$2.$3", $id  ) .'</a>';
+			return '<a href="'. $id .'" target="_BLANK">'. preg_replace('#^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})(.*)\/?$#', "$2.$3.$4", $id  ) .'</a>';
 		}
 	);
 	
