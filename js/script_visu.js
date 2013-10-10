@@ -18,7 +18,7 @@ $(function(){
 	var IMAGES = {};
 	
 	$.fn.selectRange = function(start, end) {
-		if(!end) end = start; 
+		if(!end) end = start;
 		return this.each(function() {
 			if (this.setSelectionRange) {
 				this.focus();
@@ -215,13 +215,25 @@ $(function(){
 				printRessourceInfos();
 				
 				if(selecting){
-					cache_panel.modify('<span>Nouveau Lien</span>', '<div id="typology" style="width: 350px;margin-left:15px;margin-top:20px;" ></div>',
-										'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
-					$( "#typology" ).slider({
+					cache_panel.modify(
+						'<span>Nouveau Lien</span>',
+						'<div id="sliderTypology" style="width: 350px;margin-left:15px;margin-top:20px;" ></div>'
+						+ '<br/><h4 id="infoTypology">Accord</h4>'
+						+ '<div id="sliderValue" style="width: 350px;margin-left:15px;margin-top:20px;" ></div>',
+						'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+						
+					$( "#sliderTypology" ).slider({
 						step: 1,
-						min: -255, 
-						max: 255
-					}).css("background-color", "rgb(255,130,255)");;
+						min: 1, 
+						max: 4
+					}).css("background-color", "rgb(21, 234, 21)");
+					
+					$( "#sliderValue" ).slider({
+						step: 25,
+						min: 0, 
+						max: 75
+					}).css("background-color", "rgb(21, 234, 21)");
+					
 					cache_panel.open();
 					
 					var isAddRequest = false;
@@ -231,7 +243,7 @@ $(function(){
 						}
 						if($(this).html() == "Ajouter" && !isAddRequest){
 							isAddRequest = true;
-							sendNewLink ($('#typology').slider( "value" ), function(){
+							sendNewLink ($('#sliderTypology').slider( "value" ), $('#sliderValue').slider( "value" ), function(){
 								setTimeout(function(){
 									fetchEntryData( entry_selected_id, function(){
 										cache_panel.stopWaiting(true);
@@ -255,21 +267,60 @@ $(function(){
 	
 	
 	//Changement de couleur du fond du slider de création des liens
-	$( "#cache_panel" ).on( "slide", "#typology", function( event, ui ) {
+	$( "#cache_panel" ).on( "slide", "#sliderTypology", function( event, ui ) {
 		
-		// if(ui.value > 0 && ui.value <= 255)
-			// $(this).css("background-color", "rgb(255,"+ (255-ui.value) +","+ (255-ui.value) +")");
-		// else if(ui.value < 0 && ui.value >= -255)
-			// $(this).css("background-color", "rgb("+ (255+ui.value) +",255,"+ (255+ui.value) +")");
-		// else
-			// $(this).css("background-color", "rgb(220,220,220)");
+		var typ = ui.value;
+		var sliderTypology = $(this);
+		var infoTypology = $('#infoTypology');
+		var sliderValue = $( "#sliderValue" );
 		
-		if(ui.value > 0 && ui.value <= 255)
-			$(this).css("background-color", "rgb("+ 255 +", "+ Math.ceil(130-(ui.value/2)) +","+ (255-ui.value) +")");
-		else if(ui.value < 0 && ui.value >= -255)
-			$(this).css("background-color", "rgb("+ (255+ui.value) +", "+ Math.ceil(130+(ui.value/2)) +","+ 255 +")");
-		else
-			$(this).css("background-color", "rgb(255,130,255)");
+		switch(typ){
+			case 1:
+				sliderTypology.css('background-color', 'rgb(21, 234, 21)');
+				sliderValue.css('background-color', 'rgb(21, 234, 21)');
+				infoTypology.html("Accord");
+				break;
+			case 2:
+				sliderTypology.css('background-color', 'rgb(227, 7, 7)');
+				sliderValue.css('background-color', 'rgb(227, 7, 7)');
+				infoTypology.html("Désaccord");
+				break;
+			case 3:
+				sliderTypology.css('background-color', 'rgb(85, 171, 197)');
+				sliderValue.css('background-color', 'rgb(85, 171, 197)');
+				infoTypology.html("Inclusion");
+				break;
+			case 4:
+				sliderTypology.css('background-color', 'rgb(28, 28, 28)');
+				sliderValue.css('background-color', 'rgb(28, 28, 28)');
+				infoTypology.html("Exclusion");
+				break;
+		}
+		
+	});
+	
+	//Changement de couleur du fond du slider de création des liens
+	$( "#cache_panel" ).on( "slide", "#sliderValue", function( event, ui ) {
+		
+		var val = ui.value/100;
+		var sliderValue = $( this );
+		var typ = $('#sliderTypology').slider("value");
+		
+		switch(typ){
+			case 1:
+				sliderValue.css('background-color', 'rgb('+ Math.ceil(21+ (234*val) ) +', '+ Math.ceil(234+ (21*val) ) +', '+ Math.ceil(21+ (234*val) ) +')');
+				break;
+			case 2:
+				sliderValue.css('background-color', 'rgb('+ Math.ceil(227+ (23*val) ) +', '+ Math.ceil(7+ (248*val) ) +', '+ Math.ceil(7+ (248*val) ) +')');
+				break;
+			case 3:
+				sliderValue.css('background-color', 'rgb('+ Math.ceil(85+ (170*val) ) +', '+ Math.ceil(171+ (84*val) ) +', '+ Math.ceil(197+ (58*val) ) +')');
+				break;
+			case 4:
+				sliderValue.css('background-color', 'rgb('+ Math.ceil(28+ (227*val) ) +', '+ Math.ceil(28+ (227*val) ) +', '+ Math.ceil(28+ (227*val) ) +')');
+				break;
+		}
+		
 	});
 	
 	
@@ -958,15 +1009,16 @@ $(function(){
 		
 	}
 	
-	function sendNewLink (link_type, callback){
+	function sendNewLink (link_type, link_val, callback){
 		
-		if(link_type < -255 || link_type > 255) return false;
+		if(link_type < 1 || link_type > 4) return false;
 		
 		$.ajax({
 			type: "POST",
 			url: "utils/addLink.util.php",
 			data : {
 				link_type: link_type,
+				link_val: link_val,
 				link_from: lastRessource_selected.id(),
 				link_to: ressource_selected.id(),
 				link_entry_id: entry_selected_id

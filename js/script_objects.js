@@ -191,29 +191,23 @@ function Link (tab){
 	};
 	
 	function typeToColor (val){
-		// if(val > 0 && val <= 255){
-		
-			// return "rgb(0,"+ (255-val) +","+ (255-val) +")";
-			
-		// }else if(val < 0 && val >= -255){
-		
-			// return "rgb("+ (255 - (val*-1)) +",0,"+ (255 - (val*-1)) +")";
-			
-		// }else{
-		
-			// return "rgb(250,250,250)";
-			
-		// }
-		
-		val = val*1;
-		console.debug(val);
-		
-		if(val > 0 && val <= 255)
-			return "rgb("+ 255 +", "+ Math.ceil(130-(val/2)) +","+ (255-val) +")";
-		else if(val < 0 && val >= -255)
-			return "rgb("+ (255+val) +", "+ Math.ceil(130+(val/2)) +","+ 255 +")";
-		else
-			return "rgb(255,130,255)";
+		console.debug(type);
+		switch(type*1){
+			case 1:
+				return 'rgb('+ Math.ceil(21+ (234*(val/100)) ) +', '+ Math.ceil(234+ (21*(val/100)) ) +', '+ Math.ceil(21+ (234*(val/100)) ) +')';
+				break;
+			case 2:
+				return 'rgb('+ Math.ceil(227+ (23*(val/100)) ) +', '+ Math.ceil(7+ (248*(val/100)) ) +', '+ Math.ceil(7+ (248*(val/100)) ) +')';
+				break;
+			case 3:
+				return 'rgb('+ Math.ceil(85+ (170*(val/100)) ) +', '+ Math.ceil(171+ (84*(val/100)) ) +', '+ Math.ceil(197+ (58*(val/100)) ) +')';
+				break;
+			case 4:
+				return 'rgb('+ Math.ceil(28+ (227*(val/100)) ) +', '+ Math.ceil(28+ (227*(val/100)) ) +', '+ Math.ceil(28+ (227*(val/100)) ) +')';
+				break;
+			default:
+				return 'rgb(250,250,250)';
+		}
 		
 	};
 	
