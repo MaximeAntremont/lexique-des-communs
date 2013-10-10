@@ -217,22 +217,19 @@ $(function(){
 				if(selecting){
 					cache_panel.modify(
 						'<span>Nouveau Lien</span>',
-						'<div id="sliderTypology" style="width: 350px;margin-left:15px;margin-top:20px;" ></div>'
-						+ '<br/><h4 id="infoTypology">Accord</h4>'
+						'<select id="sliderTypology" style="width: 350px;margin-left:15px;margin-top:20px;" >'
+							+'<option value="1" >Accord/Désaccord</option>'
+							+'<option value="2" >Inclusion/Exclusion</option>'
+						+'</select>'
 						+ '<div id="sliderValue" style="width: 350px;margin-left:15px;margin-top:20px;" ></div>',
 						'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
-						
-					$( "#sliderTypology" ).slider({
-						step: 1,
-						min: 1, 
-						max: 4
-					}).css("background-color", "rgb(21, 234, 21)");
 					
 					$( "#sliderValue" ).slider({
-						step: 25,
-						min: 0, 
-						max: 75
-					}).css("background-color", "rgb(21, 234, 21)");
+						step: 0,
+						min: -100, 
+						value: 0,
+						max: 100
+					}).css('background-color', 'rgb(250, 250, 250)');
 					
 					cache_panel.open();
 					
@@ -243,7 +240,7 @@ $(function(){
 						}
 						if($(this).html() == "Ajouter" && !isAddRequest){
 							isAddRequest = true;
-							sendNewLink ($('#sliderTypology').slider( "value" ), $('#sliderValue').slider( "value" ), function(){
+							sendNewLink ($('#sliderTypology').val(), $('#sliderValue').slider( "value" ), function(){
 								setTimeout(function(){
 									fetchEntryData( entry_selected_id, function(){
 										cache_panel.stopWaiting(true);
@@ -267,33 +264,24 @@ $(function(){
 	
 	
 	//Changement de couleur du fond du slider de création des liens
-	$( "#cache_panel" ).on( "slide", "#sliderTypology", function( event, ui ) {
+	$( "#cache_panel" ).on( "change", "#sliderTypology", function() {
 		
-		var typ = ui.value;
+		
 		var sliderTypology = $(this);
-		var infoTypology = $('#infoTypology');
+		var typ = sliderTypology.val();
+		// var infoTypology = $('#infoTypology');
 		var sliderValue = $( "#sliderValue" );
 		
-		switch(typ){
+		switch(typ*1){
 			case 1:
-				sliderTypology.css('background-color', 'rgb(21, 234, 21)');
-				sliderValue.css('background-color', 'rgb(21, 234, 21)');
-				infoTypology.html("Accord");
+				// sliderTypology.css('background-color', 'rgb(21, 234, 21)');
+				sliderValue.css('background-color', 'rgb(250, 250, 250)');
+				sliderValue.slider("value", 0);
 				break;
 			case 2:
-				sliderTypology.css('background-color', 'rgb(227, 7, 7)');
-				sliderValue.css('background-color', 'rgb(227, 7, 7)');
-				infoTypology.html("Désaccord");
-				break;
-			case 3:
-				sliderTypology.css('background-color', 'rgb(85, 171, 197)');
-				sliderValue.css('background-color', 'rgb(85, 171, 197)');
-				infoTypology.html("Inclusion");
-				break;
-			case 4:
-				sliderTypology.css('background-color', 'rgb(28, 28, 28)');
-				sliderValue.css('background-color', 'rgb(28, 28, 28)');
-				infoTypology.html("Exclusion");
+				// sliderTypology.css('background-color', 'rgb(227, 7, 7)');
+				sliderValue.css('background-color', 'rgb(250, 250, 250)');
+				sliderValue.slider("value", 0);
 				break;
 		}
 		
@@ -304,22 +292,23 @@ $(function(){
 		
 		var val = ui.value/100;
 		var sliderValue = $( this );
-		var typ = $('#sliderTypology').slider("value");
+		var typ = $('#sliderTypology').val();
 		
-		switch(typ){
-			case 1:
-				sliderValue.css('background-color', 'rgb('+ Math.ceil(21+ (234*val) ) +', '+ Math.ceil(234+ (21*val) ) +', '+ Math.ceil(21+ (234*val) ) +')');
-				break;
-			case 2:
-				sliderValue.css('background-color', 'rgb('+ Math.ceil(227+ (23*val) ) +', '+ Math.ceil(7+ (248*val) ) +', '+ Math.ceil(7+ (248*val) ) +')');
-				break;
-			case 3:
-				sliderValue.css('background-color', 'rgb('+ Math.ceil(85+ (170*val) ) +', '+ Math.ceil(171+ (84*val) ) +', '+ Math.ceil(197+ (58*val) ) +')');
-				break;
-			case 4:
-				sliderValue.css('background-color', 'rgb('+ Math.ceil(28+ (227*val) ) +', '+ Math.ceil(28+ (227*val) ) +', '+ Math.ceil(28+ (227*val) ) +')');
-				break;
+		if(typ == 1){
+			
+			if(val > 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(222+ (23*(1-val)) ) +', '+ Math.ceil(2+ (248*(1-val)) ) +', '+ Math.ceil(2+ (248*(1-val)) ) +')');
+			else if(val < 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(21+ (229*(1+val)) ) +', '+ Math.ceil(234+ (16*(1+val)) ) +', '+ Math.ceil(21+ (229*(1+val)) ) +')');
+			else  sliderValue.css('background-color', 'rgb(250,250,250)');
+			
+		}else if(typ == 2){
+			
+			if(val > 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(28+ (222*(1-val)) ) +', '+ Math.ceil(28+ (222*(1-val)) ) +', '+ Math.ceil(28+ (222*(1-val)) ) +')');
+			else if(val < 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(85+ (165*(1+val)) ) +', '+ Math.ceil(171+ (79*(1+val)) ) +', '+ Math.ceil(192+ (58*(1+val)) ) +')');
+			else  sliderValue.css('background-color', 'rgb(250,250,250)');
+			
 		}
+		
+		return;
 		
 	});
 	
@@ -345,8 +334,10 @@ $(function(){
 				var cursor = {x: e.pageX-40, y: e.pageY-40};
 				selecting = true;
 				screen.draw(gpu.getFrame(), true);
+				context.strokeStyle = "rgb(0,0,0)";
+				context.globalAlpha = 1;
 				context.beginPath();
-				context.moveTo(ressource_selected.top_left_center.x, ressource_selected.top_left_center.y);
+				context.moveTo(ressource_selected.x(), ressource_selected.y());
 				context.lineTo(cursor.x, cursor.y);
 				context.stroke();
 			}else{

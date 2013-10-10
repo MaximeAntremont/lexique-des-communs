@@ -149,7 +149,6 @@ function Link (tab){
 		alpha = tab.alpha || 0.6,
 		factor = tab.factor || 0.5;
 	var color = typeToColor(type);
-	console.debug(typeToColor(type));
 	var toDraw = false;
 	
 	this.id = function (val){
@@ -190,23 +189,22 @@ function Link (tab){
 		return toDraw;
 	};
 	
-	function typeToColor (val){
-		console.debug(type);
-		switch(type*1){
-			case 1:
-				return 'rgb('+ Math.ceil(21+ (234*(val/100)) ) +', '+ Math.ceil(234+ (21*(val/100)) ) +', '+ Math.ceil(21+ (234*(val/100)) ) +')';
-				break;
-			case 2:
-				return 'rgb('+ Math.ceil(227+ (23*(val/100)) ) +', '+ Math.ceil(7+ (248*(val/100)) ) +', '+ Math.ceil(7+ (248*(val/100)) ) +')';
-				break;
-			case 3:
-				return 'rgb('+ Math.ceil(85+ (170*(val/100)) ) +', '+ Math.ceil(171+ (84*(val/100)) ) +', '+ Math.ceil(197+ (58*(val/100)) ) +')';
-				break;
-			case 4:
-				return 'rgb('+ Math.ceil(28+ (227*(val/100)) ) +', '+ Math.ceil(28+ (227*(val/100)) ) +', '+ Math.ceil(28+ (227*(val/100)) ) +')';
-				break;
-			default:
-				return 'rgb(250,250,250)';
+	function typeToColor (type){
+		
+		var value = val/100;
+		
+		if(type == 1){
+			
+			if(value > 0) return 'rgb('+ Math.ceil(222+ (23*(1-value)) ) +', '+ Math.ceil(2+ (248*(1-value)) ) +', '+ Math.ceil(2+ (248*(1-value)) ) +')';
+			else if(value < 0) return 'rgb('+ Math.ceil(21+ (229*(1+value)) ) +', '+ Math.ceil(234+ (16*(1+value)) ) +', '+ Math.ceil(21+ (229*(1+value)) ) +')';
+			else  return 'rgb(250,250,250)';
+			
+		}else if(type == 2){
+			
+			if(value > 0) return 'rgb('+ Math.ceil(28+ (222*(1-value)) ) +', '+ Math.ceil(28+ (222*(1-value)) ) +', '+ Math.ceil(28+ (222*(1-value)) ) +')';
+			else if(value < 0) return 'rgb('+ Math.ceil(85+ (165*(1+value)) ) +', '+ Math.ceil(171+ (79*(1+value)) ) +', '+ Math.ceil(192+ (58*(1+value)) ) +')';
+			else  return 'rgb(250,250,250)';
+			
 		}
 		
 	};
@@ -226,27 +224,14 @@ function Link (tab){
 			
 			var v = new Vector( ressFrom.x(), ressFrom.y(), ressTo.x(), ressTo.y() );
 			var av = new Vector( -v.y()*factor, v.x()*factor );
-			// av.resize( -av.getNorme()/factor );
 			ctx.beginPath();
 			ctx.moveTo(ressFrom.x(), ressFrom.y());
-			// ctx.moveTo(ressFrom.top_left_center.x+(ressFrom.width()/2), ressFrom.top_left_center.y+(ressFrom.height()/2));
-			// ctx.bezierCurveTo(
-				// ressFrom.x() + av.x(),
-				// ressFrom.y() + av.y(),
-				// ressTo.x() + av.x(),
-				// ressTo.y() + av.y(),
-				// ressTo.x(),
-				// ressTo.y()
-			// );
 			ctx.quadraticCurveTo(
 				ressFrom.x() + av.x() + (v.x()/2),
 				ressFrom.y() + av.y() + (v.y()/2),
 				ressTo.x(),
 				ressTo.y()
 			);
-			
-			// ctx.lineTo(ressTo.x(), ressTo.y());
-			// ctx.closePath();
 			ctx.stroke();
 		}
 				
