@@ -83,7 +83,7 @@ $(function(){
 		$('#canvas').css('top', '40px');
 		$('#canvas').css('left', '40px');
 		$('#canvas').css('z-index', '5');
-		$('#entrys .content').css('width', winW-40);
+		$('#entrys .content').css('width', winW);
 		$('#entrys .content').css('height', winH-40);
 		
 		if(ressources.length > 0)
@@ -1051,7 +1051,7 @@ $(function(){
 		canvas.css('top', '40px');
 		canvas.css('left', '40px');
 		canvas.css('z-index', '5');
-		$('#entrys .content').css('width', winW-40);
+		$('#entrys .content').css('width', winW);
 		$('#entrys .content').css('height', winH-40);
 		
 		screen.setFrame(anim);
