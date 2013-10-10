@@ -149,6 +149,7 @@ function Link (tab){
 		alpha = tab.alpha || 0.6,
 		factor = tab.factor || 0.5;
 	var color = typeToColor(type);
+	console.debug(color);
 	var toDraw = false;
 	
 	this.id = function (val){
@@ -206,7 +207,7 @@ function Link (tab){
 			else if(value < 0) return 'rgb('+ Math.ceil(85+ ((defaut-85)*(1+value)) ) +', '+ Math.ceil(171+ ((defaut-171)*(1+value)) ) +', '+ Math.ceil(192+ ((defaut-192)*(1+value)) ) +')';
 			else  return 'rgb('+ defaut +','+ defaut +','+ defaut +')';
 			
-		}
+		}else return 'rgb('+ defaut +','+ defaut +','+ defaut +')';
 		
 	};
 	

@@ -2,9 +2,11 @@
 	<canvas id="canvas" ></canvas>
 
 	<div id="top_panel">
+	
+		<a href="index.php"><div id="retourIndex" class="panel_button" >Portail</div></a>
 		<div id="index" class="panel_button" ></div>
-		
 		<div id="add_ressource" class="panel_button" ></div>
+		
 	</div>
 	<div id="left_panel">
 		<div id="addZoom" class="panel_button" ></div>
