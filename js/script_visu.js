@@ -527,8 +527,6 @@ $(function(){
 				isAddRequest = true;
 				sendNewEntry ($('#input_entry_val').val(), function(){
 					getEntrys(true, function(){cache_panel.close();});
-					// refreshIndex();
-					// $("#top_left_corner #part_one, #top_left_corner #part_two").html("");
 				});
 			}
 		});
@@ -643,8 +641,7 @@ $(function(){
 	
 	
 	$("body").on("click", "#index", function(){
-		cache_panel.startWaiting(true);
-		getEntrys(false, function(){ cache_panel.stopWaiting(true); $('#entrys').show(); });
+		getEntrys(false, function(){$('#entrys').show();});
 	});
 	
 	
@@ -911,38 +908,6 @@ $(function(){
 			
 	}
 	
-	function refreshIndex(callback){
-		$.ajax({
-			type: "POST",
-			url: "utils/getIndex.util.php",
-			dataType: "json"
-		}).done(function(data) {
-			
-			var txt = "";
-			
-			if(data != null)
-				data.forEach(function(obj){
-					if(obj.select != null)
-						txt += '<div class="letter-on" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
-					else
-						txt += '<div class="letter-off" id="char-'+ obj['char'] +'" >'+ obj['char'] +'</div>';
-					
-					LETTERS['char-'+obj['char']] = obj['select'];
-					if(obj['select'] && obj['select'].length > 0)
-						obj['select'].forEach(function(o){ENTRYS.push(o);});
-				});
-				
-			$("#top_panel #index").html("");
-			$("#top_panel #index").append(txt);
-			
-			if(callback) callback();
-			
-		}).fail(function (a,b,c){
-			console.debug(a+" | "+b+" | "+c);
-		});
-		
-	}
-	
 	
 	
 	
@@ -1108,7 +1073,6 @@ $(function(){
 						ENTRYS.forEach(function(obj){
 							if(obj.id == hash){
 								recall = false;
-								// printEntrysFromLetter(LETTERS, "char-"+obj['val'].charAt(0).toUpperCase());
 								fetchEntryData(obj.id, cache_panel.stopWaiting(true));
 							}
 						});
