@@ -215,6 +215,7 @@ $(function(){
 				printRessourceInfos();
 				
 				if(selecting){
+					var isAddRequest = false;
 					cache_panel.modify(
 						'<span>Nouveau Lien</span>',
 						'<select id="sliderTypology" style="width: 350px;margin-left:15px;margin-top:20px;" >'
@@ -233,7 +234,6 @@ $(function(){
 					
 					cache_panel.open();
 					
-					var isAddRequest = false;
 					$(".cliquable").click(function(){
 						if($(this).html() == "Annuler"){
 							cache_panel.close();
@@ -510,6 +510,9 @@ $(function(){
 	
 	
 	$("body").on("click", "#add_entry", function(){
+	
+		var isAddRequest = false;
+		
 		cache_panel.modify('<span>Nouvelle entrée</span>', '<input type="text" id="input_entry_val" placeholder="Nom de l\'entrée"/>', '<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
 		cache_panel.open();
 		$("#entrys").hide();
@@ -520,7 +523,8 @@ $(function(){
 			if($(this).html() == "Annuler"){
 				cache_panel.close();
 			}
-			if($(this).html() == "Ajouter"){
+			if($(this).html() == "Ajouter" && !isAddRequest){
+				isAddRequest = true;
 				sendNewEntry ($('#input_entry_val').val(), function(){
 					getEntrys(true, function(){cache_panel.close();});
 					// refreshIndex();
@@ -590,17 +594,6 @@ $(function(){
 		});
 		screen.draw(gpu.getFrame(), true);
 	});
-	
-	
-	
-	// $("body").on("click", ".letter-on", function(){
-		// ressources = [];
-		// cursorRefs = [];
-		// linksToDraw = [];
-		// $("#add_ressource").hide();
-		// screen.draw(gpu.getFrame(), true);
-		// printEntrysFromLetter(LETTERS, this.id);
-	// });
 	
 	
 	
