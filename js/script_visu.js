@@ -72,7 +72,7 @@ $(function(){
 	;});
 	
 	
-	$(window).resize(function (){
+	$(window).on('resize orientationchange', function (){
 		var oldMiddle = {x: winW_m,y: winH_m};
 		detectScreen();
 		var offset = {x: winW_m-oldMiddle.x, y: winH_m-oldMiddle.y};
@@ -182,9 +182,98 @@ $(function(){
 		mouseClicked = true;
 	});
 	
+	var holdCords = [];
 	
+	// $(document).on('vmousedown', function(event){
+		// holdCords.holdX = event.pageX;
+		// holdCords.holdY = event.pageY;
+	// });
 
-	$('#canvas').mouseup(function(e){
+	$('#canvas').on('taphold', function(e){
+		
+		if(selecting) return;
+		
+		e.pageX = holdCords.holdX;
+		e.pageY = holdCords.holdY;
+		
+		lastRessource_selected = ressource_selected;
+		ressource_selected = null;
+		marges.mouseMovePressInteration = 0;
+		
+		if(ressources.length > 0){
+		
+			ressources.forEach(function(obj){
+			
+				if(ressource_selected == null
+					&& obj.visible()
+					&& obj.isOver({x: e.pageX-40, y: e.pageY-40})){
+					ressource_selected = obj;
+					obj.alpha(0.7);
+					
+				}else{
+					obj.alpha(0.3);
+				}
+								 
+			});
+			
+			if(ressource_selected == null){
+				
+				ressources.forEach(function(objB){objB.alpha(0.5);});
+				ressource_selected = null;
+				linksToDraw = [];
+				printRessourceInfos();
+				
+			}else{
+				drawLinks();
+				printRessourceInfos();
+				
+				if(ressource_selected != lastRessource_selected){
+					var isAddRequest = false;
+					cache_panel.modify(
+						'<span>Nouveau Lien</span>',
+						'<select id="sliderTypology" style="width: 350px;margin-left:15px;margin-top:20px;" >'
+							+'<option value="1" >Accord/Désaccord</option>'
+							+'<option value="2" >Inclusion/Exclusion</option>'
+						+'</select>'
+						+ '<div id="sliderValue" style="width: 350px;margin-left:15px;margin-top:20px;" ></div>',
+						'<div><span class="cliquable">Annuler</span><span class="cliquable">Ajouter</span></div>');
+					
+					$( "#sliderValue" ).slider({
+						step: 0,
+						min: -100, 
+						value: 0,
+						max: 100
+					}).css('background-color', 'rgb(180, 180, 180)');
+					
+					cache_panel.open();
+					
+					$(".cliquable").click(function(){
+						if($(this).html() == "Annuler"){
+							cache_panel.close();
+						}
+						if($(this).html() == "Ajouter" && !isAddRequest){
+							isAddRequest = true;
+							sendNewLink ($('#sliderTypology').val(), $('#sliderValue').slider( "value" ), function(){
+								setTimeout(function(){
+									fetchEntryData( entry_selected_id, function(){
+										cache_panel.stopWaiting(true);
+										cache_panel.close();
+									});
+								}, 1000);
+							});
+						}
+						
+					});
+				}
+			}
+			
+			screen.draw(gpu.getFrame(), true);
+			
+		}
+		
+	});
+	
+	$('#canvas').on('mouseup vmouseup', function(e){
 		// console.debug('mouseClicked: '+mouseClicked);
 		mouseClicked = false;
 		lastRessource_selected = ressource_selected;
@@ -321,7 +410,9 @@ $(function(){
 	
 	
 	//gère les mouvements de la souris sur le canvas
-	$('#canvas').mousemove(function(e){
+	$('#canvas').on("mousemove vmousemove",function(e){
+		holdCords.holdX = e.pageX;
+		holdCords.holdY = e.pageY;
 		if(ressources.length > 0){
 			var isNoOver = true;
 			ressources.forEach(function(obj){
