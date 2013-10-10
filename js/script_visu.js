@@ -274,7 +274,7 @@ $(function(){
 	});
 	
 	$('#canvas').on('vmouseup', function(e){
-		console.debug(e.pageX+', '+e.pageY);
+		// console.debug(e.pageX+', '+e.pageY);
 		mouseClicked = false;
 		lastRessource_selected = ressource_selected;
 		ressource_selected = null;

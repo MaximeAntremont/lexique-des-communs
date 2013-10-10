@@ -149,7 +149,7 @@ function Link (tab){
 		alpha = tab.alpha || 0.6,
 		factor = tab.factor || 0.5;
 	var color = typeToColor(type);
-	console.debug(color);
+	// console.debug(color);
 	var toDraw = false;
 	
 	this.id = function (val){
