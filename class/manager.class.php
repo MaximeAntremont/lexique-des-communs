@@ -73,11 +73,11 @@ class Manager
 		
 	}
 	
-	public function getEntryAll ($culumns = '*'){
+	public function getEntryAll ($culumns = '*', $param = ''){
 		
 		$entrys = array();
 		
-		$req = $this->_db->query('SELECT '. $culumns .' FROM '. $this->_attr .'entry');
+		$req = $this->_db->query('SELECT '. $culumns .' FROM '. $this->_attr .'entry '.$param);
 		
 		while($don = $req->fetch()){
 			$entrys[] = new Entry($don);

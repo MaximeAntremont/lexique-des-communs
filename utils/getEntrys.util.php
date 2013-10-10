@@ -21,7 +21,7 @@
 		
 		$manager = new Manager(getConnection(), $_SESSION['lexique_attr']);
 		
-		$entries = $manager -> getEntryAll('entry_id, entry_val');
+		$entries = $manager -> getEntryAll('entry_id, entry_val', 'ORDER BY entry_val ASC');
 		
 		foreach($entries as $e){
 			
