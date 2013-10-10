@@ -235,7 +235,7 @@ $(function(){
 						min: -100, 
 						value: 0,
 						max: 100
-					}).css('background-color', 'rgb(250, 250, 250)');
+					}).css('background-color', 'rgb(180, 180, 180)');
 					
 					cache_panel.open();
 					
@@ -280,12 +280,12 @@ $(function(){
 		switch(typ*1){
 			case 1:
 				// sliderTypology.css('background-color', 'rgb(21, 234, 21)');
-				sliderValue.css('background-color', 'rgb(250, 250, 250)');
+				sliderValue.css('background-color', 'rgb(180, 180, 180)');
 				sliderValue.slider("value", 0);
 				break;
 			case 2:
 				// sliderTypology.css('background-color', 'rgb(227, 7, 7)');
-				sliderValue.css('background-color', 'rgb(250, 250, 250)');
+				sliderValue.css('background-color', 'rgb(180, 180, 180)');
 				sliderValue.slider("value", 0);
 				break;
 		}
@@ -295,21 +295,22 @@ $(function(){
 	//Changement de couleur du fond du slider de création des liens
 	$( "#cache_panel" ).on( "slide", "#sliderValue", function( event, ui ) {
 		
-		var val = ui.value/100;
+		var value = ui.value/100;
+		var defaut = 180;
 		var sliderValue = $( this );
 		var typ = $('#sliderTypology').val();
 		
 		if(typ == 1){
 			
-			if(val > 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(222+ (23*(1-val)) ) +', '+ Math.ceil(2+ (248*(1-val)) ) +', '+ Math.ceil(2+ (248*(1-val)) ) +')');
-			else if(val < 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(21+ (229*(1+val)) ) +', '+ Math.ceil(234+ (16*(1+val)) ) +', '+ Math.ceil(21+ (229*(1+val)) ) +')');
-			else  sliderValue.css('background-color', 'rgb(250,250,250)');
+			if(value > 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(222+ ((defaut-222)*(1-value)) ) +', '+ Math.ceil(2+ ((defaut-2)*(1-value)) ) +', '+ Math.ceil(2+ ((defaut-2)*(1-value)) ) +')');
+			else if(value < 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(21+ ((defaut-21)*(1+value)) ) +', '+ Math.ceil(234+ ((defaut-234)*(1+value)) ) +', '+ Math.ceil(21+ ((defaut-21)*(1+value)) ) +')');
+			else  sliderValue.css('background-color', 'rgb('+ defaut +','+ defaut +','+ defaut +')');
 			
 		}else if(typ == 2){
 			
-			if(val > 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(28+ (222*(1-val)) ) +', '+ Math.ceil(28+ (222*(1-val)) ) +', '+ Math.ceil(28+ (222*(1-val)) ) +')');
-			else if(val < 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(85+ (165*(1+val)) ) +', '+ Math.ceil(171+ (79*(1+val)) ) +', '+ Math.ceil(192+ (58*(1+val)) ) +')');
-			else  sliderValue.css('background-color', 'rgb(250,250,250)');
+			if(value > 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(28+ ((defaut-28)*(1-value)) ) +', '+ Math.ceil(28+ ((defaut-28)*(1-value)) ) +', '+ Math.ceil(28+ ((defaut-28)*(1-value)) ) +')');
+			else if(value < 0) sliderValue.css('background-color', 'rgb('+ Math.ceil(85+ ((defaut-85)*(1+value)) ) +', '+ Math.ceil(171+ ((defaut-171)*(1+value)) ) +', '+ Math.ceil(192+ ((defaut-192)*(1+value)) ) +')');
+			else  sliderValue.css('background-color', 'rgb('+ defaut +','+ defaut +','+ defaut +')');
 			
 		}
 		

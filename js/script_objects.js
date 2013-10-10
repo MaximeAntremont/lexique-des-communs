@@ -192,18 +192,19 @@ function Link (tab){
 	function typeToColor (type){
 		
 		var value = val/100;
+		var defaut = 180;
 		
 		if(type == 1){
 			
-			if(value > 0) return 'rgb('+ Math.ceil(222+ (23*(1-value)) ) +', '+ Math.ceil(2+ (248*(1-value)) ) +', '+ Math.ceil(2+ (248*(1-value)) ) +')';
-			else if(value < 0) return 'rgb('+ Math.ceil(21+ (229*(1+value)) ) +', '+ Math.ceil(234+ (16*(1+value)) ) +', '+ Math.ceil(21+ (229*(1+value)) ) +')';
-			else  return 'rgb(250,250,250)';
+			if(value > 0) return 'rgb('+ Math.ceil(222+ ((defaut-222)*(1-value)) ) +', '+ Math.ceil(2+ ((defaut-2)*(1-value)) ) +', '+ Math.ceil(2+ ((defaut-2)*(1-value)) ) +')';
+			else if(value < 0) return 'rgb('+ Math.ceil(21+ ((defaut-21)*(1+value)) ) +', '+ Math.ceil(234+ ((defaut-234)*(1+value)) ) +', '+ Math.ceil(21+ ((defaut-21)*(1+value)) ) +')';
+			else  return 'rgb('+ defaut +','+ defaut +','+ defaut +')';
 			
 		}else if(type == 2){
 			
-			if(value > 0) return 'rgb('+ Math.ceil(28+ (222*(1-value)) ) +', '+ Math.ceil(28+ (222*(1-value)) ) +', '+ Math.ceil(28+ (222*(1-value)) ) +')';
-			else if(value < 0) return 'rgb('+ Math.ceil(85+ (165*(1+value)) ) +', '+ Math.ceil(171+ (79*(1+value)) ) +', '+ Math.ceil(192+ (58*(1+value)) ) +')';
-			else  return 'rgb(250,250,250)';
+			if(value > 0) return 'rgb('+ Math.ceil(28+ ((defaut-28)*(1-value)) ) +', '+ Math.ceil(28+ ((defaut-28)*(1-value)) ) +', '+ Math.ceil(28+ ((defaut-28)*(1-value)) ) +')';
+			else if(value < 0) return 'rgb('+ Math.ceil(85+ ((defaut-85)*(1+value)) ) +', '+ Math.ceil(171+ ((defaut-171)*(1+value)) ) +', '+ Math.ceil(192+ ((defaut-192)*(1+value)) ) +')';
+			else  return 'rgb('+ defaut +','+ defaut +','+ defaut +')';
 			
 		}
 		
@@ -217,7 +218,7 @@ function Link (tab){
 			var ressTo = ressources[to];
 			
 			ctx.lineCap = 'round';
-			ctx.lineWidth = 2;
+			ctx.lineWidth = 3;
 			ctx.globalAlpha = alpha;
 			
 			ctx.strokeStyle = color;
