@@ -4,8 +4,9 @@
 	
 	$timestamp = time();
 	
-	if(isset($_SESSION['user_token']) && $_SESSION['user_token'] < $timestamp)
+	if(isset($_SESSION['user_token']) && $_SESSION['user_token'] < $timestamp){
 		header('Location:dashboard.php');
+	}
 	// else
 		// session_destroy();
 	
@@ -29,6 +30,11 @@ include 'admin.header.php'; ?>
 	
 	
 	<div id="middle_panel" >
+		<?php
+			
+			// echo $_SESSION['user_token'];
+			
+		?>
 	</div>
 	
 	

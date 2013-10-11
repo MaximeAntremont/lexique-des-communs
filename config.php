@@ -253,5 +253,22 @@
 		
 		301 => "incrementation du trend d'une ressource",
 		302 => "decrementation du trend d'une ressource",
-		303 => "alerte d'une ressource"
+		303 => "alerte d'une ressource",
+		304 => "Ajout d'une ressource",
+		305 => "Suppression d'une ressource (seule)",
+		
+		321 => "Ajout d'un lien",
+		
+		341 => "Ajout d'une entrée",
+		342 => "Suppression d'une entrée (seule)",
+		
+		361 => "Création d'un lexique",
+		362 => "Suppression d'une lexique",
+		363 => "Activation d'un lexique",
+		364 => "Désactivation d'un lexique",
+		364 => "Désactivation d'un lexique",
+		
+		381 => "Création d'un utilisateur",
+		382 => "Suppression d'un utilisateur",
+		383 => "Modification d'un utilisateur (statut)"
 	);

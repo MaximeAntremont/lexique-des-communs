@@ -85,8 +85,9 @@
 					)
 				');
 				
-				if($category && $entry && $link && $log && $ressource) echo '<div class="list"><h3>Création du Lexique réussie !</h3></div>';
-				else echo '<div class="list">Erreur: Impossible de créer le Lexique<h3></h3></div>';
+				if($category && $entry && $link && $log && $ressource){ 
+					echo '<div class="list"><h3>Création du Lexique réussie !</h3></div>';
+				}else echo '<div class="list">Erreur: Impossible de créer le Lexique<h3></h3></div>';
 				
 			}else echo '<div class="list">Erreur: impossible de lister le Lexique<h3></h3></div>';
 			

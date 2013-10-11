@@ -30,7 +30,7 @@ if(!empty($_POST['lexique_id']) && isConnected() && isSUDO()){
 			
 		}else echo '<div class="list"><h3>Une erreur quelque part ! Il va y avoir des erreurs... :S</h3></div>';
 		
-	}echo '<div class="list"><h3>Ah, le lexique n\'a pas été trouvé...</h3></div>';
+	}else echo '<div class="list"><h3>Ah, le lexique n\'a pas été trouvé...</h3></div>';
 	
 
 }else echo '<div class="list"><h3>Il semble qu\'il y ait un petit problème. Le lexique n\'a donc pas pu être supprimé !</h3><div>';
