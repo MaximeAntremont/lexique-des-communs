@@ -7,7 +7,8 @@ class Log
 			$create_date,
 			$ip,
 			$type,
-			$entry_id;
+			$entry_id,
+			$user_id;
 	
 	/***************
 	 * CONSTRUCTOR
@@ -60,6 +61,10 @@ class Log
 		if(isset($val) && is_numeric($val)) $this->type = $val;
 		return $this->type;
 	}
+	public function user_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->user_id = $val;
+		return $this->user_id;
+	}
 	
 	//fonctions utiles seulement pour la construction de la classe
 	private function set_log_id ($val = null){
@@ -86,6 +91,10 @@ class Log
 		if(isset($val) && is_numeric($val)) $this->type = $val;
 		return $this->type;
 	}
+	public function set_log_user_id ($val = null){
+		if(isset($val) && is_numeric($val) && $val >= 0) $this->user_id = $val;
+		return $this->user_id;
+	}
 	
 	/*********************
 	 * Diverses fonctions
@@ -97,7 +106,8 @@ class Log
 			"entry_id: ".$this->entry_id()."<br/>".
 			"create_date: ".$this->create_date()."<br/>".
 			"ip: ".$this->ip()."<br/>".
-			"type: ".$this->type();
+			"type: ".$this->type()."<br/>".
+			"user_id: ".$this->user_id();
 	}
 	
 }

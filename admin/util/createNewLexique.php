@@ -65,6 +65,7 @@
 						`log_create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 						`log_ip` varchar(255) DEFAULT NULL,
 						`log_entry_id` int(10) unsigned DEFAULT NULL,
+						`log_user_id` int(10) unsigned DEFAULT NULL,
 						PRIMARY KEY (`log_id`)
 					)
 				');

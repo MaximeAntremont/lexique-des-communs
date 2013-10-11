@@ -411,13 +411,15 @@ class Manager
 				log_type = :type,
 				log_val = :val,
 				log_ip = :ip,
-				log_entry_id = :entry_id
-				');
+				log_entry_id = :entry_id'.
+				((!empty($obj->user_id())) ? ', log_user_id = :user_id' : '')
+				);
 			
 			$req->bindValue(':val', $obj->val());
 			$req->bindValue(':entry_id', $obj->entry_id());
 			$req->bindValue(':ip', $obj->ip());
 			$req->bindValue(':type', $obj->type());
+			if(!empty($obj->user_id())) $req->bindValue(':user_id', $obj->user_id());
 			
 			$req->execute();
 			
