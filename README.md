@@ -6,17 +6,31 @@ lexique-des-communs
 	Gestion des liens.
 	Gestion des catégories.
 	Navigation x et y dans le nuage.
-	Adaptation surfaces tactiles.
 	Liens conflictuels.
 	Liens qui se superposent.
-	Ajout de l'id du créateur pour divers logs (dont création/suppression lexique)
-	? - Gestion (suppression) de liens.
-	Debug: Il est possible d'ajouter plusieurs fois la même entrée.
 	Début de prise en charge du niveau de compte "Rédacteur".
-	Ajout d'un bouton de retour à l'accueil.
 
 	
 <h3>Notes de versions:</h3>
+
+<h5>a3r00 - 11 oct 2013</h5>
+
+	Nouvelle typologie des liens
+	Meilleur affichage des liens
+	Nettoyage partiel
+	Amélioration des logs
+	Adaptation surface tactiles (non-testé)
+	Si aucun paramètre n'indique la ressource à afficher, le menu des entrées s'affiche automatiquement
+	Le menu des entrées affiche une liste ordonnée alphabétiquement
+	Fix: La fenêtre du menu des entrées n'était pas assez large
+	Ajout d'un bouton de retour au portail d'accueil
+	Fix: Les ressources-liens n'étaient pas cliquables
+	Fix: Il était impossible d'ajouter des entrées si l'on cliquait trop rapidement après l'ouverture du menu des entrées.
+	Fix: Il était possible d'ajouter plusieurs fois la même entrée en cliquant rapidement et plusieurs fois sur "ajouter" dans la fenêtre d'ajout d'une entrée
+	
+<h5>a2r04 - 09 oct 2013</h5>
+
+	Fix: suppression des ressources défectueuse
 
 <h5>a2r04 - 09 oct 2013</h5>
 
