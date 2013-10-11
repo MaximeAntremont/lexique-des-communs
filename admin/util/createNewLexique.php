@@ -31,7 +31,7 @@
 						`category_val` varchar(25) NOT NULL,
 						`category_create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 						PRIMARY KEY (`category_id`)
-					)
+					) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 				');
 				
 				$entry = $db->query('
@@ -40,7 +40,7 @@
 						`entry_val` varchar(50) NOT NULL,
 						`entry_create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 						PRIMARY KEY (`entry_id`)
-					)
+					) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 				');
 				
 				$link = $db->query('
@@ -54,7 +54,7 @@
 						`link_create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 						`link_alert` int(10) unsigned DEFAULT \'0\',
 						PRIMARY KEY (`link_id`)
-					)
+					) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 				');
 				
 				$log = $db->query('
@@ -67,7 +67,7 @@
 						`log_entry_id` int(10) unsigned DEFAULT NULL,
 						`log_user_id` int(10) unsigned DEFAULT NULL,
 						PRIMARY KEY (`log_id`)
-					)
+					) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 				');
 				
 				$ressource = $db->query('
@@ -82,7 +82,7 @@
 						`ress_alert` int(11) unsigned NOT NULL DEFAULT \'0\',
 						`ress_titre` varchar(20) DEFAULT NULL,
 						PRIMARY KEY (`ress_id`)
-					)
+					) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 				');
 				
 				if($category && $entry && $link && $log && $ressource){ 
