@@ -1196,7 +1196,7 @@ $(function(){
 							legend
 	*************************************************************/
 	
-	$('#icons_list').hide();
+	$('#icons_list').show();
 	$('#link_list').hide();
 		
 	
