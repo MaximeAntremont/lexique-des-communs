@@ -37,7 +37,6 @@
 
 	<div id="bottom_left_corner">
 		<ul id="icons_list">
-			<li>Légende</li>
 			<li><span class="icon text"></span><span class="label">Longs textes</span></li>
 			<li><span class="icon img"></span><span class="label">Images</span></li>
 			<li><span class="icon video"></span><span class="label">Vidéos</span></li>
@@ -46,7 +45,6 @@
 		</ul>
 
 		<ul id="link_list">
-			<li>Légende</li>
 			<li><span class="link ok"></span><span class="legend">accord</span><span class="legend last">désaccord</span><span class="legend neutral">neutre</span></li>
 			<li><span class="link include"></span><span class="legend">inclu dans</span><span class="legend last">exclu de</span><span class="legend neutral">neutre</span></li>
 			<li><span class="link conflict"></span><span class="legend conflict">conflictuel</span></li>
