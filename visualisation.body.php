@@ -28,12 +28,31 @@
 		<div id="part_one" ></div>
 		<div id="part_two" ></div>
 	</div>
+
 	<div id="top_right_corner">
 		<div id="type" ></div>
 		<div id="category" ></div>
 		<div id="val" ></div>
 	</div>
-	
+
+	<div id="bottom_left_corner">
+		<ul id="icons_list">
+			<li>Légende</li>
+			<li><span class="icon text"></span><span class="label">Longs textes</span></li>
+			<li><span class="icon img"></span><span class="label">Images</span></li>
+			<li><span class="icon video"></span><span class="label">Vidéos</span></li>
+			<li><span class="icon sound"></span><span class="label">Sons</span></li>
+			<li><span class="icon link"></span><span class="label">Liens</span></li>
+		</ul>
+
+		<ul id="link_list">
+			<li>Légende</li>
+			<li><span class="link ok"></span><span class="legend">accord</span><span class="legend last">désaccord</span><span class="legend neutral">neutre</span></li>
+			<li><span class="link include"></span><span class="legend">inclu dans</span><span class="legend last">exclu de</span><span class="legend neutral">neutre</span></li>
+			<li><span class="link conflict"></span><span class="legend conflict">conflictuel</span></li>
+		</ul>
+	</div>
+
 	<div id="cache_panel" >
 		<div style="height: 100%;vertical-align: middle;display: inline-block;" ></div>
 		<div id="middle_window">

@@ -80,6 +80,17 @@ body{
 		-moz-user-select: none;
 		-webkit-user-select: none;
 	}
+	#bottom_left_corner{
+		position: fixed;
+		bottom: 40px; left: 60px;
+		height: 150px;
+		width: 200px;
+		color: rgb(110,110,110);
+		background: transparent;
+		padding: 5px;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+	}
 	#bottom_panel{
 		position: fixed;
 		bottom: 0; left: 0;
@@ -297,6 +308,81 @@ body{
 		width: 100%;
 	}
 	
+
+/*************************************************
+				  BOTTOM_LEFT_CORNER
+ *************************************************/
+	
+	#bottom_left_corner span{
+		display: inline-block;
+	}
+
+	#bottom_left_corner ul{
+		list-style: none;
+		line-height: 20px;
+		/*position: absolute;*/
+		/*bottom: 5px;*/
+	}
+
+	#bottom_left_corner span.link{
+		width: 176px;
+		height: 11px;
+		/*background-size: 20px 20px;
+		vertical-align: top;*/
+	}
+
+	#bottom_left_corner span.icon{
+		width: 20px;
+		height: 20px;
+		background-size: 20px 20px;
+	}
+
+	#bottom_left_corner span.label{
+		margin-left: 15px;
+	}
+
+	#bottom_left_corner li{
+		/*text-align: center;*/
+	}
+
+	#bottom_left_corner span.legend{
+		font-size: 10px;
+		width:33%;
+		float: left;
+		margin-left: -15px;
+	}
+
+	#bottom_left_corner span.legend.neutral{
+		margin: 0 auto;
+		width:33%;
+		text-align: center;
+	}
+
+	#bottom_left_corner span.legend.last{
+		float: right;
+		width:33%;
+		text-align: center;
+	}
+
+	.clear{
+		clear: both;
+	}
+
+	.conflict{
+		margin: 0 auto;
+	}
+
+	span.icon.text{background-image: url("../img/text.png");}
+	span.icon.img{background-image: url("../img/image.png");}
+	span.icon.video{background-image: url("../img/video.png");}
+	span.icon.sound{background-image: url("../img/audio.png");}
+	span.icon.link{background-image: url("../img/link-cloud.png");}
+
+	span.link.ok{background-image: url("../img/legend_link_ok.png");}
+	span.link.include{background-image: url("../img/legend_link_include.png");}
+	span.link.conflict{background-image: url("../img/legend_link_conflict.png");}
+
+
  /*************************************************
 				   RIGHT PANEL
  *************************************************/

@@ -279,6 +279,8 @@ $(function(){
 		lastRessource_selected = ressource_selected;
 		ressource_selected = null;
 		marges.mouseMovePressInteration = 0;
+
+
 		
 		if(ressources.length > 0){
 		
@@ -290,6 +292,8 @@ $(function(){
 					
 					ressource_selected = obj;
 					obj.alpha(0.7);
+					$('#icons_list').hide();
+					$('#link_list').show();
 					
 				}else{
 					obj.alpha(0.3);
@@ -303,6 +307,8 @@ $(function(){
 				ressource_selected = null;
 				linksToDraw = [];
 				printRessourceInfos();
+				$('#icons_list').show();
+				$('#link_list').hide();
 				
 			}else{
 				drawLinks();
@@ -1186,15 +1192,13 @@ $(function(){
 		
 	}
 
+	/************************************************************
+							legend
+	*************************************************************/
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	$('#icons_list').hide();
+	$('#link_list').hide();
+		
 	
 	/************************************************************
 							fetchEntryData
