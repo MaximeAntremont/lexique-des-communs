@@ -13,6 +13,10 @@ lexique-des-communs
 	
 <h3>Notes de versions:</h3>
 
+<h5>a3r01 - 12 oct 2013</h5>
+
+	Ajout des légendes
+	
 <h5>a3r00 - 11 oct 2013</h5>
 
 	Nouvelle typologie des liens
