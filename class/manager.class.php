@@ -39,12 +39,19 @@ class Manager
 			
 			if($req->execute()){
 			
+				//---------Création du log
+				$log = new Log();
+				
 				$log->type(201);
-				$log->ip($_SERVER['REMOTE_ADDR']);
 				$log->val("null");
+				$log->ip($_SERVER['REMOTE_ADDR']);
+				
+				if(isset($_SESSION['user_id'])) $log->user_id( $_SESSION['user_id'] );
 				$log->entry_id( $this->_db->lastInsertId() );
 				
 				$this->sendNewLog($log);
+				//---------Log envoyé
+				
 				return true;
 				
 			}else{return false;}
@@ -154,7 +161,24 @@ class Manager
 		
 		if(is_numeric($id)){
 			
-			return ($this->_db->query('DELETE FROM '. $this->_attr .'entry WHERE entry_id = '.$id)) ? true : false;
+			if($this->_db->query('DELETE FROM '. $this->_attr .'entry WHERE entry_id = '.$id)){
+				
+				//---------Création du log
+				$log = new Log();
+				
+				$log->type(342);
+				$log->val("null");
+				$log->ip($_SERVER['REMOTE_ADDR']);
+				
+				if(isset($_SESSION['user_id'])) $log->user_id( $_SESSION['user_id'] );
+				$log->entry_id( $id );
+				
+				$this->sendNewLog($log);
+				//---------Log envoyé
+				
+				return true;
+				
+			}else return false;
 			
 		}else return false;
 		
@@ -280,7 +304,24 @@ class Manager
 			$req->bindValue(':type', $obj->type());
 			$req->bindValue(':entry_id', $obj->entry_id());
 			
-			return ($req->execute()) ? true : false;
+			if($req->execute()){
+				
+				//---------Création du log
+				$log = new Log();
+				
+				$log->type(321);
+				$log->val("null");
+				$log->ip($_SERVER['REMOTE_ADDR']);
+				
+				if(isset($_SESSION['user_id'])) $log->user_id( $_SESSION['user_id'] );
+				$log->entry_id( $obj->entry_id() );
+				
+				$this->sendNewLog($log);
+				//---------Log envoyé
+				
+				return true;
+			
+			}else return false;
 			
 		}else{
 		
@@ -563,16 +604,23 @@ class Manager
 			$req->bindValue(':entry_id', $obj->entry_id());
 			
 			if($req->execute()){
-			
-				$log->type(202);
-				$log->ip($_SERVER['REMOTE_ADDR']);
+				
+				//---------Création du log
+				$log = new Log();
+				
+				$log->type(304);
 				$log->val("null");
-				$log->entry_id($obj->entry_id());
+				$log->ip($_SERVER['REMOTE_ADDR']);
+				
+				if(isset($_SESSION['user_id'])) $log->user_id( $_SESSION['user_id'] );
+				$log->entry_id( $obj->entry_id() );
 				
 				$this->sendNewLog($log);
+				//---------Log envoyé
+				
 				return true;
 				
-			}else{return false;}
+			}else return false;
 			
 		}else{
 			
@@ -687,7 +735,24 @@ class Manager
 		
 		if(is_numeric($id)){
 			
-			return ($this->_db->query('DELETE FROM '. $this->_attr .'ressource WHERE ress_id = '.$id)) ? true : false;
+			if($this->_db->query('DELETE FROM '. $this->_attr .'ressource WHERE ress_id = '.$id)){
+				
+				//---------Création du log
+				$log = new Log();
+				
+				$log->type(305);
+				$log->val("null");
+				$log->ip($_SERVER['REMOTE_ADDR']);
+				
+				if(isset($_SESSION['user_id'])) $log->user_id( $_SESSION['user_id'] );
+				$log->entry_id( $id );
+				
+				$this->sendNewLog($log);
+				//---------Log envoyé
+				
+				return true;
+				
+			}else return false;
 			
 		}else{
 			return false;
@@ -865,6 +930,18 @@ class Manager
 					$req2 = $this->_db->prepare('UPDATE lexique_admin_references SET lexique_statut = :statut WHERE lexique_id = :id');
 					$req2->bindValue(':statut', ($don['lexique_statut'] == 1) ? 0 : 1);
 					$req2->bindValue(':id', $id);
+					
+					//---------Création du log
+					$log = new Log();
+					
+					$log->type( ($don['lexique_statut'] == 1) ? 364 : 363 );
+					$log->val('id$'.$id);
+					$log->ip($_SERVER['REMOTE_ADDR']);
+					
+					if(isset($_SESSION['user_id'])) $log->user_id( $_SESSION['user_id'] );
+					
+					$this->sendNewLog($log);
+					//---------Log envoyé
 					
 					return ($req2->execute()) ? true : false;
 					

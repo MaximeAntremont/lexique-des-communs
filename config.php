@@ -266,7 +266,6 @@
 		362 => "Suppression d'une lexique",
 		363 => "Activation d'un lexique",
 		364 => "Désactivation d'un lexique",
-		364 => "Désactivation d'un lexique",
 		
 		381 => "Création d'un utilisateur",
 		382 => "Suppression d'un utilisateur",
